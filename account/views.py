@@ -33,8 +33,8 @@ def login_view(request):
                         return redirect('store-dashboard',)
             else:
                 messages.error(request,'Username or password is not correct!')
-                return render(request, 'Account/login.html')
-    return render(request, 'Account/login.html')
+                return render(request, 'account/login.html')
+    return render(request, 'account/login.html')
 
 def logout_view(request):
     if request.user.is_authenticated:
