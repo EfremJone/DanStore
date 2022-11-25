@@ -16,9 +16,9 @@ def add_to_store(request):
 def cheeck_request(request):
     return render(request,"Store_manager/cheeck_Request/cheeck_request.html")
 def user_Profile(request):
-    return render(request,'Store_manager/Profile/show_profile.html')
+    return render(request,'Store_manager/profile/show_profile.html')
 def edit_Profile(request):
-    return render(request,'Store_manager/Profile/edit_profile.html',)
+    return render(request,'Store_manager/profile/edit_profile.html',)
 def chage_password(request):
     if request.method == 'POST':
         form = passwordform(request.user, request.POST)
@@ -35,7 +35,7 @@ def chage_password(request):
         context = {
             'form': form
             }
-    return render(request,'Store_manager/Profile/chage_pass.html')
+    return render(request,'Store_manager/profile/chage_pass.html')
 
 def chage_profile_pic(request):
-    return render(request,'Store_manager/Profile/change_profile_pic.html')
+    return render(request,'Store_manager/profile/change_profile_pic.html')
