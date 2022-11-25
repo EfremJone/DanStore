@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "whitenoise.runserver_nostatic",
     "crispy_forms",
-   
+    "Company_Admin",
     'account',
 ]
 

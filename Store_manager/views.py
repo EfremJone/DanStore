@@ -35,7 +35,7 @@ def chage_password(request):
         context = {
             'form': form
             }
-    return render(request,'Store_manager/profile/chage_pass.html')
+    return render(request,'Store_manager/profile/chage_pass.html',context)
 
 def chage_profile_pic(request):
     return render(request,'Store_manager/profile/change_profile_pic.html')
