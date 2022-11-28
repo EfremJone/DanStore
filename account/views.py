@@ -22,7 +22,9 @@ def login_view(request):
             password = request.POST['password']
             print(username)
             print(password)
+            
             user = authenticate(username=username, password=password)
+            
             if hasattr(user,'groups'):
                     a = user.groups.all()[0].name
                     if a == 'Admin':
