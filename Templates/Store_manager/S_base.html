@@ -5,9 +5,9 @@
  <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{% static '/img/logo.png' %}" alt=""> 
+        <h1><img src="{% static '/img/logo.png' %}" alt=""> </h1>
         <div class="text-start">
-          <h1 class="text-pirmary" > <strong>DanEnergy</strong></h1>
+          <h4 class="text-pirmary" > <strong>DanEnergy</strong></h4>
         </div>
        
       </a>
@@ -159,14 +159,16 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="{% static '/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            {% if user.store_manager.profile_pic %}
+            <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle">
+           {% endif %}
+            <span class="d-none d-md-block ps-2">{{user.first_name}} {{user.last_name}}</span>
           </a><!-- End Profile Iamge Icon -->
-
+          <!-- <h6>{{user.first_name}} {{user.last_name}}</h6> -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{user.first_name}} {{user.last_name}}</h6>
+              <span>{{user.store_manager.Job}}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -196,7 +198,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'log-out' %}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>

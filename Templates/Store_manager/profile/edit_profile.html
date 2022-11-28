@@ -17,10 +17,11 @@
             <a href="{% url 'chage-profile-pic' %}" class="btn btn-primary btn-sm" title="Upload profile image"><i class="bi bi-upload"></i></a>
             <!-- <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image" type="file" data-bs-target="#verticalycentered"><i class="bi bi-trash"></i></a>
              -->
+             {% if admin.profile_pic %}
             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">
               <i class="bi bi-trash"></i>
             </button>
-           
+            {% endif %}
                 <!-- Vertically centered Modal -->
                 <div class="modal fade" id="verticalycentered" tabindex="-1">
                   <div class="modal-dialog modal-dialog-centered">
@@ -30,10 +31,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <img src="" alt="Profile">
+                        {% if admin.profile_pic %}
+                        <img src="{{admin.profile_pic.url}}" alt="Profile" width="150px">
+                        {% endif %}
                         </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>
+                        
+                        <a href="{% url 'delete-pic' %}" class="btn btn-danger">Yes</a>
                         <a href="{% url 'edit-Profile' %}" class="btn btn-info">No</a>
                       </div>
                     </div>
@@ -77,26 +81,19 @@
         </div>
       </div>
 
-      <div class="row mb-3">
+      <!-- <div class="row mb-3">
         <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
         <div class="col-md-8 col-lg-9">
           <input name="company" type="text" class="form-control" id="company" value="{{admin.Company}}">
         </div>
-      </div>
+      </div> -->
 
-      <div class="row mb-3">
+      <!-- <div class="row mb-3">
         <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
         <div class="col-md-8 col-lg-9">
           <input name="job" type="text" class="form-control" id="Job" value="{{admin.Job}}">
         </div>
-      </div>
-
-      <div class="row mb-3">
-        <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-        <div class="col-md-8 col-lg-9">
-          <input name="country" type="text" class="form-control" id="Country" value="{{admin.Country}}">
-        </div>
-      </div>
+      </div> -->
 
       <div class="row mb-3">
         <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
