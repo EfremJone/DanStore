@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Admin(models.Model):
-    user=models.OneToOneField(User,null=True, on_delete=models.CASCADE)
+    user=models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     Full_Name=models.CharField(max_length=300, null=True)
     phone1 = models.CharField(max_length=200, null=True)
     phone2 = models.CharField(max_length=200, null=True)
@@ -19,7 +19,7 @@ class Admin(models.Model):
         return str(self.user)
 
 class Store_manager(models.Model):
-    user=models.OneToOneField(User,null=True, on_delete=models.CASCADE)
+    user=models.ForeignKey(User,null=True, on_delete=models.CASCADE)
     Full_Name=models.CharField(max_length=300, null=True)
     phone1 = models.CharField(max_length=200, null=True)
     phone2 = models.CharField(max_length=200, null=True)
