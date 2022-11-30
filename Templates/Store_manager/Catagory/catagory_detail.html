@@ -36,7 +36,6 @@
                       <thead>
                         
                         <tr>
-                         
                           <th scope="col">Item Name</th>
                           <th scope="col">Total in stok</th>
                           <th scope="col">Last update</th>
@@ -51,7 +50,7 @@
                           
                           <td>{{item.item_name}}</td>
                           <td>{{item.total_item_in_Stok}}</td>
-                          <td><a href="{% url 'item-detail' %}">{{item.last_update}}</a></td>
+                          <td><a href="{% url 'item_detail' item.id %}">{{item.last_update}}</a></td>
                           
                         </tr>
                         {% endfor %}
@@ -69,12 +68,12 @@
               <div class="col-lg-4">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">Manage Catagory</h5>
+                    <h5 class="card-title">Manage Shelf</h5>
                     <!-- Vertical Form -->
                     <form class="row g-3" method="POST">
                       {% csrf_token %}
                       <div class="col-12">
-                        <label for="inputNanme4" class="form-label">Catagory Name</label>
+                        <label for="inputNanme4" class="form-label">Shelf Name</label>
                         <input type="text" class="form-control"  name="catagory" placeholder="Enter Catagory" value="{{catagory.Catagory_Name}}" required>
                         </div>
                        
@@ -116,7 +115,7 @@
                       {% csrf_token %}
                       <div class="col-12">
                         <label for="inputNanme4" class="form-label">Item Name</label>
-                        <input type="text" class="form-control"  name="itemname" placeholder="Enter Catagory" required>
+                        <input type="text" class="form-control"  name="itemname" placeholder="Enter Item Name" required>
                         </div>
                         <div class="col-12 pt-2">
                           <label for="inputNanme4" class="form-label">Total in Stok</label>

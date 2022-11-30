@@ -29,7 +29,7 @@
           <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">All Catagory List</h5>
+                  <h5 class="card-title">All shelf List</h5>
                   <!-- List group with Links and buttons -->
                   <div class="list-group">
                     {% for catagory in all_catagory %}
@@ -44,14 +44,14 @@
          <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Add Catagory</h5>
+                  <h5 class="card-title">Add New Shelf</h5>
     
                   <!-- Vertical Form -->
                   <form class="row g-3" method="POST">
                     {% csrf_token %}
                     <div class="col-12">
-                      <label for="inputNanme4" class="form-label">Catagory Name</label>
-                      <input type="text" class="form-control"  name="catagory" placeholder="Enter Catagory" required>
+                      <label for="inputNanme4" class="form-label">Shelf Name</label>
+                      <input type="text" class="form-control"  name="catagory" placeholder="Enter Shelf" required>
                       </div>
                     <div class="text-center d-grid">
                       <button type="submit" class="btn btn-success">Add</button>

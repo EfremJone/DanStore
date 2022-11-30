@@ -5,9 +5,9 @@
  <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <h1><img src="{% static '/img/logo.png' %}" alt=""> </h1>
+        <h1><img src="{% static '/img/newfile.png' %}" alt=""> </h1>
         <div class="text-start">
-          <h4 class="text-pirmary" > <strong>DanEnergy</strong></h4>
+          <h2 class="text-success" > <strong>DanEnergy</strong></h2>
         </div>
        
       </a>
@@ -225,37 +225,44 @@
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link " href="{% url 'manage-catagory' %}">
-          <i class="bi bi-grid"></i>
-          <span>Manage Catagory</span>
+          <i class="bi bi-bookshelf"></i>
+          <span>Manage Shelf</span>
         </a>
       </li><!-- End Dashboard Nav -->
      
       <li class="nav-item">
         <a class="nav-link " href="{% url 'add-to-store' %}">
-          <i class="bi bi-grid"></i>
+          <i class="ri ri-store-3-line"></i>
           <span>Add to store</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="{% url 'cheeck-request' %}">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-list-task"></i>
           <span>Cheek Request</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link " href="#">
-          <i class="bi bi-grid"></i>
-          <span>Request fot Purchase</span>
+        <a class="nav-link " href="{% url 'list_for_purchase' %}">
+          <i class="bx bx-purchase-tag"></i>
+          <span>Item for Purchase</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="#">
-          <i class="bi bi-grid"></i>
+          <i class="bx bxs-report"></i>
           <span>Report</span>
         </a>
       </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="#">
+          <i class="bi bi-chat-dots"></i>
+          <span>Chat</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
     </ul>
+    
     
   </aside><!-- End Sidebar-->
 

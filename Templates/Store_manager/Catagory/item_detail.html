@@ -26,11 +26,11 @@
     {% endfor %}
     <section class="section">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
 
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">Datatables</h5>
+                    <h5 class="card-title">{{item.item_name}} history</h5>
                     
                     <!-- Table with stripped rows -->
                     <table class="table datatable">
@@ -44,28 +44,64 @@
                         </tr>
                       </thead>
                       <tbody>
-                        
+                        {% for ItemHistory in item_history  %}
                         <tr>
-                            
-                            <td>New Add</td>
-                            <td>New Purchase</td>
-                            <td>Financ</td>
-                            <td>2016-05-25</td>
+                            <td>{{ItemHistory.Reason}}</td>
+                            <td>{{ItemHistory.Action}}</td>
+                            <td>{{ItemHistory.Approved}}</td>
+                            <td>{{ItemHistory.last_update}}</td>
                         </tr>
-                        <tr>
-                            
-                            <td>Removed</td>
-                            <td>to clean staff</td>
-                            <td>HR</td>
-                            <td>2016-05-25</td>
-                          </tr>
+                        {% endfor %}
+                       
                       </tbody>
                     </table>
                     <!-- End Table with stripped rows -->
                   </div>
                 </div>
               </div>
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Manage Item</h5>
+                    <!-- Vertical Form -->
+                    <form class="row g-3" method="POST">
+                      {% csrf_token %}
+                      <div class="col-12">
+                        <label for="inputNanme4" class="form-label">Item Name</label>
+                        <input type="text" class="form-control"  name="item_name" placeholder="Enter Item Name" value="{{item.item_name}}" required>
+                        </div>
+                      <div >
+                        <button type="submit" class="btn btn-warning "> Update </button>
 
+                        <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                          Delete
+                        </button>
+                      </div>
+                    </form><!-- Vertical Form -->
+                <!-- Vertically centered Modal -->
+                <div class="modal fade" id="verticalycentered" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Are You Sure to Delete {{item.item_name}} from Catagory</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <P>This action will remove all file of {{item.item_name}}.</P>
+                      <div class="modal-footer">
+                        
+                        <a href="{% url 'item-delete' item.id %}" class="btn btn-danger">Yes</a>
+                        <a href="{% url 'item_detail' item.id %}" class="btn btn-info">No</a>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- End Vertically centered Modal-->
+                  </div>
+                  </div>
+                </div>
+                
+               
+            </div>
          </div>
     </section>
   </main><!-- End #main -->

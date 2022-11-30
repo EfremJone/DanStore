@@ -70,8 +70,28 @@ def add_item(request,id):
             messages.success(request,"You have added New Item Successfully.")
             return redirect('catagory-detail' ,id)
     return render(request,'Store_manager/Catagory/catagory_detail.html',context)
-def item_detail(request):
-    return render(request,'Store_manager/Catagory/item_detail.html')
+def item_detail(request,id):
+    item=Item.objects.get(pk=id)
+
+    item_history=ItemHistory.objects.filter(Item=item)
+    context={
+        'item':item,
+        'item_history':item_history,
+    }
+    if request.method == 'POST':
+        new_catagory = request.POST.get('item_name')
+        item.item_name=new_catagory
+        item.save()
+        if item:
+            messages.success(request,"You have update item Name successfully.")
+    return render(request,'Store_manager/Catagory/item_detail.html',context)
+def item_delete(request,id):
+    item=Item.objects.get(pk=id)
+    catagory=item.Catagory
+    id2=catagory.id
+    Item.objects.get(pk=id).delete()
+    return redirect('catagory-detail', id2)
+
 def add_to_store(request):
     return render(request,"Store_manager/Add_to_Store/add_to_store.html")
 def cheeck_request(request):
@@ -152,3 +172,89 @@ def delete_profile_pic(request):
         admin.profile_pic.delete()
         return redirect('user-Profile')
     return render(request,)
+def purchase(request):
+   
+    return render(request,'Store_manager/for_purchase/purchase.html')
+def list_for_purchase(request):
+    return render(request,'Store_manager/for_purchase/purchase_list.html',)
+def new_action1(request):
+    if form1temp.objects.all().count() !=0:
+        print("already exist")
+        all_form= form1temp.objects.all()
+        form1=all_form[0]
+        print(form1)
+        print(all_form)
+        form1temp.objects.all().delete()
+        if request.method == 'POST':
+            Request_by=request.POST.get('Request_by')
+            Department=request.POST.get('Department')
+            checked_by=request.POST.get('checkd_by')
+            approved_by=request.POST.get('Approved_by')
+            form1=form1temp.objects.create(Request_by=Request_by,Department=Department,checkd_by=checked_by, Approved_by=approved_by)
+            if form1:
+                messages.success(request,'You have sumite Form-1 successfuly.')
+                return redirect('purchase')
+    else:
+        if request.method == 'POST':
+            Request_by=request.POST.get('Request_by')
+            Department=request.POST.get('Department')
+            checked_by=request.POST.get('checkd_by')
+            approved_by=request.POST.get('Approved_by')
+            form1=form1temp.objects.create(Request_by=Request_by,Department=Department,checkd_by=checked_by, Approved_by=approved_by)
+            if form1:
+                messages.success(request,'You have sumite Form-1 successfuly.')
+                return redirect('purchase')
+    return render(request,'Store_manager/for_purchase/purchase.html')
+
+def new_action(request):
+    if request.method == 'POST':
+        all_form= form1temp.objects.all()
+        form1=all_form[0]
+        des=request.POST.get('desc')
+        Qty=request.POST.get('qty')
+        unit=request.POST.get('unit')
+        remark=request.POST.get('remark')
+        form2=form2temp.objects.create(form1=form1,Description=des,unit=unit,qty=Qty,Remark=remark)
+        if form2:
+            messages.success(request,'You have sumite Form-2 successfuly.')
+            return redirect('purchase')
+
+def check_out(request):
+    all_form= form1temp.objects.all()
+    if all_form:
+        form1=all_form[0]
+        all_item=form2temp.objects.filter(form1=form1)
+        context={
+            'form1':form1,
+            'all_item':all_item,
+        }
+        return render(request,'Store_manager/for_purchase/check_out.html',context)
+    else:
+         messages.error(request,'First, you must complete and submit Form 1. ')
+    return render(request,'Store_manager/for_purchase/purchase.html')
+
+
+def list_for_purchase(request):
+    all_list_item=form2permanent.objects.all().order_by('-id')
+    context={
+        'all_list_item':all_list_item,
+    }
+    all_form= form1temp.objects.all()
+    if all_form:
+        form1=all_form[0]
+        all_item=form2temp.objects.filter(form1=form1)
+        Request_by=form1.Request_by
+        Department=form1.Department
+        checkd_by=form1.checkd_by
+        Approved_by=form1.Approved_by
+        form1per=form1permanent.objects.create(Request_by=Request_by,Department=Department,checkd_by=checkd_by,Approved_by=Approved_by)
+        if form1per:
+            for item in all_item:
+                Description=item.Description
+                unit=item.unit
+                qty=item.qty
+                Remark=item.Remark
+                form2permanent.objects.create(form1per=form1per,Description=Description,unit=unit,qty=qty,Remark=Remark)
+                messages.success(request,'You have submitted your purchase request successfully.')
+                form1temp.objects.all().delete()
+    return render(request,'Store_manager/for_purchase/purchase_list.html',context)
