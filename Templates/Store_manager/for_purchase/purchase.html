@@ -5,11 +5,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Request for Purchase</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+          <li class="breadcrumb-item"><a href="{% url 'store-dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Request for Purchase</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -66,13 +66,13 @@
                     {% csrf_token %}
                     <div class="col-md-12">
                       <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingName" placeholder="Your Name" name="desc">
+                        <input type="text" class="form-control" id="floatingName" placeholder="Your Name" name="desc" required>
                         <label for="floatingName">Description</label>
                       </div>
                     </div>
                      <div class="col-md-6">
                       <div class="form-floating mb-3">
-                        <select class="form-select" id="floatingSelect" aria-label="State" name="unit">
+                        <select class="form-select" id="floatingSelect" aria-label="State" name="unit" required>
                           
                           <option>Kg.</option>
                           <option>Meter</option>
@@ -86,7 +86,7 @@
                     <div class="col-md-6">
                       <div class="col-md-12">
                         <div class="form-floating">
-                          <input type="text" class="form-control" id="floatingCity" placeholder="City" name="qty">
+                          <input type="text" class="form-control" id="floatingCity" placeholder="City" name="qty" required>
                           <label for="floatingCity">Qty</label>
                         </div>
                       </div>
@@ -94,7 +94,7 @@
                     
                     <div class="col-12">
                       <div class="form-floating">
-                        <textarea class="form-control" placeholder="Address" id="floatingTextarea" name="remark" style="height: 100px;"></textarea>
+                        <textarea class="form-control" placeholder="Address" id="floatingTextarea" name="remark" style="height: 100px;" required></textarea>
                         <label for="floatingTextarea">Remark</label>
                       </div>
                     </div>

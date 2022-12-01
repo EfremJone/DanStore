@@ -34,7 +34,6 @@ class form1temp(models.Model):
     checkd_by=models.CharField(max_length=100,null=True,blank=True)
     Approved_by=models.CharField(max_length=100,null=True,blank=True)
 class form2temp(models.Model):
-    
     form1=models.ForeignKey(form1temp,null=True,blank=True, on_delete=models.CASCADE)
     Description=models.CharField(max_length=100,null=True,blank=True)
     unit=models.CharField(max_length=100,null=True,blank=True)

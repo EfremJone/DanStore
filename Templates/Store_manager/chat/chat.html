@@ -1,0 +1,111 @@
+{% extends 'Store_manager/S_base.html'  %}
+
+{% block store %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Chat With</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'store-dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item ">Chat </li>
+          <li class="breadcrumb-item active">Chat with</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% for mssg in messages%}
+    {% if mssg.tags == 'success' %}
+    <div class="alert alert-success" role="alert">
+      {{mssg}}
+    </div>
+    {%else %}
+    <div class="alert alert-danger" role="alert">
+      {{mssg}}
+    </div>
+    {% endif %}
+    {% endfor %}
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-5 nav-item dropdown pe-3">
+                                
+
+                                   {% if user.store_manager.profile_pic %}
+                                      <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                     <div class="pt-3">
+                                        <span class="d-none d-md-block ps-2">{{user.first_name}} {{user.last_name}}</span>
+                                     </div>
+                                      {% endif %}
+                                      
+                                    </a><!-- End Profile Iamge Icon -->
+                                    <!-- <h6>{{user.first_name}} {{user.last_name}}</h6> -->
+                                
+                                 
+                              </div>
+                              
+                        </div>
+                        
+                    </div>
+                    <div class="card-body pt-2">
+                      <div class="text-start">
+                        
+                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                          <span class="badge bg-warning text-dark">Hi</span><br>
+                        </button>
+                      </div>
+                      <div class="text-end">
+                        <span class="badge bg-info text-dark text-center">Hello</span><br>
+                      </div>
+                      <div class="text-start">
+                        <span class="badge bg-warning text-dark">how are you?</span>
+                      </div>
+                      <div class="text-end">
+                        <span class="badge bg-info text-dark text-center">I am fine. u?</span><br>
+                      </div>
+                    </div>
+                        
+                    <div class="card-footer">
+                        <div class="row">
+                            
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputText" placeholder="Text">
+                                  </div>
+                              
+                                  <div class="col-lg-2 text-center d-grid">
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                            
+                                  </div>
+                        </div>
+                     
+                    </div>
+                     <!-- Vertically centered Modal -->
+                <div class="modal fade" id="verticalycentered" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Chat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-12 pb-2">
+                          <input type="text" class="form-control" id="inputText" value="hi">
+                      </div>
+                      <div class="modal-footer">
+                        <a href="#" class="btn btn-info">Update</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  </div><!-- End Card with header and footer -->
+        
+            </div>
+         </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

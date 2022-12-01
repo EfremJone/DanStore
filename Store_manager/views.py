@@ -209,26 +209,32 @@ def new_action1(request):
 def new_action(request):
     if request.method == 'POST':
         all_form= form1temp.objects.all()
-        form1=all_form[0]
-        des=request.POST.get('desc')
-        Qty=request.POST.get('qty')
-        unit=request.POST.get('unit')
-        remark=request.POST.get('remark')
-        form2=form2temp.objects.create(form1=form1,Description=des,unit=unit,qty=Qty,Remark=remark)
-        if form2:
-            messages.success(request,'You have sumite Form-2 successfuly.')
+        if all_form:
+            form1=all_form[0]
+            des=request.POST.get('desc')
+            Qty=request.POST.get('qty')
+            unit=request.POST.get('unit')
+            remark=request.POST.get('remark')
+            form2=form2temp.objects.create(form1=form1,Description=des,unit=unit,qty=Qty,Remark=remark)
+            if form2:
+                messages.success(request,'You have sumite Form-2 successfuly.')
+                return redirect('purchase')
+        else:
+            messages.error(request,'First, you must complete and submit Form 1')
             return redirect('purchase')
-
 def check_out(request):
     all_form= form1temp.objects.all()
     if all_form:
         form1=all_form[0]
         all_item=form2temp.objects.filter(form1=form1)
-        context={
-            'form1':form1,
-            'all_item':all_item,
-        }
-        return render(request,'Store_manager/for_purchase/check_out.html',context)
+        if all_item:
+            context={
+                'form1':form1,
+                'all_item':all_item,
+            }
+            return render(request,'Store_manager/for_purchase/check_out.html',context)
+        else:
+            messages.error(request,'First, you must complete and submit Form 2. ')
     else:
          messages.error(request,'First, you must complete and submit Form 1. ')
     return render(request,'Store_manager/for_purchase/purchase.html')
@@ -258,3 +264,12 @@ def list_for_purchase(request):
                 messages.success(request,'You have submitted your purchase request successfully.')
                 form1temp.objects.all().delete()
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
+
+def chat(request):
+    return render(request,'Store_manager/chat/index.html')
+
+def chat_pepol(request):
+    return render(request,'Store_manager/chat/chat.html')
+
+def report(request):
+    return render(request,'Store_manager/Report/index.html')

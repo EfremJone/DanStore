@@ -35,4 +35,12 @@ urlpatterns = [
 
    # -------- End Purchase --------- #
 
+   # -------- Chat --------- #
+   path('chat/',views.chat,name="chat"),
+   path('chat_pepol/',views.chat_pepol,name="chat_pepol"),
+   # -------- End Chat --------- #
+
+   # -------- Report --------- #
+   path('report/',views.report,name="report"),
+   # -------- End Report --------- #
 ]
