@@ -261,8 +261,10 @@ def list_for_purchase(request):
                 qty=item.qty
                 Remark=item.Remark
                 form2permanent.objects.create(form1per=form1per,Description=Description,unit=unit,qty=qty,Remark=Remark)
-                messages.success(request,'You have submitted your purchase request successfully.')
+                # messages.success(request,'You have submitted your purchase request successfully.')
                 form1temp.objects.all().delete()
+            messages.success(request,'You have submitted your purchase request successfully.')
+                
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
 def chat(request):
