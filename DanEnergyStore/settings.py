@@ -127,5 +127,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SESSION_EXPIRE_SECONDS = 10
+# SESSION_EXPIRE_SECONDS = 1200
+# SESSION_TIMEOUT_REDIRECT = '/'
+
 # SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
