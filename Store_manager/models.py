@@ -70,3 +70,6 @@ class form2permanent(models.Model):
     Status=models.CharField(max_length=200,null=True,blank=True,choices=status,default="Pending")
     date=models.DateField(auto_now_add=True,null=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
+
+class student(models.Model):
+    name=models.CharField(max_length=20,null=True,blank=True)

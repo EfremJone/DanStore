@@ -20,9 +20,7 @@ def login_view(request):
         if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
-            print(username)
-            print(password)
-            
+           
             user = authenticate(username=username, password=password)
             
             if hasattr(user,'groups'):

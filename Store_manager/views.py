@@ -93,7 +93,24 @@ def item_delete(request,id):
     return redirect('catagory-detail', id2)
 
 def add_to_store(request):
+    
     return render(request,"Store_manager/Add_to_Store/add_to_store.html")
+def add_to_store1(request):
+    if request.method == 'POST':
+        res=request.POST.get('reson')
+        
+        all_item=Item.objects.all()
+        all_orderd=form2permanent.objects.all()
+        context={
+            
+            'res':res,
+            'all_item':all_item,
+            'all_orderd':all_orderd,
+
+        }
+        return render(request,"Store_manager/Add_to_Store/add_to_store1.html",context)
+    return redirect('add-to-store')
+   
 def cheeck_request(request):
     return render(request,"Store_manager/cheeck_Request/cheeck_request.html")
 

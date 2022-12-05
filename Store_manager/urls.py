@@ -12,6 +12,7 @@ urlpatterns = [
    # -------- End profile --------- #
 
    path('add_to_store',views.add_to_store,name="add-to-store"),
+   path('add_to_store1',views.add_to_store1,name="add-to-store1"),
    path('cheek_request',views.cheeck_request,name="cheeck-request"),
    
    # ---------- Catagory ---------- #
