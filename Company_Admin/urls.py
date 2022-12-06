@@ -2,14 +2,17 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    path('', views.home, name='admin-dashboard'),
-    path('pae1', views.page1, name='page1'),
-    path('page2', views.page2, name='page2'),
-    path('page3', views.page3, name='page3'),
-    path('page4', views.page4, name='page4'),
-    path('page5', views.page5, name='page5'),
-    path('page6', views.page6, name='page6'),
-    path('page7', views.page7, name='page7'),
+    path('admin-dashboard', views.home, name='admin-dashboard'),
+    path('manage-employee', views.manage_employee, name='manage-employee'),
+    path('departments', views.departments, name='departments'),
+    path('vendors', views.vendors, name='vendors'),
+    path('role', views.role, name='role'),
+    path('products', views.products, name='products'),
+    path('store', views.store, name='store'),
+    path('batch', views.batch, name='batch'),
+    path('reports', views.reports, name='reports'),
     
-   
+    # 
+    path('chat',views.chat,name="admin-chat"),
+    path('chat_peple',views.chat_people,name="admin-chat_people"),
 ]
