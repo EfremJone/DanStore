@@ -73,3 +73,5 @@ class form2permanent(models.Model):
 
 class student(models.Model):
     name=models.CharField(max_length=20,null=True,blank=True)
+
+    
