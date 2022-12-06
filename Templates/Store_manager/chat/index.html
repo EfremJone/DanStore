@@ -42,12 +42,13 @@
                     </div>
                     <div class="card-body pt-2">
                         <div class="list-group">
+                            {% for chat in all_chat %}
                             <a href="{% url 'chat_pepol' %}" class="list-group-item list-group-item-action " aria-current="true">
                                 <div class="row">
                                     <div class="col-lg-4">
                                         {% if user.store_manager.profile_pic %}
                                     
-                                        <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                        <img src="{{chat.me_with.admin.profile_pic}}" alt="Profile" class="rounded-circle w-25">
                                       
                                         {% endif %}
                                     </div>
@@ -59,55 +60,10 @@
                                     </div>
                                 </div>
                                 </a>
-                                <a href="{% url 'chat_pepol' %}" class="list-group-item list-group-item-action " aria-current="true">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            {% if user.store_manager.profile_pic %}
-                                            <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
-                                          
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="pt-3">
-                                                <span class="d-none d-md-block ps-2">Last Message</span>
-                                             </div>
-                                           
-                                        </div>
-                                    </div>
-                                    </a>
-                                    <a href="{% url 'chat_pepol' %}" class="list-group-item list-group-item-action " aria-current="true">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                {% if user.store_manager.profile_pic %}
-                                                <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
-                                              
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="pt-3">
-                                                    <span class="d-none d-md-block ps-2">Lste Massage</span>
-                                                 </div>
-                                               
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <a href="{% url 'chat_pepol' %}" class="list-group-item list-group-item-action " aria-current="true">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    {% if user.store_manager.profile_pic %}
-                                                    <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
-                                                  
-                                                    {% endif %}
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <div class="pt-3 text-start">
-                                                        <span class="d-none d-md-block ps-2">Efrem Yohanis</span>
-                                                     </div>
-                                                   
-                                                </div>
-                                            </div>
-                                            </a>
-                           
+                                {% endfor %}
+                                
+                                
+                                       
                           
                           </div><!-- End List group Advanced Content -->
             

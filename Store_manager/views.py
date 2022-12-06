@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import render, redirect, reverse
 from .form import *
+from .models import chatbot
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -285,10 +286,16 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
 def chat(request):
-    return render(request,'Store_manager/chat/index.html')
+    all_chat=chatbot.objects.all()
+    context={
+        'all_chat':all_chat,
+    }
+    return render(request,'Store_manager/chat/index.html',context)
 
 def chat_pepol(request):
-    return render(request,'Store_manager/chat/chat.html')
+    
+    return render(request,'Store_manager/chat/chat.html',)
 
 def report(request):
-    return render(request,'Store_manager/Report/index.html')
+    
+    return render(request,'Store_manager/Report/index.html',)
