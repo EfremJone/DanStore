@@ -3,25 +3,34 @@ from django.shortcuts import render
 # Create your views here.
 
 def home(request):
-    return render(request,'Company_Admin/Dashboard/index.html')
+    return render(request,'Admin/Dashboard/index.html')
 
 def manage_employee(request):
-    return render(request,'Company_Admin/ManageEmployee/index.html')
+    return render(request,'Admin/ManageEmployee/index.html')
 
-def page2(request):
-    return render(request,'Company_Admin/page2.html')
+def departments(request):
+    return render(request,'Admin/Departments/index.html')
 
-def page3(request):
-    return render(request,'Company_Admin/page3.html')
+def vendors(request):
+    return render(request,'Admin/Vendors/index.html')
 
-def page4(request):
-    return render(request,'Company_Admin/page4.html')
+def role(request):
+    return render(request,'Admin/Role/index.html')
 
-def page5(request):
-    return render(request,'Company_Admin/page5.html')
+def products(request):
+    return render(request,'Admin/Products/index.html')
 
-def page6(request):
-    return render(request,'Company_Admin/page6.html')
+def store(request):
+    return render(request,'Admin/Store/index.html')
 
-def page7(request):
-    return render(request,'Company_Admin/page7.html')
+def batch(request):
+    return render(request,'Admin/Batch/index.html')
+
+def reports(request):
+    return render(request,'Admin/Reports/index.html')
+
+def chat(request):
+    return render(request,'Admin/Chat/index.html')
+
+def chat_people(request):
+    return render(request,'Admin/Chat/chat.html')

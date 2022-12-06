@@ -1,11 +1,13 @@
 {% extends 'Admin/base.html' %} {% block admin %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Page1</h1>
+    <h1>Products</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item">Page1</li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin-dashboard' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">Products</li>
       </ol>
     </nav>
   </div>
@@ -13,7 +15,7 @@
 
   <section class="section">
     <div class="row">
-      <h1>Manage Employees Page</h1>
+      <h1>Products Page</h1>
     </div>
   </section>
 </main>

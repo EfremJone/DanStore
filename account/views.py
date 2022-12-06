@@ -9,7 +9,7 @@ def login_view(request):
     if request.user.is_authenticated:
         if hasattr(request.user,'groups'):
                 a = request.user.groups.all()[0].name
-                if a == 'Admin':
+                if a == 'Company_Admin':
                     return redirect('admin-dashboard')   
                 elif a == 'Store_Manager':
                      return redirect('store-dashboard',)
@@ -25,7 +25,7 @@ def login_view(request):
             
             if hasattr(user,'groups'):
                     a = user.groups.all()[0].name
-                    if a == 'Admin':
+                    if a == 'Company_Admin':
                         login(request, user)
                         return redirect('admin-dashboard')
                     elif a == 'Store_Manager':
