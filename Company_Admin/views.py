@@ -17,12 +17,15 @@ def vendors(request):
 def role(request):
     return render(request,'Admin/Role/index.html')
 
-def products(request):
-    return render(request,'Admin/Products/index.html')
-
+# def categories(request):
+#     return render(request,'Admin/Categories/index.html')
+#----------------- store ---------------#
 def store(request):
     return render(request,'Admin/Store/index.html')
 
+def store_details(request):
+    return render(request,"Admin/Store/store_detail.html")
+#----------------- End store ---------------#
 def batch(request):
     return render(request,'Admin/Batch/index.html')
 

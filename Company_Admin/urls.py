@@ -7,8 +7,11 @@ urlpatterns = [
     path('departments', views.departments, name='departments'),
     path('vendors', views.vendors, name='vendors'),
     path('role', views.role, name='role'),
-    path('products', views.products, name='products'),
+    # path('categories', views.categories, name='categories'),
+
     path('store', views.store, name='store'),
+    path('store-details', views.store_details, name='store-details'),
+
     path('batch', views.batch, name='batch'),
     path('reports', views.reports, name='reports'),
     
