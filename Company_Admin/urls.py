@@ -23,6 +23,7 @@ urlpatterns = [
     path('store', views.store, name='store'),
     path('store-details', views.store_details, name='store-details'),
     path('add-new-store',views.add_new_store,name='add-new-store'),
+    path('cat-item-detail',views.cat_item_detail,name='cat-item-detail'),
     # 
     path('batch', views.batch, name='batch'),
     path('reports', views.reports, name='reports'),

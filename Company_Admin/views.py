@@ -53,6 +53,9 @@ def store_details(request):
 def add_new_store(request):
     return render(request, 'Admin/Store/add_new_store.html')
 
+def cat_item_detail(request):
+    return render(request, 'Admin/Store/cat_item_details.html')
+
 #----------------- End OF STORE ---------------#
 def batch(request):
     return render(request,'Admin/Batch/index.html')

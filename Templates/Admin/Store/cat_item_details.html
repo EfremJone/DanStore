@@ -1,0 +1,93 @@
+{% extends 'Admin/base.html' %} {% block admin %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1 style="color: black">Store</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin-dashboard' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item"><a href="{% url 'store' %}">Store</a></li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'store-details' %}">Store Details</a>
+        </li>
+        <li class="breadcrumb-item"><a href="{% url 'store' %}">Store</a></li>
+        <li>Items in Categories</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <h3 style="color: black; display: flex; justify-content: center">
+        Items that are in *** Category are:
+      </h3>
+      <!-- Tabels -->
+      <div class="col-lg-11" style="margin: 30px">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="color: black">Items</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Item Name</th>
+                  <th scope="col">Item detail</th>
+                  <th scope="col">Used In</th>
+                  <th scope="col">bla</th>
+                  <th scope="col">bla</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Hewlett-Packard</td>
+                  <td>Computers</td>
+                  <td>America</td>
+                  <td>Electronics</td>
+                  <td>2016-05-25</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Cisco Networking</td>
+                  <td>Networking Eq.</td>
+                  <td>America</td>
+                  <td>Electronics</td>
+                  <td>2014-12-05</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Ashleigh Langosh</td>
+                  <td>Finance</td>
+                  <td>45</td>
+                  <td>Electronics</td>
+                  <td>2011-08-12</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>Angus Grady</td>
+                  <td>HR</td>
+                  <td>34</td>
+                  <td>Electronics</td>
+                  <td>2012-06-11</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>Raheem Lehner</td>
+                  <td>Dynamic Division Officer</td>
+                  <td>47</td>
+                  <td>Electronics</td>
+                  <td>2011-04-19</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- End of Tabel -->
+    </div>
+  </section>
+</main>
+{% endblock %}
