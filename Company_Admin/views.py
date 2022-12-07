@@ -5,8 +5,14 @@ from django.shortcuts import render
 def home(request):
     return render(request,'Admin/Dashboard/index.html')
 
+#----------------- manage Employee ---------------#
 def manage_employee(request):
     return render(request,'Admin/ManageEmployee/index.html')
+
+def add_new_employee(request):
+    return render(request,'Admin/ManageEmployee/add_new_employee.html')
+
+#----------------- END of manage Employee ---------------#
 
 def departments(request):
     return render(request,'Admin/Departments/index.html')
