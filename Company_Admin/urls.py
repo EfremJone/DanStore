@@ -11,6 +11,7 @@ urlpatterns = [
     # DEPARTMENT
     path('departments', views.departments, name='departments'),
     path('add-new-department',views.add_new_department,name='add-new-department'),
+    path('department-details',views.department_details,name='department-details'),
 
     # Vendors
     path('vendors', views.vendors, name='vendors'),
@@ -18,14 +19,16 @@ urlpatterns = [
     
     # Role
     path('role', views.role, name='role'),
-    # path('categories', views.categories, name='categories'),
-    # 
+    path('add-new-role',views.add_new_role,name='add-new-role'),
+    path('role-details',views.role_details,name='role-details'),
+
+    # Store
     path('store', views.store, name='store'),
     path('store-details', views.store_details, name='store-details'),
     path('add-new-store',views.add_new_store,name='add-new-store'),
     path('cat-item-detail',views.cat_item_detail,name='cat-item-detail'),
+
     # 
-    path('batch', views.batch, name='batch'),
     path('reports', views.reports, name='reports'),
     
   

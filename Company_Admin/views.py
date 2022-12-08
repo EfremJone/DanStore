@@ -23,6 +23,10 @@ def departments(request):
 
 def add_new_department(request):
     return render(request,'Admin/Departments/add_new_department.html')
+
+def department_details(request):
+    return render(request,'Admin/Departments/department_details.html')
+
 #----------------- END of Departments ---------------#
 
 
@@ -39,10 +43,15 @@ def add_new_vendor(request):
 
 def role(request):
     return render(request,'Admin/Role/index.html')
+
+def add_new_role(request):
+    return render(request, 'Admin/Role/add_new_role.html')
+
+def role_details(request):
+    return render(request, 'Admin/Role/role_details.html')
+
 #----------------- END of ROLE ---------------#
 
-# def categories(request):
-#     return render(request,'Admin/Categories/index.html')
 
 #----------------- STORE ---------------#
 def store(request):
@@ -58,8 +67,6 @@ def cat_item_detail(request):
     return render(request, 'Admin/Store/cat_item_details.html')
 
 #----------------- End OF STORE ---------------#
-def batch(request):
-    return render(request,'Admin/Batch/index.html')
 
 def reports(request):
     return render(request,'Admin/Reports/index.html')

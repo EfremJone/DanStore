@@ -1,7 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-right">
-    <a href="index.html" class="logo d-flex align-items-center">
+    <a
+      href="{% url 'admin-dashboard' %}"
+      class="logo d-flex align-items-center"
+    >
       <img src="{% static '/img/newfile.png' %}" alt="" />
       <span
         class="d-none d-lg-block"
@@ -321,12 +324,6 @@
       <a class="nav-link collapsed" href="{% url 'store' %}">
         <i class="bi bi bi-shop" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Store</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'batch' %}">
-        <i class="bi bi-view-list" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Batch</span>
       </a>
     </li>
     <li class="nav-item">
