@@ -1,13 +1,13 @@
 {% extends 'Admin/base.html' %} {% block admin %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Roles</h1>
+    <h1 style="color: black">Vendors</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="{% url 'admin-dashboard' %}">Home</a>
         </li>
-        <li class="breadcrumb-item">Roles</li>
+        <li class="breadcrumb-item">Vendors</li>
       </ol>
     </nav>
   </div>
@@ -15,8 +15,82 @@
 
   <section class="section">
     <div class="row">
-      <h1>ROles Page</h1>
+      <div class="col-lg-11" style="display: flex; justify-content: right">
+        <div class="d-grid gap-2 m-3">
+          <a
+            href="{% url 'add-new-vendor' %}"
+            class="btn btn-outline-secondary btn-lg"
+            type="button"
+          >
+            <i class="bi bi-bag-plus-fill"></i
+            ><span style="margin: 0 6px"> </span>Add New Vendors
+          </a>
+        </div>
+      </div>
     </div>
+    <!-- Tabels -->
+    <div class="col-lg-11">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Vendors</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Vendor Name</th>
+                <th scope="col">Products</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Type</th>
+                <th scope="col">Start Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Hewlett-Packard</td>
+                <td>Computers</td>
+                <td>America</td>
+                <td>Electronics</td>
+                <td>2016-05-25</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Cisco Networking</td>
+                <td>Networking Eq.</td>
+                <td>America</td>
+                <td>Electronics</td>
+                <td>2014-12-05</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Ashleigh Langosh</td>
+                <td>Finance</td>
+                <td>45</td>
+                <td>Electronics</td>
+                <td>2011-08-12</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>Angus Grady</td>
+                <td>HR</td>
+                <td>34</td>
+                <td>Electronics</td>
+                <td>2012-06-11</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>Raheem Lehner</td>
+                <td>Dynamic Division Officer</td>
+                <td>47</td>
+                <td>Electronics</td>
+                <td>2011-04-19</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- End of Tabel -->
   </section>
 </main>
 <!-- End #main -->

@@ -1,7 +1,7 @@
 {% extends 'Admin/base.html' %} {% block admin %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Store</h1>
+    <h1 style="color: black">Store</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -15,7 +15,98 @@
 
   <section class="section">
     <div class="row">
-      <h1>Store page</h1>
+      <div
+        class="col-lg-12"
+        style="margin: 20px; display: flex; justify-content: right"
+      >
+        <a
+          href="{% url 'add-new-store' %}"
+          type="button"
+          class="btn btn-outline-secondary btn-lg"
+          style="margin-right: 40px"
+        >
+          <i class="bi bi-shop-window"></i>
+          <span style="margin: 0 7px"></span>Add New Store
+        </a>
+      </div>
+      <!--  -->
+      <div class="col-lg-6">
+        <a href="{% url 'store-details' %}">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Civil Service</h5>
+              <p class="card-text">Location Description is here.</p>
+            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d914.3720944562128!2d38.83570364712971!3d9.02177867948127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b9b4d4edea511%3A0x64d206dc3a577468!2sDan%20Energy%20Research%20and%20Development%20PLC!5e1!3m2!1sen!2set!4v1670325869518!5m2!1sen!2set"
+              width="570"
+              height="300"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </a>
+      </div>
+      <!--  -->
+      <!--  -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Location 2</h5>
+            <p class="card-text">Location Description is here.</p>
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d914.3720944562128!2d38.83570364712971!3d9.02177867948127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b9b4d4edea511%3A0x64d206dc3a577468!2sDan%20Energy%20Research%20and%20Development%20PLC!5e1!3m2!1sen!2set!4v1670325869518!5m2!1sen!2set"
+            width="570"
+            height="300"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+      <!--  -->
+      <!--  -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Location 3</h5>
+            <p class="card-text">Location Description is here.</p>
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d914.3720944562128!2d38.83570364712971!3d9.02177867948127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b9b4d4edea511%3A0x64d206dc3a577468!2sDan%20Energy%20Research%20and%20Development%20PLC!5e1!3m2!1sen!2set!4v1670325869518!5m2!1sen!2set"
+            width="570"
+            height="300"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+      <!--  -->
+      <!--  -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Location 4</h5>
+            <p class="card-text">Location Description is here.</p>
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d914.3720944562128!2d38.83570364712971!3d9.02177867948127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b9b4d4edea511%3A0x64d206dc3a577468!2sDan%20Energy%20Research%20and%20Development%20PLC!5e1!3m2!1sen!2set!4v1670325869518!5m2!1sen!2set"
+            width="570"
+            height="300"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+      <!--  -->
     </div>
   </section>
 </main>

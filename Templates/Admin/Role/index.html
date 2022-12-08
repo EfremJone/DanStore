@@ -1,7 +1,7 @@
 {% extends 'Admin/base.html' %} {% block admin %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Role</h1>
+    <h1 style="color: black">Role</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -15,7 +15,123 @@
 
   <section class="section">
     <div class="row">
-      <h1>Roles Page</h1>
+      <div
+        class="col-lg-12"
+        style="margin: 20px; display: flex; justify-content: right"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-lg"
+          style="margin-right: 40px"
+        >
+          <i class="bi bi-file-earmark-plus"></i>
+          <span style="margin: 0 7px"></span>Add New Roles
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <!--  -->
+      <div class="col-xxl-4 col-md-6 col-sm-6">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Administrator</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-person-lines-fill"></i>
+              </div>
+              <div class="ps-3">
+                <span class="text-success small pt-1 fw-bold">2</span>
+                <span class="text-muted small pt-2 ps-1"> admins</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="col-xxl-4 col-md-6 col-sm-6">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Finance</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-cash"></i>
+              </div>
+              <div class="ps-3">
+                <span class="text-success pt-1 fw-bold">4</span>
+                <span class="text-muted pt-2 ps-1"> finance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="col-xxl-4 col-md-6 col-sm-6">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Store Manager</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-file-earmark-person"></i>
+              </div>
+              <div class="ps-3">
+                <span class="text-success small pt-1 fw-bold">1</span>
+                <span class="text-muted small pt-2 ps-1"> manager</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-4 col-md-6 col-sm-6">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Department Head</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-person-bounding-box"></i>
+              </div>
+              <div class="ps-3">
+                <span class="text-success small pt-1 fw-bold">16</span>
+                <span class="text-muted small pt-2 ps-1"> heads</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-4 col-md-6 col-sm-6">
+        <div class="card info-card sales-card">
+          <div class="card-body">
+            <h5 class="card-title">Employee</h5>
+
+            <div class="d-flex align-items-center">
+              <div
+                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+              >
+                <i class="bi bi-person-badge"></i>
+              </div>
+              <div class="ps-3">
+                <span class="text-success small pt-1 fw-bold">342</span>
+                <span class="text-muted small pt-2 ps-1"> employees</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  -->
     </div>
   </section>
 </main>

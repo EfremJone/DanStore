@@ -5,8 +5,8 @@
       <img src="{% static '/img/newfile.png' %}" alt="" />
       <span
         class="d-none d-lg-block"
-        style="color: #3158cc; margin-top: 5px; padding-left: 5px"
-        >DanStore</span
+        style="color: black; margin-top: 5px; padding-left: 5px"
+        >Dan Store</span
       >
     </a>
     <i class="bi bi-list toggle-sidebar-btn" style="margin-right: 10px"></i>
@@ -205,14 +205,16 @@
             alt="Profile"
             class="rounded-circle"
           />
-          <span class="d-none d-md-block dropdown-toggle ps-2"
+          <span
+            class="d-none d-md-block dropdown-toggle ps-2"
+            style="color: black"
             >{{user.admin.Full_Name}}</span
           > </a
         ><!-- End Profile Iamge Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>Million Tenkir</h6>
+            <h6>{{user.admin.Full_Name}}</h6>
             <span>Software Engineer</span>
           </li>
           <li>
@@ -259,7 +261,10 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="#">
+            <a
+              class="dropdown-item d-flex align-items-center"
+              href="{% url 'log-out' %}"
+            >
               <i class="bi bi-box-arrow-right"></i>
               <span>Sign Out</span>
             </a>
@@ -305,18 +310,13 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'vendors' %}">
+      <a class="nav-link collapsed" href="{% url 'role' %}">
         <i class="bi bi-person-rolodex" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Roles</span>
       </a>
     </li>
     <li style="color: black">Store</li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'products' %}">
-        <i class="bi bi-cpu" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Products</span>
-      </a>
-    </li>
+
     <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'store' %}">
         <i class="bi bi bi-shop" style="color: black"></i>
@@ -335,6 +335,7 @@
         <span style="color: rgb(96, 96, 96)">Reports</span>
       </a>
     </li>
+    <li style="color: black">Chat</li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'admin-chat' %}">
         <i class="bi bi-chat-left-text" style="color: black"></i>

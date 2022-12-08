@@ -1,0 +1,191 @@
+{% extends 'Admin/base.html' %} {% block admin %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1 style="color: black">Manage Employees</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin-dashboard' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'manage-employee' %}">Manage Employees</a>
+        </li>
+        <li class="breadcrumb-item">Add New Employees</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h3
+                style="
+                  color: black;
+                  display: flex;
+                  justify-content: center;
+                  margin: 30px;
+                "
+              >
+                Add New Employees to the system
+              </h3>
+              <form>
+                <div class="row mb-3" style="margin: 10px">
+                  <div class="col-lg-6">
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-person-circle"></i> First Name</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-person"></i> User Name</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-lock"></i> Temporary Password</span
+                        ></label
+                      >
+                    </div>
+                    <fieldset class="row m-3">
+                      <legend
+                        class="col-form-label col-sm-3 pt-0"
+                        style="color: black"
+                      >
+                        <span>Gender</span>
+                      </legend>
+                      <div class="col-sm-9">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gridRadios"
+                            id="gridRadios1"
+                            value="option1"
+                            checked
+                          />
+                          <label class="form-check-label" for="gridRadios1">
+                            <span>Male</span>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="gridRadios"
+                            id="gridRadios2"
+                            value="option2"
+                          />
+                          <label class="form-check-label" for="gridRadios2">
+                            <span>Female</span>
+                          </label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-person-circle"></i> Last Name</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-envelope-open"></i> Email</span
+                        ></label
+                      >
+                    </div>
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-lock"></i> Confirm Temporary
+                          Password</span
+                        ></label
+                      >
+                    </div>
+                    <div class="form-floating m-3">
+                      <select
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                      >
+                        <option>Role of Employee</option>
+                        <option value="1">Adimn</option>
+                        <option value="2">Department Head</option>
+                        <option value="3">Employee</option>
+                        <option value="4">Finance</option>
+                        <option value="5">Store Manager</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-10"></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-10"></div>
+                  <div class="col-lg-2" style="margin-top: 25px">
+                    <button type="submit" class="btn btn-primary">Next</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

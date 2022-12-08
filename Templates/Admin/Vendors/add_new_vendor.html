@@ -1,0 +1,128 @@
+{% extends 'Admin/base.html' %} {% block admin %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1 style="color: black">Vendors</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin-dashboard' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'vendors' %}">Vendors</a>
+        </li>
+        <li class="breadcrumb-item">New Vendors</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h3
+                style="
+                  color: black;
+                  display: flex;
+                  justify-content: center;
+                  margin: 30px;
+                "
+              >
+                Add New Vendor
+              </h3>
+              <form>
+                <div class="row mb-3" style="margin: 10px">
+                  <div class="col-lg-6">
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-list-ol"></i> Vendor Code</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-house-fill"></i> Vendor Name</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-award"></i> Products</span
+                        ></label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span
+                          ><i class="bi bi-geo-alt"></i> Origin</span
+                        ></label
+                      >
+                    </div>
+
+                    <div class="form-floating m-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput" style="color: black"
+                        ><span><i class="bi bi-fonts"></i> Type</span></label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-10"></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-10"></div>
+                  <div class="col-lg-2" style="margin-top: 25px">
+                    <button type="submit" class="btn btn-outline-secondary">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}
