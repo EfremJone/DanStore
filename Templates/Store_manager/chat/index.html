@@ -42,15 +42,16 @@
                     </div>
                     <div class="card-body pt-2">
                         <div class="list-group">
-                            {% for chat in all_chat %}
-                            <a href="{% url 'chat_pepol' %}" class="list-group-item list-group-item-action " aria-current="true">
+                            {% for chat in chat_group %}
+                            {% if chat.user != user %}
+                            <a href="{% url 'chat_pepol' chat.id %}" class="list-group-item list-group-item-action " aria-current="true">
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        {% if user.store_manager.profile_pic %}
-                                    
-                                        <img src="{{chat.me_with.admin.profile_pic}}" alt="Profile" class="rounded-circle w-25">
                                       
-                                        {% endif %}
+                                      {% if chat.profile_pic %}
+                                        <img src="{{ chat.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                      {% endif %}
+                          
                                     </div>
                                     <div class="col-lg-8">
                                         <div class="pt-3">
@@ -60,6 +61,7 @@
                                     </div>
                                 </div>
                                 </a>
+                                {% endif %}
                                 {% endfor %}
                                 
                                 

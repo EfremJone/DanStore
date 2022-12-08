@@ -6,7 +6,7 @@ from .form import *
 from .models import chatbot
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.db.models import Q
 
 def store_dashboard(request):
     all_catagory = Catagory.objects.all()
@@ -286,16 +286,37 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
 def chat(request):
-    all_chat=chatbot.objects.all()
+    chat_group=employ.objects.all()
     context={
-        'all_chat':all_chat,
+      
+        'chat_group':chat_group,
     }
     return render(request,'Store_manager/chat/index.html',context)
 
-def chat_pepol(request):
-    
-    return render(request,'Store_manager/chat/chat.html',)
+def chat_pepol(request,id):
+    chat_employ=employ.objects.get(pk=id)
+    me=employ.objects.get(pk=request.user.id)
+    all_message=chatbot.objects.filter(Q(Q(me_with=chat_employ) | Q(me=chat_employ)) & Q(Q(me_with=me) | Q(me=me)))
+    if request.method == 'POST':
+        me_with=employ.objects.get(pk=id)
+        me=me
+        message=request.POST.get('mess')
+        newmess=chatbot.objects.create(me_with=me_with,me=me,message=message)
+        if newmess:
+            return redirect('chat_pepol',id)
+    context={
+        'chat_employ':chat_employ,
+        'message':all_message,
+        'id':id,
+        'me':me
+    }
+    return render(request,'Store_manager/chat/chat.html',context)
+def send_message(request):
+    me=request.user
+    if request.method == 'POST':
+        print(me)
 
+    return redirect('chat_pepol')
 def report(request):
     
     return render(request,'Store_manager/Report/index.html',)

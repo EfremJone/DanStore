@@ -10,6 +10,7 @@ admin.site.register(form2temp)
 admin.site.register(form1permanent)
 admin.site.register(form2permanent)
 admin.site.register(chatbot)
+admin.site.register(employ)
 
 
 
