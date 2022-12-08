@@ -12,8 +12,7 @@
         <li class="breadcrumb-item">
           <a href="{% url 'store-details' %}">Store Details</a>
         </li>
-        <li class="breadcrumb-item"><a href="{% url 'store' %}">Store</a></li>
-        <li>Items in Categories</li>
+        <li class="breadcrumb-item">Items in Categories</li>
       </ol>
     </nav>
   </div>
@@ -21,66 +20,32 @@
 
   <section class="section">
     <div class="row">
-      <h3 style="color: black; display: flex; justify-content: center">
-        Items that are in *** Category are:
-      </h3>
+      <h3 style="color: black; display: flex; justify-content: center"></h3>
       <!-- Tabels -->
       <div class="col-lg-11" style="margin: 30px">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title" style="color: black">Items</h5>
+            <h5 class="card-title" style="color: black">
+              Items that are in {{category.Catagory_Name}} Category are
+            </h5>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <!-- <th scope="col">#</th> -->
                   <th scope="col">Item Name</th>
-                  <th scope="col">Item detail</th>
-                  <th scope="col">Used In</th>
-                  <th scope="col">bla</th>
-                  <th scope="col">bla</th>
+                  <th scope="col">Total in Stock</th>
+                  <th scope="col">Last Updated at</th>
                 </tr>
               </thead>
               <tbody>
+                {% for item in category.item_set.all %}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Hewlett-Packard</td>
-                  <td>Computers</td>
-                  <td>America</td>
-                  <td>Electronics</td>
-                  <td>2016-05-25</td>
+                  <!-- <th scope="row">1</th> -->
+                  <td>{{item.item_name}}</td>
+                  <td>{{item.total_item_in_Stok}}</td>
+                  <td>{{item.last_update}}</td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Cisco Networking</td>
-                  <td>Networking Eq.</td>
-                  <td>America</td>
-                  <td>Electronics</td>
-                  <td>2014-12-05</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Ashleigh Langosh</td>
-                  <td>Finance</td>
-                  <td>45</td>
-                  <td>Electronics</td>
-                  <td>2011-08-12</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>Angus Grady</td>
-                  <td>HR</td>
-                  <td>34</td>
-                  <td>Electronics</td>
-                  <td>2012-06-11</td>
-                </tr>
-                <tr>
-                  <th scope="row">5</th>
-                  <td>Raheem Lehner</td>
-                  <td>Dynamic Division Officer</td>
-                  <td>47</td>
-                  <td>Electronics</td>
-                  <td>2011-04-19</td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

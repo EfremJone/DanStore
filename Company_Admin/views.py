@@ -58,13 +58,22 @@ def store(request):
     return render(request,'Admin/Store/index.html')
 
 def store_details(request):
-    return render(request,"Admin/Store/store_detail.html")
+    all_category = Catagory.objects.all()
+    context = {
+        'all_category': all_category
+    }
+    print(all_category)
+    return render(request,"Admin/Store/store_detail.html", context)
 
 def add_new_store(request):
     return render(request, 'Admin/Store/add_new_store.html')
 
-def cat_item_detail(request):
-    return render(request, 'Admin/Store/cat_item_details.html')
+def cat_item_detail(request,id):
+    category = Catagory.objects.get(pk=id)
+    context={
+        'category':category
+    }
+    return render(request, 'Admin/Store/cat_item_details.html',context)
 
 #----------------- End OF STORE ---------------#
 
