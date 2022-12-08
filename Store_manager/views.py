@@ -38,8 +38,7 @@ def add_new_catagory(request):
         new_catagory = request.POST.get('catagory')
         total_item = request.POST.get('totalitem')
         add_new_catagory=Catagory.objects.create(Catagory_Name=new_catagory,total_item=total_item)
-        print("-------")
-        print(total_item)
+        
         if add_new_catagory:
             messages.success(request,"You have added a new category successfully.")
     return render(request,'Store_manager/Catagory/manage_catagory.html',context)
@@ -197,11 +196,10 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',)
 def new_action1(request):
     if form1temp.objects.all().count() !=0:
-        print("already exist")
+        
         all_form= form1temp.objects.all()
         form1=all_form[0]
-        print(form1)
-        print(all_form)
+      
         form1temp.objects.all().delete()
         if request.method == 'POST':
             Request_by=request.POST.get('Request_by')
@@ -286,16 +284,30 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
 def chat(request):
+   
     chat_group=employ.objects.all()
+    if request.method == 'POST':
+        user=request.POST.get('serach')
+        serch=User.objects.get(username=user)
+        chat_group1=employ.objects.get(user=serch)
+   
+        context={
+            
+            'chat_group1':chat_group1,
+        }
+        return render(request,'Store_manager/chat/index1.html',context)
+
     context={
-      
-        'chat_group':chat_group,
-    }
+            'chat_group':chat_group,
+            
+        }
     return render(request,'Store_manager/chat/index.html',context)
 
 def chat_pepol(request,id):
     chat_employ=employ.objects.get(pk=id)
-    me=employ.objects.get(pk=request.user.id)
+    user=User.objects.get(pk=request.user.id)
+    me=employ.objects.get(user=user)
+   
     all_message=chatbot.objects.filter(Q(Q(me_with=chat_employ) | Q(me=chat_employ)) & Q(Q(me_with=me) | Q(me=me)))
     if request.method == 'POST':
         me_with=employ.objects.get(pk=id)
@@ -311,11 +323,17 @@ def chat_pepol(request,id):
         'me':me
     }
     return render(request,'Store_manager/chat/chat.html',context)
+
+def chat_profile(request,id):
+    chat_employ=employ.objects.get(pk=id)
+    context={
+        'chat_employ':chat_employ,
+    }
+    return render(request,'Store_manager/chat/profile.html',context)
 def send_message(request):
     me=request.user
     if request.method == 'POST':
-        print(me)
-
+        pass
     return redirect('chat_pepol')
 def report(request):
     

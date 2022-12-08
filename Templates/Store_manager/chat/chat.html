@@ -32,19 +32,17 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-5 nav-item dropdown pe-3">
-                                
-
-                                   {% if chat_employ.profile_pic %}
-                                      <img src="{{chat_employ.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
-                                     <div class="pt-3">
-                                        <span class="d-none d-md-block ps-2">{{chat_employ.user.first_name}} {{chat_employ.user.last_name}}</span>
-                                     </div>
-                                      {% endif %}
+                                <a href="{% url 'chat_profile' chat_employ.id %}">
+                                  {% if chat_employ.profile_pic %}
+                                  <img src="{{chat_employ.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                 <div class="pt-3">
+                                    <span class="d-none d-md-block ps-2">{{chat_employ.user.first_name}} {{chat_employ.user.last_name}}</span>
+                                 </div>
+                                  {% endif %}
+                                </a>
+                                  
                                       
-                                    </a><!-- End Profile Iamge Icon -->
-                                    <!-- <h6>{{user.first_name}} {{user.last_name}}</h6> -->
-                                
-                                 
+                                   
                               </div>
                               
                         </div>
@@ -57,13 +55,15 @@
                         
                        {% if mess.me_with == me %}
                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                          <span class="badge bg-warning text-dark">{{mess.message}}</span><br>
+                          <span class="badge bg-warning text-dark">{{mess.message}} </span><br>
                         </button>
+                        <span class="text-sm badge  text-dark">{{mess.date}}</span>
                         {% elif mess.me_with != me %}
                         <div class="text-end">
-                          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered" value="{{mess.message}}">
                             <span class="badge bg-info text-dark text-end">{{mess.message}}</span><br>
                           </button>
+                          <span class="text-sm badge  text-dark">{{mess.date}}</span>
                         </div>
                         
                           {% endif %}

@@ -39,6 +39,8 @@ urlpatterns = [
    # -------- Chat --------- #
    path('chat/',views.chat,name="chat"),
    path('chat_pepol/<int:id>',views.chat_pepol,name="chat_pepol"),
+   path('chat_profile/<int:id>',views.chat_profile,name="chat_profile"),
+   
    path('send_message/',views.send_message,name="new"),
    
    # -------- End Chat --------- #

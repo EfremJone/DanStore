@@ -31,7 +31,15 @@ urlpatterns = [
     # 
     path('reports', views.reports, name='reports'),
     
-    # 
-    path('chat',views.chat,name="admin-chat"),
-    path('chat_peple',views.chat_people,name="admin-chat_people"),
+  
+
+     # -------- Chat --------- #
+   path('chat/',views.chat,name="admin-chat"),
+   path('chat_pepol/<int:id>',views.chat_pepol,name="admin-chat_people"),
+
+   path('chat_profile/<int:id>',views.chat_profile,name="admin-chat_profile"),
+   path('send_message/',views.send_message,name="new"),
+   
+   # -------- End Chat --------- #
+
 ]
