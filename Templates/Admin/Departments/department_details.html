@@ -1,0 +1,172 @@
+{% extends 'Admin/base.html' %} {% block admin %}
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1 style="color: black">Departments</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'admin-dashboard' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'departments' %}">Departments</a>
+        </li>
+        <li class="breadcrumb-item">Department Details</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section" style="margin-top: 50px">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card">
+          <div class="card-body">
+            <h1
+              style="
+                color: black;
+                display: flex;
+                justify-content: center;
+                margin: 20px;
+              "
+            >
+              ERP
+            </h1>
+            <span style="color: rgb(41, 213, 41)"
+              >Enterprise Resource Planning</span
+            >
+            is dedicated to adipisicing elit. Eligendi impedit est sint expedita
+            perspiciatis animi sequi odio quae iure repellendus?
+            <h3 style="margin: 20px 0">Department Head : Mr. Biniyam</h3>
+            <h4>Members of ERP</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Memeber Name</th>
+                  <th scope="col">email</th>
+                  <th scope="col">Certified in</th>
+                  <th scope="col">Start Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Efrem Yohannis</td>
+                  <td>Computers</td>
+                  <td>America</td>
+                  <td>2016-05-25</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Samuel Embibel</td>
+                  <td>Networking Eq.</td>
+                  <td>America</td>
+                  <td>2014-12-05</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Shewit G/yesus</td>
+                  <td>Finance</td>
+                  <td>45</td>
+                  <td>2011-08-12</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Samuel Embibel</td>
+                  <td>Networking Eq.</td>
+                  <td>America</td>
+                  <td>2014-12-05</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Samuel Embibel</td>
+                  <td>Networking Eq.</td>
+                  <td>America</td>
+                  <td>2014-12-05</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Samuel Embibel</td>
+                  <td>Networking Eq.</td>
+                  <td>America</td>
+                  <td>2014-12-05</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h2 style="color: black; display: flex; justify-content: center">
+                Manage Department
+              </h2>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label"
+                  ><span>Department Name</span></label
+                >
+                <input type="text" class="form-control" id="inputNanme4" />
+                <div style="display: flex; justify-content: flex-end">
+                  <button
+                    style="margin: 10px"
+                    type="submit"
+                    class="btn btn-outline-warning"
+                  >
+                    Update
+                  </button>
+                  <!-- <button
+                    style="margin: 10px"
+                    type="button"
+                    class="btn btn-outline-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#verticalycentered"
+                  >
+                    Delete
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <h3
+                  style="color: black; display: flex; justify-content: center"
+                >
+                  Delete Department
+                </h3>
+                <span>
+                  To confirm write the department name in the space provided.
+                </span>
+                <div>
+                  <label for="inputNanme4" class="form-label"
+                    ><span style="color: rgb(255, 54, 54)"
+                      >Department Name</span
+                    ></label
+                  >
+                  <input type="text" class="form-control" id="inputNanme4" />
+                </div>
+                <div style="display: flex; justify-content: flex-end">
+                  <button
+                    style="margin: 10px"
+                    type="button"
+                    class="btn btn-outline-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#verticalycentered"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}
