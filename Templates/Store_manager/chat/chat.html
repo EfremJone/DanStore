@@ -34,10 +34,10 @@
                             <div class="col-5 nav-item dropdown pe-3">
                                 
 
-                                   {% if user.store_manager.profile_pic %}
-                                      <img src="{{user.store_manager.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                   {% if chat_employ.profile_pic %}
+                                      <img src="{{chat_employ.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
                                      <div class="pt-3">
-                                        <span class="d-none d-md-block ps-2">{{user.first_name}} {{user.last_name}}</span>
+                                        <span class="d-none d-md-block ps-2">{{chat_employ.user.first_name}} {{chat_employ.user.last_name}}</span>
                                      </div>
                                       {% endif %}
                                       
@@ -51,35 +51,52 @@
                         
                     </div>
                     <div class="card-body pt-2">
+                      {% if message %}
+                      {% for mess in message %}
                       <div class="text-start">
                         
-                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                          <span class="badge bg-warning text-dark">Hi</span><br>
+                       {% if mess.me_with == me %}
+                       <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                          <span class="badge bg-warning text-dark">{{mess.message}}</span><br>
                         </button>
+                        {% elif mess.me_with != me %}
+                        <div class="text-end">
+                          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                            <span class="badge bg-info text-dark text-end">{{mess.message}}</span><br>
+                          </button>
+                        </div>
+                        
+                          {% endif %}
+                          
+                         
+                        
+                       
+
                       </div>
-                      <div class="text-end">
-                        <span class="badge bg-info text-dark text-center">Hello</span><br>
-                      </div>
-                      <div class="text-start">
-                        <span class="badge bg-warning text-dark">how are you?</span>
-                      </div>
-                      <div class="text-end">
-                        <span class="badge bg-info text-dark text-center">I am fine. u?</span><br>
-                      </div>
+                      {% endfor %}
+                       {% endif %}
+                     
+
                     </div>
                         
                     <div class="card-footer">
+                      <form method="POST" >
+                        {% csrf_token %}
                         <div class="row">
-                            
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputText" placeholder="Text">
-                                  </div>
-                              
-                                  <div class="col-lg-2 text-center d-grid">
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                            
-                                  </div>
-                        </div>
+                          <div class="col-lg-10">
+                           <input type="hidden" name="user_id">
+                          </div>
+                          <div class="col-lg-10">
+                              <input type="text" class="form-control" id="inputText" name="mess" placeholder="Text">
+                            </div>
+                        
+                            <div class="col-lg-2 text-center d-grid">
+                              <button type="submit" class="btn btn-primary">Send</button>
+                      
+                            </div>
+                     </div>
+                      </form>
+                       
                      
                     </div>
                      <!-- Vertically centered Modal -->

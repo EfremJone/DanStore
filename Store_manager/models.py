@@ -74,9 +74,13 @@ class form2permanent(models.Model):
 class student(models.Model):
     name=models.CharField(max_length=20,null=True,blank=True)
 
-
+class employ(models.Model):
+    user=models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
+    profile_pic=models.ImageField(null=True,blank=True, upload_to='Profile/')
+    def __str__(self):
+        return str(self.user)
 class chatbot(models.Model):
-    me_with=models.ForeignKey(User,null=True,blank=True, on_delete=models.CASCADE)
+    me_with=models.ForeignKey(employ,null=True,blank=True, on_delete=models.CASCADE)
     me=models.CharField(max_length=200,null=True,blank=True)
     message=models.TextField(max_length=1000,null=True,blank=True)
     date=models.DateTimeField(auto_now_add=True)
