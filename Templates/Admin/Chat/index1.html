@@ -1,4 +1,4 @@
-{% extends 'Store_manager/S_base.html'  %}
+{% extends 'Admin/chat/index.html'  %}
 
 {% block store %}
 
@@ -46,29 +46,27 @@
                     <div class="card-body pt-2">
                         <div class="list-group">
                            
-                         {% block chat %}
-                            {% for chat in chat_group %}
-                            {% if chat.user != user %}
-                            <a href="{% url 'chat_pepol' chat.id %}" class="list-group-item list-group-item-action " aria-current="true">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                      
-                                      {% if chat.profile_pic %}
-                                        <img src="{{ chat.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
-                                      {% endif %}
-                          
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="pt-3">
-                                            <span class="d-none d-md-block ps-2">{{chat.user.first_name}} {{chat.user.last_name}}</span>
-                                         </div>
-                                       
-                                    </div>
+                          {% block chat %}
+
+                          {% if chat_group1 %}
+                          <a href="{% url 'chat_pepol' chat_group1.id %}" class="list-group-item list-group-item-action " aria-current="true">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                  
+                                  {% if chat_group1.profile_pic %}
+                                    <img src="{{ chat_group1.profile_pic.url}}" alt="Profile" class="rounded-circle w-25">
+                                  {% endif %}
+                      
                                 </div>
-                                </a>
-                                {% endif %}
-                                {% endfor %}
-                          
+                                <div class="col-lg-8">
+                                    <div class="pt-3">
+                                        <span class="d-none d-md-block ps-2">{{chat_group1.user.first_name}} {{chat_group1.user.last_name}}</span>
+                                     </div>
+                                   
+                                </div>
+                            </div>
+                            </a>
+                         {% endif %}
                             {% endblock chat %}
                           </div><!-- End List group Advanced Content -->
                     </div>  
