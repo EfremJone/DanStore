@@ -3,6 +3,7 @@ from .import views
 
 urlpatterns = [
     path('admin-dashboard', views.home, name='admin-dashboard'),
+    path('users-profile',views.user_profile,name='users-profile'),
 
     # MANAGE EMPLOYEE
     path('manage-employee', views.manage_employee, name='manage-employee'),

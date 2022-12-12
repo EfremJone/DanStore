@@ -1,13 +1,24 @@
 from django.shortcuts import render,redirect
 from Store_manager.models import *
 from django.db.models import Q
+from django.contrib.auth.models import User, Group
+
 # Create your views here.
 
 def home(request):
     return render(request,'Admin/Dashboard/index.html')
 
+def user_profile(request):
+    return render(request,'Admin/EditProfile/show_profile.html')
+
 #----------------- MANAGE EMPLOYEE ---------------#
 def manage_employee(request):
+
+    allEmployees = employ.objects.all()
+    context = {
+        'all_emplyees': allEmployees
+    }
+
     if request.method == 'POST':
         firstName = request.POST.get('firstName')
         lastName = request.POST.get('lastName')
@@ -17,9 +28,33 @@ def manage_employee(request):
         gender = request.POST.get('gender')
         email = request.POST.get('email')
         role = request.POST.get('role')
-        print("data: first name:",firstName," last name: ",lastName," user name: ", userName, " temp pass: ", temporaryPassword, " temporary pass con: ", temporaryPasswordConfirm," gender: ",gender, " email: ", email," role: ",role )
+        Full_Name = firstName +" " + lastName
+        # print("data: first name:",firstName," last name: ",lastName," user name: ", userName, " temp pass: ", temporaryPassword, " temporary pass con: ", temporaryPasswordConfirm," gender: ",gender, " email: ", email," role: ",role )
+        user= User.objects.create(first_name=firstName,last_name=lastName,username= userName,password=temporaryPassword,email=email,)
+        if user:
+            if role == 'admin':
+                new_group = Group.objects.get(name='Company_Admin')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                if newEmployee:
+                    print("new emplyee created.")
+            elif (role == 'department_head'):
+                new_group = Group.objects.get(name='Dept_Head')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                if newEmployee:
+                    print("new emplyee created.")
+            elif (role == 'store_manager'):
+                new_group = Group.objects.get(name='Store_Manager')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                if newEmployee:
+                    print("new emplyee created.")
+            print('successfully added new user')
+        else:
+            print("some error happend")
         return redirect('manage-employee')
-    return render(request,'Admin/ManageEmployee/index.html')
+    return render(request,'Admin/ManageEmployee/index.html', context)
 
 def add_new_employee(request):
     return render(request,'Admin/ManageEmployee/add_new_employee.html')
