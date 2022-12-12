@@ -65,12 +65,15 @@ def add_new_employee(request):
 #----------------- DEPARTMENTS ---------------#
 
 def departments(request):
-    return render(request,'Admin/Departments/index.html')
+    all_depts = department.objects.all()
+    context={
+        'all_dept': all_depts
+    }
+    return render(request,'Admin/Departments/index.html', context)
 
 def add_new_department(request):
     DeptHead = employ.objects.filter(role = 'Dept_Head')
-    for emp in DeptHead:
-        print("here", emp.Full_Name )
+    
     context = {
         "departmentHeads" : DeptHead
     }
@@ -80,7 +83,10 @@ def add_new_department(request):
         departmentHead = request.POST.get('departmentHead')
 
         dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription,departmentHead=departmentHead)
+        if dept:
+            print("successfully added new department")
         return redirect('departments')
+
     return render(request,'Admin/Departments/add_new_department.html', context)
 
 def department_details(request):

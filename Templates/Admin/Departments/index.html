@@ -32,112 +32,37 @@
     </div>
     <div class="row">
       <!--  -->
+      {% for depts in all_dept %}
       <div class="col-xxl-3 col-md-6 col-sm-6">
         <a href="{% url 'department-details' %}">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h5 class="card-title">ERP</h5>
+              <h5 style="color: black" class="card-title">
+                {{depts.departmentName}}
+              </h5>
 
               <div class="d-flex align-items-center">
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                  <i class="bi bi-pc-display-horizontal"></i>
+                  <i
+                    style="color: black"
+                    class="bi bi-pc-display-horizontal"
+                  ></i>
                 </div>
                 <div class="ps-3">
-                  <h6>Mr. Biniyam</h6>
-                  <span class="text-success small pt-1 fw-bold">9</span>
-                  <span class="text-muted small pt-2 ps-1"> members</span>
+                  <h6 style="color: black">{{ depts.departmentHead }}</h6>
+                  <span class="text-muted small pt-2 ps-1"
+                    >{{depts.departmentDescription}}</span
+                  >
                 </div>
               </div>
             </div>
           </div>
         </a>
       </div>
+      {% endfor %}
       <!--  -->
-      <div class="col-xxl-3 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">eDirr</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-cpu"></i>
-              </div>
-              <div class="ps-3">
-                <h6>Mr.</h6>
-                <span class="text-success pt-1 fw-bold">12</span>
-                <span class="text-muted pt-2 ps-1"> members</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--  -->
-      <div class="col-xxl-3 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">eLearning</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-calendar3"></i>
-              </div>
-              <div class="ps-3">
-                <h6>Mr.</h6>
-                <span class="text-success small pt-1 fw-bold">16</span>
-                <span class="text-muted small pt-2 ps-1"> members</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xxl-3 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Remote Sensing</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-dpad"></i>
-              </div>
-              <div class="ps-3">
-                <h6>Mr.</h6>
-                <span class="text-success small pt-1 fw-bold">9</span>
-                <span class="text-muted small pt-2 ps-1"> members</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xxl-3 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Cloud Computing</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-cloud"></i>
-              </div>
-              <div class="ps-3">
-                <h6>Mr.</h6>
-                <span class="text-success small pt-1 fw-bold">7</span>
-                <span class="text-muted small pt-2 ps-1"> members</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!--  -->
     </div>
