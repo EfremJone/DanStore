@@ -32,15 +32,17 @@
               >
                 Add New Employees to the system
               </h3>
-              <form>
+              <form action="manage-employee" method="post">
+                {% csrf_token %}
                 <div class="row mb-3" style="margin: 10px">
                   <div class="col-lg-6">
                     <div class="form-floating m-3">
                       <input
                         type="text"
                         class="form-control"
+                        name="firstName"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="first name"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -54,7 +56,8 @@
                         type="text"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        name="userName"
+                        placeholder="user name"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -67,8 +70,9 @@
                       <input
                         type="password"
                         class="form-control"
+                        name="temporaryPassword"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="temporary password"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -88,9 +92,9 @@
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="gridRadios"
+                            name="gender"
                             id="gridRadios1"
-                            value="option1"
+                            value="male"
                             checked
                           />
                           <label class="form-check-label" for="gridRadios1">
@@ -101,9 +105,9 @@
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="gridRadios"
+                            name="gender"
                             id="gridRadios2"
-                            value="option2"
+                            value="female"
                           />
                           <label class="form-check-label" for="gridRadios2">
                             <span>Female</span>
@@ -118,7 +122,8 @@
                         type="text"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        name="lastName"
+                        placeholder="last name"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -132,7 +137,8 @@
                         type="email"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        name="email"
+                        placeholder="email"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -142,10 +148,11 @@
                     </div>
                     <div class="form-floating m-3">
                       <input
-                        type="text"
+                        type="password"
                         class="form-control"
+                        name="temporaryPasswordConfirm"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="password confirmation"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -158,14 +165,15 @@
                       <select
                         class="form-select"
                         id="floatingSelect"
+                        name="role"
                         aria-label="Floating label select example"
                       >
                         <option>Role of Employee</option>
-                        <option value="1">Adimn</option>
-                        <option value="2">Department Head</option>
-                        <option value="3">Employee</option>
-                        <option value="4">Finance</option>
-                        <option value="5">Store Manager</option>
+                        <option value="admin">Adimn</option>
+                        <option value="department head">Department Head</option>
+                        <option value="employee">Employee</option>
+                        <option value="finance">Finance</option>
+                        <option value="store manager">Store Manager</option>
                       </select>
                     </div>
                   </div>

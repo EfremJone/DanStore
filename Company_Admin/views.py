@@ -8,6 +8,17 @@ def home(request):
 
 #----------------- MANAGE EMPLOYEE ---------------#
 def manage_employee(request):
+    if request.method == 'POST':
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        userName = request.POST.get('userName')
+        temporaryPassword = request.POST.get('temporaryPassword')
+        temporaryPasswordConfirm = request.POST.get('temporaryPasswordConfirm')
+        gender = request.POST.get('gender')
+        email = request.POST.get('email')
+        role = request.POST.get('role')
+        print("data: first name:",firstName," last name: ",lastName," user name: ", userName, " temp pass: ", temporaryPassword, " temporary pass con: ", temporaryPasswordConfirm," gender: ",gender, " email: ", email," role: ",role )
+        return redirect('manage-employee')
     return render(request,'Admin/ManageEmployee/index.html')
 
 def add_new_employee(request):
