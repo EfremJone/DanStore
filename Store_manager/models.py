@@ -98,3 +98,10 @@ class chatbot(models.Model):
     checked=models.BooleanField(default=False)
     def __str__(self):
         return str(self.date)
+
+class department(models.Model):
+    departmentName = models.CharField(max_length=100, null=False)
+    departmentDescription = models.TextField(max_length=500, null=False)
+    departmentHead = models.CharField(max_length=40, null=False)
+    def __str__(self) -> str:
+        return str(self.departmentName)

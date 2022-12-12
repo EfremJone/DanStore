@@ -32,7 +32,8 @@
               >
                 Add New Department
               </h3>
-              <form>
+              <form action="add-new-department" method="post">
+                {% csrf_token %}
                 <div class="row mb-3" style="margin: 10px">
                   <div class="col-lg-6">
                     <div class="form-floating m-3">
@@ -40,7 +41,8 @@
                         type="text"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        name="departmentName"
+                        placeholder="department name"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -55,6 +57,7 @@
                           class="form-control"
                           placeholder="Address"
                           id="floatingTextarea"
+                          name="departmentDescription"
                           style="height: 100px"
                         ></textarea>
                         <label style="color: black" for="floatingTextarea"
@@ -67,31 +70,18 @@
                     <div class="form-floating m-3">
                       <select
                         class="form-select"
+                        name="departmentHead"
                         id="floatingSelect"
                         aria-label="Floating label select example"
                       >
                         <option>Head of Department</option>
-                        <option value="1">Head 1</option>
-                        <option value="2">Head 2</option>
-                        <option value="3">Head 3</option>
-                        <option value="4">Head 4</option>
-                        <option value="5">Head 5</option>
+                        {% for depthead in departmentHeads %}
+                        <option value="{{depthead.Full_Name}}">
+                          {{depthead.Full_Name}}
+                        </option>
+                        {% endfor %}
                       </select>
                     </div>
-                    <!-- <div class="form-floating m-3">
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="floatingInput"
-                        placeholder=""
-                      />
-                      <label for="floatingInput" style="color: black"
-                        ><span
-                          ><i class="bi bi-person-circle"></i> Number of
-                          Memebers</span
-                        ></label
-                      >
-                    </div> -->
                   </div>
                 </div>
                 <div class="row">

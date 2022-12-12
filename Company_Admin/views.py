@@ -32,19 +32,19 @@ def manage_employee(request):
         # print("data: first name:",firstName," last name: ",lastName," user name: ", userName, " temp pass: ", temporaryPassword, " temporary pass con: ", temporaryPasswordConfirm," gender: ",gender, " email: ", email," role: ",role )
         user= User.objects.create(first_name=firstName,last_name=lastName,username= userName,password=temporaryPassword,email=email,)
         if user:
-            if role == 'admin':
+            if role == 'Company_Admin':
                 new_group = Group.objects.get(name='Company_Admin')
                 new_group.user_set.add(user)
                 newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
                 if newEmployee:
                     print("new emplyee created.")
-            elif (role == 'department_head'):
+            elif (role == 'Dept_Head'):
                 new_group = Group.objects.get(name='Dept_Head')
                 new_group.user_set.add(user)
                 newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
                 if newEmployee:
                     print("new emplyee created.")
-            elif (role == 'store_manager'):
+            elif (role == 'Store_Manager'):
                 new_group = Group.objects.get(name='Store_Manager')
                 new_group.user_set.add(user)
                 newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
@@ -68,7 +68,20 @@ def departments(request):
     return render(request,'Admin/Departments/index.html')
 
 def add_new_department(request):
-    return render(request,'Admin/Departments/add_new_department.html')
+    DeptHead = employ.objects.filter(role = 'Dept_Head')
+    for emp in DeptHead:
+        print("here", emp.Full_Name )
+    context = {
+        "departmentHeads" : DeptHead
+    }
+    if request.method == 'POST':
+        departmentName = request.POST.get('departmentName')
+        departmentDescription = request.POST.get('departmentDescription')
+        departmentHead = request.POST.get('departmentHead')
+
+        dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription,departmentHead=departmentHead)
+        return redirect('departments')
+    return render(request,'Admin/Departments/add_new_department.html', context)
 
 def department_details(request):
     return render(request,'Admin/Departments/department_details.html')
