@@ -41,50 +41,26 @@
                 <th scope="col">Products</th>
                 <th scope="col">Origin</th>
                 <th scope="col">Type</th>
-                <th scope="col">Start Date</th>
+                <th scope="col">Added Date</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
+              {% for eachVendor in allVendors %}
               <tr>
-                <th scope="row">1</th>
-                <td>Hewlett-Packard</td>
-                <td>Computers</td>
-                <td>America</td>
-                <td>Electronics</td>
-                <td>2016-05-25</td>
+                <th scope="row">{{eachVendor.vendorCode}}</th>
+                <td>{{eachVendor.vendorName}}</td>
+                <td>{{eachVendor.vendorProducts}}</td>
+                <td>{{eachVendor.vendorOrigin}}</td>
+                <td>{{eachVendor.vendorType}}</td>
+                <td>{{eachVendor.vendorAdded}}</td>
+                <td>
+                  <button class="btn sm btn-outline-secondary">
+                    Details
+                  </button>
+                </td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Cisco Networking</td>
-                <td>Networking Eq.</td>
-                <td>America</td>
-                <td>Electronics</td>
-                <td>2014-12-05</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Ashleigh Langosh</td>
-                <td>Finance</td>
-                <td>45</td>
-                <td>Electronics</td>
-                <td>2011-08-12</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Angus Grady</td>
-                <td>HR</td>
-                <td>34</td>
-                <td>Electronics</td>
-                <td>2012-06-11</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>Raheem Lehner</td>
-                <td>Dynamic Division Officer</td>
-                <td>47</td>
-                <td>Electronics</td>
-                <td>2011-04-19</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

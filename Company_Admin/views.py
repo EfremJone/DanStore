@@ -97,9 +97,26 @@ def department_details(request):
 
 #----------------- VENDORS ---------------#
 def vendors(request):
-    return render(request,'Admin/Vendors/index.html')
+    allVendors = vendor.objects.all()
+    context = {
+        'allVendors': allVendors
+    }
+    return render(request,'Admin/Vendors/index.html',context)
 
 def add_new_vendor(request):
+
+    if request.method == 'POST':
+        # vendorCode = request.POST.get('vendorCode')
+        vendorName = request.POST.get('vendorName')
+        vendorProducts = request.POST.get('vendorProducts')
+        vendorOrigin = request.POST.get('vendorOrigin')
+        vendorType = request.POST.get('vendorType')
+
+        ven = vendor.objects.create(vendorName=vendorName,vendorProducts=vendorProducts,vendorOrigin=vendorOrigin,vendorType=vendorType)
+        if ven:
+            print('successfully added new vendor.')
+        return redirect('vendors')
+
     return render(request, 'Admin/Vendors/add_new_vendor.html')
 
 #----------------- END of VENDORS ---------------#

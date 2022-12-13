@@ -105,3 +105,13 @@ class department(models.Model):
     departmentHead = models.CharField(max_length=40, null=False)
     def __str__(self) -> str:
         return str(self.departmentName)
+
+class vendor(models.Model):
+    vendorCode = models.AutoField(primary_key=True)
+    vendorName = models.CharField(max_length=300,null=False)
+    vendorProducts = models.CharField(max_length=300, null=False)
+    vendorOrigin = models.CharField(max_length=300,null=False)
+    vendorType = models.CharField(max_length=300,null=False)
+    vendorAdded = models.DateField(auto_now_add=True)
+    def __str__(self) -> str:
+        return str(self.vendorName)

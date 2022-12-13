@@ -12,7 +12,7 @@ admin.site.register(form2permanent)
 admin.site.register(chatbot)
 admin.site.register(employ)
 admin.site.register(department)
-
+admin.site.register(vendor)
 
 
 
