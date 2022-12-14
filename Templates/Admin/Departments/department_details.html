@@ -28,15 +28,16 @@
                 margin: 20px;
               "
             >
-              ERP
+              {{selectedDepartment.departmentName}}
             </h1>
             <span style="color: rgb(41, 213, 41)"
-              >Enterprise Resource Planning</span
+              >{{selectedDepartment.departmentName}}</span
             >
-            is dedicated to adipisicing elit. Eligendi impedit est sint expedita
-            perspiciatis animi sequi odio quae iure repellendus?
-            <h3 style="margin: 20px 0">Department Head : Mr. Biniyam</h3>
-            <h4>Members of ERP</h4>
+            {{selectedDepartment.departmentDescription}}
+            <h3 style="margin: 20px 0">
+              Department Head : {{selectedDepartment.departmentHead}}
+            </h3>
+            <h4>Members of {{selectedDepartment.departmentName}}</h4>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -62,34 +63,6 @@
                   <td>America</td>
                   <td>2014-12-05</td>
                 </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Shewit G/yesus</td>
-                  <td>Finance</td>
-                  <td>45</td>
-                  <td>2011-08-12</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Samuel Embibel</td>
-                  <td>Networking Eq.</td>
-                  <td>America</td>
-                  <td>2014-12-05</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Samuel Embibel</td>
-                  <td>Networking Eq.</td>
-                  <td>America</td>
-                  <td>2014-12-05</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Samuel Embibel</td>
-                  <td>Networking Eq.</td>
-                  <td>America</td>
-                  <td>2014-12-05</td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -106,7 +79,12 @@
                 <label for="inputNanme4" class="form-label"
                   ><span>Department Name</span></label
                 >
-                <input type="text" class="form-control" id="inputNanme4" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNanme4"
+                  placeholder="{{selectedDepartment.departmentName}}"
+                />
                 <div style="display: flex; justify-content: flex-end">
                   <button
                     style="margin: 10px"
@@ -115,15 +93,6 @@
                   >
                     Update
                   </button>
-                  <!-- <button
-                    style="margin: 10px"
-                    type="button"
-                    class="btn btn-outline-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verticalycentered"
-                  >
-                    Delete
-                  </button> -->
                 </div>
               </div>
             </div>

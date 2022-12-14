@@ -55,9 +55,11 @@
                 <td>{{eachVendor.vendorType}}</td>
                 <td>{{eachVendor.vendorAdded}}</td>
                 <td>
-                  <button class="btn sm btn-outline-secondary">
-                    Details
-                  </button>
+                  <a
+                    href="{% url 'vendor-detail' eachVendor.pk %}"
+                    class="btn btn-outline-secondary"
+                    >Details</a
+                  >
                 </td>
               </tr>
               {% endfor %}

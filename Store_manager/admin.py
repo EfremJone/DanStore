@@ -13,6 +13,6 @@ admin.site.register(chatbot)
 admin.site.register(employ)
 admin.site.register(department)
 admin.site.register(vendor)
-
+admin.site.register(role)
 
 

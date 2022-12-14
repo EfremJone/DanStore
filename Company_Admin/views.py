@@ -89,8 +89,12 @@ def add_new_department(request):
 
     return render(request,'Admin/Departments/add_new_department.html', context)
 
-def department_details(request):
-    return render(request,'Admin/Departments/department_details.html')
+def department_details(request,id):
+    selectedDepartment = department.objects.get(pk=id)
+    context={
+        'selectedDepartment': selectedDepartment
+    }
+    return render(request,'Admin/Departments/department_details.html', context)
 
 #----------------- END of Departments ---------------#
 
@@ -102,6 +106,13 @@ def vendors(request):
         'allVendors': allVendors
     }
     return render(request,'Admin/Vendors/index.html',context)
+
+def vendor_detail(request,id):
+    selectedVendor = vendor.objects.get(pk=id)
+    context = {
+        'selectedVendor': selectedVendor
+    }
+    return render(request,'Admin/Vendors/vendor_details.html',context)
 
 def add_new_vendor(request):
 
@@ -124,6 +135,8 @@ def add_new_vendor(request):
 #----------------- ROLE ---------------#
 
 def role(request):
+    allRoles = role.objects.all()
+    
     return render(request,'Admin/Role/index.html')
 
 def add_new_role(request):

@@ -12,11 +12,13 @@ urlpatterns = [
     # DEPARTMENT
     path('departments', views.departments, name='departments'),
     path('add-new-department',views.add_new_department,name='add-new-department'),
-    path('department-details',views.department_details,name='department-details'),
+    path('department-details/<int:id>',views.department_details,name='department-details'),
 
     # Vendors
     path('vendors', views.vendors, name='vendors'),
     path('add-new-vendor',views.add_new_vendor,name='add-new-vendor'),
+    path('vendor-detail/<int:id>', views.vendor_detail, name='vendor-detail'),
+
     
     # Role
     path('role', views.role, name='role'),
