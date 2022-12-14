@@ -157,10 +157,14 @@ def role_details(request,id):
 
 #----------------- STORE ---------------#
 def store(request):
-    return render(request,'Admin/Store/index.html')
+    stores = allStore.objects.all()
+    context ={
+        'stores': stores
+    }
+    return render(request,'Admin/Store/index.html', context)
 
-def store_details(request):
-    all_category = Catagory.objects.all()
+def store_details(request,id):
+    all_category = Catagory.objects.filter(store=id)
     context = {
         'all_category': all_category
     }
@@ -179,8 +183,7 @@ def add_new_store(request):
         storeKeeper = request.POST.get('storeKeeper')
         storeLocation = request.POST.get('storeLocation')
 
-        #print("sName:",storeName," sDesc:",storeDescription," sKeeper: ", storeKeeper," sLoca: ",storeLocation)
-        
+
         addedStore = allStore.objects.create(storeName=storeName,storeDescription=storeDescription,storeKeeper=storeKeeper,storeLocation=storeLocation)
         if addedStore:
             return redirect('store')

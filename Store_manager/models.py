@@ -2,9 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+class allStore(models.Model):
+    storeName= models.CharField(max_length=300,null=False, blank=False)
+    storeDescription = models.TextField(null=False,blank=False)
+    storeKeeper = models.CharField(max_length=300,null=False,blank=False)
+    storeLocation = models.TextField(null=False,blank=False)
+    def __str__(self) -> str:
+        return str(self.storeName)
+        
 class Catagory(models.Model):
     Catagory_Name = models.CharField(max_length=200, null=True, blank=True)
-    
+    store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     def __str__(self):
         return str(self.Catagory_Name)
 
@@ -124,10 +132,3 @@ class allRole(models.Model):
     def __str__(self)-> str:
         return str(self.roleName)
 
-class allStore(models.Model):
-    storeName= models.CharField(max_length=300,null=False, blank=False)
-    storeDescription = models.TextField(null=False,blank=False)
-    storeKeeper = models.CharField(max_length=300,null=False,blank=False)
-    storeLocation = models.TextField(null=False,blank=False)
-    def __str__(self) -> str:
-        return str(self.storeName)
