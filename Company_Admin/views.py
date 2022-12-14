@@ -135,15 +135,22 @@ def add_new_vendor(request):
 #----------------- ROLE ---------------#
 
 def role(request):
-    allRoles = role.objects.all()
     
-    return render(request,'Admin/Role/index.html')
+    allRoles = allRole.objects.all()
+    context={
+        'allRoles': allRoles
+    }
+    return render(request,'Admin/Role/index.html',context)
 
 def add_new_role(request):
     return render(request, 'Admin/Role/add_new_role.html')
 
-def role_details(request):
-    return render(request, 'Admin/Role/role_details.html')
+def role_details(request,id):
+    selectedRole = allRole.objects.get(pk=id)
+    context={
+        'selectedRole': selectedRole
+    }
+    return render(request, 'Admin/Role/role_details.html',context)
 
 #----------------- END of ROLE ---------------#
 
@@ -161,7 +168,21 @@ def store_details(request):
     return render(request,"Admin/Store/store_detail.html", context)
 
 def add_new_store(request):
-    return render(request, 'Admin/Store/add_new_store.html')
+    storeKeepers = employ.objects.filter(role = 'Store_Manager')
+    context={
+        'storeKeepers': storeKeepers
+    }
+
+    if request.method == 'POST':
+        storeName = request.POST.get('storeName')
+        storeDescription = request.POST.get('storeDescription')
+        storeKeeper = request.POST.get('storeKeeper')
+        storeLocation = request.POST.get('storeLocation')
+
+        print("sName:",storeName," sDesc:",storeDescription," sKeeper: ", storeKeeper," sLoca: ",storeLocation)
+        # addedStore = store.objects
+
+    return render(request, 'Admin/Store/add_new_store.html', context)
 
 def cat_item_detail(request,id):
     category = Catagory.objects.get(pk=id)

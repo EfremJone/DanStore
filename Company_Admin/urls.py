@@ -23,7 +23,7 @@ urlpatterns = [
     # Role
     path('role', views.role, name='role'),
     path('add-new-role',views.add_new_role,name='add-new-role'),
-    path('role-details',views.role_details,name='role-details'),
+    path('role-details/<int:id>',views.role_details,name='role-details'),
 
     # Store
     path('store', views.store, name='store'),

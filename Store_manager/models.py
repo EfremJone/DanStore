@@ -117,8 +117,17 @@ class vendor(models.Model):
     def __str__(self) -> str:
         return str(self.vendorName)
 
-class role(models.Model):
+class allRole(models.Model):
     roleName = models.CharField(max_length=100,null=False)
-    roleMembers = models.IntegerField(max_length=100,null=False)
+    roleMembers = models.IntegerField(null=False, blank=False)
+    roleDetails = models.TextField(null=True,blank=True)
     def __str__(self)-> str:
         return str(self.roleName)
+
+class store(models.Model):
+    storeName= models.CharField(max_length=300,null=False, blank=False)
+    storeDescription = models.TextField(null=False,blank=False)
+    storeKeeper = models.CharField(max_length=300,null=False,blank=False)
+    storeLocation = models.TextField(null=False,blank=False)
+    def __str__(self) -> str:
+        return __str__(self.storeName)
