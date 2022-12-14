@@ -179,9 +179,12 @@ def add_new_store(request):
         storeKeeper = request.POST.get('storeKeeper')
         storeLocation = request.POST.get('storeLocation')
 
-        print("sName:",storeName," sDesc:",storeDescription," sKeeper: ", storeKeeper," sLoca: ",storeLocation)
-        # addedStore = store.objects
-
+        #print("sName:",storeName," sDesc:",storeDescription," sKeeper: ", storeKeeper," sLoca: ",storeLocation)
+        
+        addedStore = allStore.objects.create(storeName=storeName,storeDescription=storeDescription,storeKeeper=storeKeeper,storeLocation=storeLocation)
+        if addedStore:
+            return redirect('store')
+        
     return render(request, 'Admin/Store/add_new_store.html', context)
 
 def cat_item_detail(request,id):

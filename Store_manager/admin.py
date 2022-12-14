@@ -14,6 +14,6 @@ admin.site.register(employ)
 admin.site.register(department)
 admin.site.register(vendor)
 admin.site.register(allRole)
-admin.site.register(store)
+admin.site.register(allStore)
 
 
