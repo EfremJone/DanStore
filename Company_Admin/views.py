@@ -88,6 +88,12 @@ def add_new_employee(request):
 #----------------- DEPARTMENTS ---------------#
 
 def departments(request):
+
+    if request.method == 'POST':
+        deptId = request.POST.get('deptId')
+
+        print("this is going to be deleted.", deptId)
+
     all_depts = department.objects.all()
     context={
         'all_dept': all_depts
@@ -127,6 +133,12 @@ def department_details(request,id):
         'members': memebers
     }
     return render(request,'Admin/Departments/department_details.html', context)
+
+def department_delete(request,id):
+    tobedeleted = department.objects.filter(pk=id).delete()
+    if tobedeleted:
+        print("successfully deleted the department")
+        return redirect('departments')
 
 #----------------- END of Departments ---------------#
 

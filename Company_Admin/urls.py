@@ -30,6 +30,7 @@ urlpatterns = [
     path('store-details/<int:id>', views.store_details, name='store-details'),
     path('add-new-store',views.add_new_store,name='add-new-store'),
     path('cat-item-detail/<int:id>',views.cat_item_detail,name='cat-item-detail'),
+    path('department-delete/<int:id>',views.department_delete,name='department-delete'),
 
     # 
     path('reports', views.reports, name='reports'),
