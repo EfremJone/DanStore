@@ -6,7 +6,18 @@ from django.contrib.auth.models import User, Group
 # Create your views here.
 
 def home(request):
-    return render(request,'Admin/Dashboard/index.html')
+    cate = Catagory.objects.all()
+    vend = vendor.objects.all()
+    dept = department.objects.all()
+    cateLength = cate.__len__()
+    vendLenth = vend.__len__()
+    deptLength = dept.__len__()
+    context={
+        'cateLength': cateLength,
+        'vendLength': vendLenth,
+        'deptLength': deptLength
+    }
+    return render(request,'Admin/Dashboard/index.html',context)
 
 def user_profile(request):
     return render(request,'Admin/EditProfile/show_profile.html')
@@ -165,8 +176,11 @@ def store(request):
 
 def store_details(request,id):
     all_category = Catagory.objects.filter(store=id)
+    all_category.storeId = id
+    print('category are: ',all_category.storeId)
     context = {
-        'all_category': all_category
+        'all_category': all_category,
+        'storeId':id
     }
     print(all_category)
     return render(request,"Admin/Store/store_detail.html", context)
