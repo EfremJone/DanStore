@@ -8,4 +8,10 @@ urlpatterns = [
     path('',include("account.urls") ),
     path('comp-admin/',include("Company_Admin.urls")),
     path('Store_Manager/',include("Store_manager.urls")),
+    path('report/',include("report.urls")),
+    path('department_head/',include("Department_Head.urls")),
+    path('Employer/',include("Employer.urls")),
+
+    
+    
 ] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
      "Company_Admin",
      'account',
      "Store_manager",
+     "report",
 ]
 
 MIDDLEWARE = [

@@ -284,8 +284,26 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
 def chat(request):
-   
+    chat_team=[]
+    chat_team1=[]
     chat_group=employ.objects.all()
+    # all_chat_team=chatbot.objects.filter()
+    user=User.objects.get(pk=request.user.id)
+    me=employ.objects.get(user=user)
+    all_message=chatbot.objects.filter(Q(me_with=me) | Q(me=me))
+    # result = any(item in test_list for item in test_list)
+    for team in all_message:
+        if (Q(team.me_with) | Q(team.me))  in chat_team:
+            pass
+        else:
+            chat_team.append(team.me_with)
+            
+
+    print("--------------")
+    for a in chat_team:
+        chat_group1=employ.objects.get(pk=a.id)
+    print(chat_group1)
+    print("--------------")
     if request.method == 'POST':
         user=request.POST.get('serach')
         serch=User.objects.get(username=user)
@@ -293,7 +311,7 @@ def chat(request):
    
         context={
             
-            'chat_group1':chat_group1,
+            'chat_group1':chat_group,
         }
         return render(request,'Store_manager/chat/index1.html',context)
 
