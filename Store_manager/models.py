@@ -2,9 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+class allStore(models.Model):
+    storeName= models.CharField(max_length=300,null=False, blank=False)
+    storeDescription = models.TextField(null=False,blank=False)
+    storeKeeper = models.CharField(max_length=300,null=False,blank=False)
+    storeLocation = models.TextField(null=False,blank=False)
+    def __str__(self) -> str:
+        return str(self.storeName)
+        
 class Catagory(models.Model):
     Catagory_Name = models.CharField(max_length=200, null=True, blank=True)
-    
+    store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     def __str__(self):
         return str(self.Catagory_Name)
 
@@ -74,11 +82,30 @@ class form2permanent(models.Model):
 class student(models.Model):
     name=models.CharField(max_length=20,null=True,blank=True)
 
+class department(models.Model):
+    departmentName = models.CharField(max_length=100, null=False)
+    departmentDescription = models.TextField(max_length=500, null=False)
+    departmentHead = models.CharField(max_length=40, null=False)
+    def __str__(self) -> str:
+        return str(self.departmentName)
+
 class employ(models.Model):
     user=models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
+    role= models.CharField(max_length=200,null=True,blank=True)
     profile_pic=models.ImageField(null=True,blank=True, upload_to='Profile/')
+    Full_Name=models.CharField(max_length=300, null=True)
+    gender = models.CharField(max_length=20,null=True,blank=True)
+    phone1 = models.CharField(max_length=200, null=True)
+    phone2 = models.CharField(max_length=200, null=True)
+    facebook = models.CharField(max_length=200, null=True,blank=True)
+    telegram = models.CharField(max_length=200, null=True,blank=True)
+    instagram = models.CharField(max_length=200, null=True,blank=True)
+    about = models.TextField(max_length=500, null=True)
+    address = models.CharField(max_length=200, null=True)
+    inDepartment = models.ForeignKey(department,max_length=300,null=True,on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):
-        return str(self.id)
+        return str(self.user)
 class chatbot(models.Model):
     me_with=models.ForeignKey(employ,null=True,blank=True, on_delete=models.CASCADE)
     me=models.CharField(max_length=200,null=True,blank=True)
@@ -87,3 +114,23 @@ class chatbot(models.Model):
     checked=models.BooleanField(default=False)
     def __str__(self):
         return str(self.date)
+
+
+
+class vendor(models.Model):
+    vendorCode = models.AutoField(primary_key=True)
+    vendorName = models.CharField(max_length=300,null=False)
+    vendorProducts = models.CharField(max_length=300, null=False)
+    vendorOrigin = models.CharField(max_length=300,null=False)
+    vendorType = models.CharField(max_length=300,null=False)
+    vendorAdded = models.DateField(auto_now_add=True)
+    def __str__(self) -> str:
+        return str(self.vendorName)
+
+class allRole(models.Model):
+    roleName = models.CharField(max_length=100,null=False)
+    roleMembers = models.IntegerField(null=False, blank=False)
+    roleDetails = models.TextField(null=True,blank=True)
+    def __str__(self)-> str:
+        return str(self.roleName)
+

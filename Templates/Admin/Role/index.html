@@ -32,11 +32,14 @@
     </div>
     <div class="row">
       <!--  -->
+      {% for eachRole in allRoles %}
       <div class="col-xxl-4 col-md-6 col-sm-6">
-        <a href="{% url 'role-details' %}">
+        <a href="{% url 'role-details' eachRole.pk %}">
           <div class="card info-card sales-card">
             <div class="card-body">
-              <h5 class="card-title" style="color: black">Administrator</h5>
+              <h5 class="card-title" style="color: black">
+                {{eachRole.roleName}}
+              </h5>
 
               <div class="d-flex align-items-center">
                 <div
@@ -45,7 +48,9 @@
                   <i class="bi bi-person-lines-fill"></i>
                 </div>
                 <div class="ps-3">
-                  <span class="text-success small pt-1 fw-bold">2</span>
+                  <span class="text-success small pt-1 fw-bold"
+                    >{{eachRole.roleMembers}}</span
+                  >
                   <span class="text-muted small pt-2 ps-1"> admins</span>
                 </div>
               </div>
@@ -53,87 +58,7 @@
           </div>
         </a>
       </div>
-      <!--  -->
-      <div class="col-xxl-4 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Finance</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-cash"></i>
-              </div>
-              <div class="ps-3">
-                <span class="text-success pt-1 fw-bold">4</span>
-                <span class="text-muted pt-2 ps-1"> finance</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--  -->
-      <div class="col-xxl-4 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Store Manager</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-file-earmark-person"></i>
-              </div>
-              <div class="ps-3">
-                <span class="text-success small pt-1 fw-bold">1</span>
-                <span class="text-muted small pt-2 ps-1"> manager</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xxl-4 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Department Head</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-person-bounding-box"></i>
-              </div>
-              <div class="ps-3">
-                <span class="text-success small pt-1 fw-bold">16</span>
-                <span class="text-muted small pt-2 ps-1"> heads</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xxl-4 col-md-6 col-sm-6">
-        <div class="card info-card sales-card">
-          <div class="card-body">
-            <h5 class="card-title">Employee</h5>
-
-            <div class="d-flex align-items-center">
-              <div
-                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-              >
-                <i class="bi bi-person-badge"></i>
-              </div>
-              <div class="ps-3">
-                <span class="text-success small pt-1 fw-bold">342</span>
-                <span class="text-muted small pt-2 ps-1"> employees</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {% endfor %}
       <!--  -->
     </div>
   </section>

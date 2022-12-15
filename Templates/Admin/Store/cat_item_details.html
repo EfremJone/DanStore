@@ -10,7 +10,9 @@
         </li>
         <li class="breadcrumb-item"><a href="{% url 'store' %}">Store</a></li>
         <li class="breadcrumb-item">
-          <a href="{% url 'store-details' %}">Store Details</a>
+          <a href="{% url 'store-details' category.store.id %}"
+            >Store details</a
+          >
         </li>
         <li class="breadcrumb-item">Items in Categories</li>
       </ol>
