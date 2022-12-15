@@ -61,6 +61,18 @@ def manage_employee(request):
                 newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
                 if newEmployee:
                     print("new emplyee created.")
+            elif(role == 'Employee'):
+                new_group = Group.objects.get(name='Employee')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                if newEmployee:
+                    print("new employee created.")
+            elif(role == 'Finance'):
+                new_group = Group.objects.get(name='Finance')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                if newEmployee:
+                    print("new employee created.")
             print('successfully added new user')
         else:
             print("some error happend")
@@ -80,6 +92,7 @@ def departments(request):
     context={
         'all_dept': all_depts
     }
+    
     return render(request,'Admin/Departments/index.html', context)
 
 def add_new_department(request):
@@ -101,9 +114,17 @@ def add_new_department(request):
     return render(request,'Admin/Departments/add_new_department.html', context)
 
 def department_details(request,id):
+    if request.method == 'POST':
+        updatedDepartmentName = request.POST.get('updatedDepartmentName')
+        departmentId = request.POST.get('departmentId')
+        toBeUpdate = department.objects.filter(id=departmentId).update(departmentName=updatedDepartmentName)
+        if toBeUpdate:
+            print("successfully updated the department Name")
     selectedDepartment = department.objects.get(pk=id)
+    memebers = employ.objects.filter(inDepartment = selectedDepartment.id)
     context={
-        'selectedDepartment': selectedDepartment
+        'selectedDepartment': selectedDepartment,
+        'members': memebers
     }
     return render(request,'Admin/Departments/department_details.html', context)
 

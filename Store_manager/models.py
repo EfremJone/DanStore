@@ -82,6 +82,13 @@ class form2permanent(models.Model):
 class student(models.Model):
     name=models.CharField(max_length=20,null=True,blank=True)
 
+class department(models.Model):
+    departmentName = models.CharField(max_length=100, null=False)
+    departmentDescription = models.TextField(max_length=500, null=False)
+    departmentHead = models.CharField(max_length=40, null=False)
+    def __str__(self) -> str:
+        return str(self.departmentName)
+
 class employ(models.Model):
     user=models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
     role= models.CharField(max_length=200,null=True,blank=True)
@@ -95,7 +102,7 @@ class employ(models.Model):
     instagram = models.CharField(max_length=200, null=True,blank=True)
     about = models.TextField(max_length=500, null=True)
     address = models.CharField(max_length=200, null=True)
-    departments = models.CharField(max_length=300,null=True)
+    inDepartment = models.ForeignKey(department,max_length=300,null=True,on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):
         return str(self.user)
@@ -108,12 +115,7 @@ class chatbot(models.Model):
     def __str__(self):
         return str(self.date)
 
-class department(models.Model):
-    departmentName = models.CharField(max_length=100, null=False)
-    departmentDescription = models.TextField(max_length=500, null=False)
-    departmentHead = models.CharField(max_length=40, null=False)
-    def __str__(self) -> str:
-        return str(self.departmentName)
+
 
 class vendor(models.Model):
     vendorCode = models.AutoField(primary_key=True)
