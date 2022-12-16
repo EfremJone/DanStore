@@ -32,7 +32,8 @@
               >
                 Add New Vendor
               </h3>
-              <form>
+              <form action="add-new-vendor" method="post">
+                {% csrf_token %}
                 <div class="row mb-3" style="margin: 10px">
                   <div class="col-lg-6">
                     <div class="form-floating m-3">
@@ -40,21 +41,9 @@
                         type="text"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
-                      />
-                      <label for="floatingInput" style="color: black"
-                        ><span
-                          ><i class="bi bi-list-ol"></i> Vendor Code</span
-                        ></label
-                      >
-                    </div>
-
-                    <div class="form-floating m-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="floatingInput"
-                        placeholder="name@example.com"
+                        name="vendorName"
+                        required
+                        placeholder="vendor name"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -65,10 +54,11 @@
 
                     <div class="form-floating m-3">
                       <input
-                        type="password"
+                        type="text"
                         class="form-control"
+                        name="vendorProducts"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="vendor products"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -82,8 +72,9 @@
                       <input
                         type="text"
                         class="form-control"
+                        name="vendorOrigin"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="vendor origin"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -93,15 +84,23 @@
                     </div>
 
                     <div class="form-floating m-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="floatingInput"
-                        placeholder="name@example.com"
-                      />
-                      <label for="floatingInput" style="color: black"
-                        ><span><i class="bi bi-fonts"></i> Type</span></label
+                      <select
+                        class="form-select"
+                        name="vendorType"
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
                       >
+                        <option>Type of Vendor</option>
+                        <option value="Manufacturer">Manufacturer</option>
+                        <option value="Wholesaler">Wholesaler</option>
+                        <option value="Retailer">Retailer</option>
+                        <option value="Service & Maintenance">
+                          Service & Maintenance
+                        </option>
+                        <option value="Independent vendors">
+                          Independent vendors
+                        </option>
+                      </select>
                     </div>
                   </div>
                 </div>

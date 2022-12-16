@@ -32,7 +32,8 @@
               >
                 Add New Store
               </h3>
-              <form>
+              <form action="add-new-store" method="post">
+                {% csrf_token %}
                 <div class="row mb-3" style="margin: 10px">
                   <div class="col-lg-6">
                     <div class="form-floating m-3">
@@ -40,7 +41,8 @@
                         type="text"
                         class="form-control"
                         id="floatingInput"
-                        placeholder="name@example.com"
+                        placeholder="store Name"
+                        name="storeName"
                       />
                       <label for="floatingInput" style="color: black"
                         ><span
@@ -56,6 +58,7 @@
                           placeholder="Address"
                           id="floatingTextarea"
                           style="height: 100px"
+                          name="storeDescription"
                         ></textarea>
                         <label style="color: black" for="floatingTextarea"
                           ><span> Store Description</span></label
@@ -68,27 +71,28 @@
                       <select
                         class="form-select"
                         id="floatingSelect"
+                        name="storeKeeper"
                         aria-label="Floating label select example"
                       >
                         <option>Assigned Store Keeper</option>
-                        <option value="1">Head 1</option>
-                        <option value="2">Head 2</option>
-                        <option value="3">Head 3</option>
-                        <option value="4">Head 4</option>
-                        <option value="5">Head 5</option>
+                        {% for storeKeeper in storeKeepers %}
+                        <option>{{storeKeeper.Full_Name}}</option>
+                        {% endfor %}
                       </select>
                     </div>
                     <div class="form-floating m-3">
-                      <input
-                        type="number"
+                      <textarea
+                        type="text"
                         class="form-control"
                         id="floatingInput"
                         placeholder=""
-                      />
+                        name="storeLocation"
+                        style="height: 100px"
+                      ></textarea>
                       <label for="floatingInput" style="color: black"
                         ><span
-                          ><i class="bi bi-person-circle"></i> Number of
-                          Memebers</span
+                          ><i class="bi bi-person-circle"></i> copy and paste
+                          the iFrame location from google maps.</span
                         ></label
                       >
                     </div>
@@ -101,7 +105,7 @@
                   <div class="col-lg-10"></div>
                   <div class="col-lg-2" style="margin-top: 25px">
                     <button type="submit" class="btn btn-outline-secondary">
-                      Add Department
+                      Add New Store
                     </button>
                   </div>
                 </div>

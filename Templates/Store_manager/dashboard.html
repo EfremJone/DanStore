@@ -16,38 +16,29 @@
 
   <section class="section dashboard">
     <div class="row">
-      <!-- Left side columns -->
-      <div class="col-lg-12">
-        <div class="row">
-          {% for catagory in all_catagory %}
-          <div class="col-xxl-4 col-md-4">
-            <div class="card info-card sales-card">
-              <a href="{% url 'catagory-detail' catagory.id %}">
-                <div class="card-body">
-                  <h5 class="card-title">{{catagory.Catagory_Name}}</h5>
-                  <div class="d-flex align-items-center">
-                    <!-- <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+      {% for catagory in all_catagory %}
+      <div class="col-lg-3 col-md-6" style="margin-top: 20px">
+        <div class="card info-card sales-card newshadow">
+          <a href="{% url 'catagory-detail' catagory.id %}">
+            <div class="card-body">
+              <h5 class="card-title" style="color: black">
+                {{catagory.Catagory_Name}}
+              </h5>
+              <div class="d-flex align-items-center">
+                <!-- <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                         <i class="bi bi-cart"></i>
                       </div> -->
-                    <div class="ps-3">
-                      <h6>
-                        {{catagory.item_set.all.count}}<span
-                          class="text-success small pt-1 fw-bold"
-                        >
-                          Item</span
-                        >
-                      </h6>
-                    </div>
-                  </div>
+                <div class="ps-3">
+                  <span style="color: black">
+                    {{catagory.item_set.all.count}} Item
+                  </span>
                 </div>
-              </a>
+              </div>
             </div>
-          </div>
-          <!-- End Sales Card -->
-          {% endfor %}
+          </a>
         </div>
       </div>
-      <!-- End Left side columns -->
+      {% endfor %}
     </div>
   </section>
 </main>

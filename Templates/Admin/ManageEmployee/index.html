@@ -17,10 +17,14 @@
     <div class="row">
       <div class="col-lg-11" style="display: flex; justify-content: right">
         <div class="d-grid gap-2 m-3">
-          <a href="{% url 'add-new-employee' %}" class="btn btn-outline-secondary btn-lg" type="button">
+          <a
+            href="{% url 'add-new-employee' %}"
+            class="btn btn-outline-secondary btn-lg"
+            type="button"
+          >
             <i class="bi bi-person-plus"></i
             ><span style="margin: 0 6px"> </span>Add New Employees
-            </a>
+          </a>
         </div>
       </div>
     </div>
@@ -29,52 +33,28 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Employees</h5>
-          <table class="table table-border datatable">
+          <table class="table table-border table-striped datatable">
             <thead>
               <tr>
                 <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Position</th>
-                <th scope="col">Age</th>
-                <th scope="col">Start Date</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Email</th>
               </tr>
             </thead>
             <tbody>
+              {% for employee in all_emplyees %}
               <tr>
-                <th scope="row">1</th>
-                <td>Brandon Jacob</td>
-                <td>Designer</td>
-                <td>28</td>
-                <td>2016-05-25</td>
+                <td></td>
+                <td>{{employee.Full_Name}}</td>
+                <td>{{employee.role}}</td>
+                <td>{{employee.user}}</td>
+                <td>{{employee.gender}}</td>
+                <td>{{employee.user.email}}</td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Bridie Kessler</td>
-                <td>Developer</td>
-                <td>35</td>
-                <td>2014-12-05</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Ashleigh Langosh</td>
-                <td>Finance</td>
-                <td>45</td>
-                <td>2011-08-12</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Angus Grady</td>
-                <td>HR</td>
-                <td>34</td>
-                <td>2012-06-11</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>Raheem Lehner</td>
-                <td>Dynamic Division Officer</td>
-                <td>47</td>
-                <td>2011-04-19</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
