@@ -11,6 +11,8 @@ urlpatterns = [
     path('report/',include("report.urls")),
     path('department_head/',include("Department_Head.urls")),
     path('Employer/',include("Employer.urls")),
+    path('Finance/',include("Finance.urls")),
+    
 
     
     

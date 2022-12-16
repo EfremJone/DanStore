@@ -6,3 +6,6 @@ def employe_view(request):
 
 def request(request):
     return render(request,'employe/request.html',)
+
+def add_employe(request):
+    return render(request,'Department_head/add_employe.html',)

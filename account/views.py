@@ -13,6 +13,10 @@ def login_view(request):
                     return redirect('admin-dashboard')   
                 elif a == 'Store_Manager':
                      return redirect('store-dashboard',)
+                elif a == 'Dept_Head':
+                     return redirect('dept-ashboard',)
+                elif a == 'Employe':
+                     return redirect('employe_dashboard',)
         else:
             messages.error(request,'You are not authenticated')
             return render(request, 'Account/login.html')
@@ -21,6 +25,8 @@ def login_view(request):
             username = request.POST['username']
             password = request.POST['password']
            
+            print (username)
+            print (password)
             user = authenticate(username=username, password=password)
             
             if hasattr(user,'groups'):
@@ -31,6 +37,15 @@ def login_view(request):
                     elif a == 'Store_Manager':
                         login(request, user)
                         return redirect('store-dashboard',)
+                    elif a == 'Dept_Head':
+                        login(request, user)
+                        return redirect('dept-dashboard',)
+                    elif a == 'Employe':
+                        login(request, user)
+                        return redirect('employe_dashboard',)
+                    elif a == 'Finance':
+                        login(request, user)
+                        return redirect('finance_dashboard',)
             else:
                 messages.error(request,'Username or password is not correct!')
                 return render(request, 'account/login.html')

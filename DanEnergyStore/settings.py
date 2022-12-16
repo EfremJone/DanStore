@@ -27,12 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "whitenoise.runserver_nostatic",
-
     "crispy_forms",
+     "account",
      "Company_Admin",
-     'account',
+     "Department_Head",
+     "Employer",
      "Store_manager",
      "report",
+     "Finance",
+     
 ]
 
 MIDDLEWARE = [

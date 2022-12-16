@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} 
+
+{% block content %}
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-right">
@@ -268,20 +270,20 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
-        <a class="nav-link collapsed active" href="{% url 'store-dashboard' %}">
+        <a class="nav-link collapsed active" href="{% url 'dept-dashboard' %}">
           <i class="bi bi-grid" style="color: black"></i>
           <span style="color: rgb(96, 96, 96)">Dashboard</span>
         </a>
       </li>
     <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'store-dashboard' %}">
+      <a class="nav-link collapsed active" href="{% url 'add_employe' %}">
         <i class="bi bi-grid" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Manage Employe</span>
+        <span style="color: rgb(96, 96, 96)">Add Employe</span>
       </a>
     </li>
     <!-- End Dashboard Nav -->
     <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'manage-catagory' %}">
+      <a class="nav-link collapsed active" href="{% url 'approve_request' %}">
         <i class="bi bi-bookshelf" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Check Request</span>
       </a>
@@ -290,19 +292,19 @@
     
 
     <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'add-to-store' %}">
+      <a class="nav-link collapsed active" href="{% url 'make_request' %}">
         <i class="ri ri-store-3-line" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)"> Make Request</span>
       </a>
     </li>
 
   
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'report' %}">
         <i class="bx bxs-report" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)"> Report</span>
       </a>
-    </li>
+    </li> -->
 
     
     <li class="nav-item">
@@ -316,21 +318,11 @@
 </aside>
 <!-- End Sidebar-->
 
-{% block store %} {% endblock %}
+{% block d_head %}
 
-<footer id="footer" class="footer">
-  <div class="copyright">
-    &copy; Copyright <strong><span>DanEneregy</span></strong
-    >. All Rights Reserved
-  </div>
-  <div class="credits">
-    <!-- All the links in the footer should remain intact. -->
-    <!-- You can delete the links only if you purchased the pro version. -->
-    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-    <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-  </div>
-</footer>
-<!-- End Footer -->
+
+{% endblock %}
+
+
 
 {% endblock %}
