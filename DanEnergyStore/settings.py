@@ -33,7 +33,6 @@ INSTALLED_APPS = [
      "Department_Head",
      "Employer",
      "Store_manager",
-     "report",
      "Finance",
      
 ]
@@ -135,3 +134,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SESSION_TIMEOUT_REDIRECT = '/'
 
 # SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+
+LOGOUT_REDIRECT_URL = '/'

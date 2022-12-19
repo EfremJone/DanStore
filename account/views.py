@@ -27,8 +27,9 @@ def login_view(request):
            
             print (username)
             print (password)
+             
             user = authenticate(username=username, password=password)
-            
+            print(user)
             if hasattr(user,'groups'):
                     a = user.groups.all()[0].name
                     if a == 'Company_Admin':

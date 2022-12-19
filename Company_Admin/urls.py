@@ -7,7 +7,7 @@ urlpatterns = [
 
     # MANAGE EMPLOYEE
     path('manage-employee', views.manage_employee, name='manage-employee'),
-    path('add-new-employee',views.add_new_employee, name='add-new-employee'),
+    path('add-new-employe',views.add_new_employe, name='add-new-employe'),
 
     # DEPARTMENT
     path('departments', views.departments, name='departments'),
