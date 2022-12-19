@@ -1,11 +1,9 @@
-{% extends 'base.html' %} {% load static %} 
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-right">
     <a href="index.html" class="logo d-flex align-items-center">
-      <img src="{% static '/img/newfile.png' %}" alt="" />
+      <img src="{% static 'assets/img/newfile.png' %}" alt="" />
       <span
         class="d-none d-lg-block"
         style="color: black; margin-top: 5px; padding-left: 5px"
@@ -270,26 +268,27 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
-        <a class="nav-link collapsed active" href="{% url 'dept-dashboard' %}">
-          <i class="bi bi-grid" style="color: black"></i>
-          <span style="color: rgb(96, 96, 96)">Dashboard</span>
-        </a>
-      </li>
+      <a class="nav-link collapsed active" href="{% url 'dept-dashboard' %}">
+        <i class="bi bi-speedometer" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Dashboard</span>
+      </a>
+    </li>
+    <li>Manage Employees</li>
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'add_employe' %}">
-        <i class="bi bi-grid" style="color: black"></i>
+        <i class="bi bi-person-plus-fill" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Add Employe</span>
       </a>
     </li>
     <!-- End Dashboard Nav -->
+    <li>Actions</li>
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'approve_request' %}">
-        <i class="bi bi-bookshelf" style="color: black"></i>
+        <i class="bi bi-check-all" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Check Request</span>
       </a>
     </li>
     <!-- End Dashboard Nav -->
-    
 
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'make_request' %}">
@@ -297,16 +296,7 @@
         <span style="color: rgb(96, 96, 96)"> Make Request</span>
       </a>
     </li>
-
-  
-    <!-- <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'report' %}">
-        <i class="bx bxs-report" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)"> Report</span>
-      </a>
-    </li> -->
-
-    
+    <li>Chat</li>
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'chat' %}">
         <i class="bi bi-chat-dots" style="color: black"></i>
@@ -318,11 +308,4 @@
 </aside>
 <!-- End Sidebar-->
 
-{% block d_head %}
-
-
-{% endblock %}
-
-
-
-{% endblock %}
+{% block d_head %} {% endblock %} {% endblock %}
