@@ -1,8 +1,12 @@
 from django.urls import path
 from .import views
+from .views import GeneratePdf
+
+
 urlpatterns = [
+   path('pdf/', GeneratePdf.as_view(),name="pdf"),
    path('',views.store_dashboard,name="store-dashboard"),
-    
+   # 
    # -------- profile --------- #
    path('user_Profile',views.user_Profile,name="user-Profile"),
    path('edit_Profile',views.edit_Profile,name="edit-Profile"),

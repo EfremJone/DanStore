@@ -28,8 +28,8 @@
     <section class="section">
         <div class="row">
           <div class="col-lg-12 text-end pb-2">
-            <button id="download_pdf" onclick="pdfDownload()" type="button"
-            class="btn btn-primary btn-sm">Print</button>
+            <a href="{% url 'pdf' %}" 
+            class="btn btn-primary btn-sm">Print</a>
           </div>
            
         
@@ -48,7 +48,7 @@
                         <p><strong> Department: {{form1.Department}}</strong></p>
                         <p><strong>Checked By: {{form1.checkd_by}}</strong></p>
                         <p><strong>Approved By: {{form1.Approved_by}}</strong></p>
-                        <p><strong> Date: </strong></p>
+                        <p><strong> Date: {{form1.date}} </strong></p>
                     </div>
                     
                 </div>

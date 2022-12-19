@@ -3,7 +3,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-right">
     <a href="index.html" class="logo d-flex align-items-center">
-      <img src="{% static '/img/newfile.png' %}" alt="" />
+      <img src="{% static '/assets/img/newfile.png' %}" alt="" />
       <span
         class="d-none d-lg-block"
         style="color: black; margin-top: 5px; padding-left: 5px"
@@ -195,13 +195,13 @@
           href="#"
           data-bs-toggle="dropdown"
         >
-          {% if user.store_manager.profile_pic %}
+          {% if re_emp.profile_pic %}
           <img
-            src="{{user.store_manager.profile_pic.url}}"
+            src="{{re_emp.profile_pic.url}}"
             alt="Profile"
             class="rounded-circle"
           />
-          {% endif %}
+         {% endif %}
           <span class="d-none d-md-block ps-2"
             >{{user.first_name}} {{user.last_name}}</span
           > </a

@@ -7,24 +7,48 @@ from .models import chatbot
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.views.generic import View
+from Store_manager import models
+from .process import html_to_pdf 
 
+
+#Creating a class based view
 def store_dashboard(request):
-    all_catagory = Catagory.objects.all()
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
+    re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
+    try:
+        all_catagory = Catagory.objects.filter(store=re_Store)
+    except Catagory.DoesNotExist:
+        all_catagory = None
     context ={
         'all_catagory':all_catagory,
+        're_emp':re_emp,
     }
     return render(request,'Store_manager/dashboard.html',context)
 
 def manage_catagory(request):
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
+    re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
+    try:
+        all_catagory = Catagory.objects.filter(store=re_Store)
+    except Catagory.DoesNotExist:
+        all_catagory = None
     
-    all_catagory = Catagory.objects.all()
     context ={
         'all_catagory':all_catagory,
          
     }
     if request.method == 'POST':
         new_catagory = request.POST.get('catagory')
-        add_new_catagory=Catagory.objects.create(Catagory_Name=new_catagory)
+        add_new_catagory=Catagory.objects.create(store=re_Store,Catagory_Name=new_catagory)
+
         if add_new_catagory:
             messages.success(request,"You have added a new category successfully.")
             return redirect('manage-catagory')
@@ -92,13 +116,20 @@ def item_delete(request,id):
     Item.objects.get(pk=id).delete()
     return redirect('catagory-detail', id2)
 
-def add_to_store(request):
-    
-    return render(request,"Store_manager/Add_to_Store/add_to_store.html")
+
 def add_to_store1(request):
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
+    re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
+    try:
+        all_catagory = Catagory.objects.filter(store=re_Store)
+    except Catagory.DoesNotExist:
+        all_catagory = None
+    print(all_catagory)
+    
     if request.method == 'POST':
         res=request.POST.get('reson')
-        
         all_item=Item.objects.all()
         all_orderd=form2permanent.objects.all()
         context={
@@ -106,6 +137,7 @@ def add_to_store1(request):
             'res':res,
             'all_item':all_item,
             'all_orderd':all_orderd,
+            'all_catagory':all_catagory,
 
         }
         return render(request,"Store_manager/Add_to_Store/add_to_store1.html",context)
@@ -116,7 +148,8 @@ def cheeck_request(request):
 
 def user_Profile(request):
     users = User.objects.get(id=request.user.id)
-    admin = users.store_manager
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     context= {
         'admin':admin,
     }
@@ -124,7 +157,8 @@ def user_Profile(request):
 
 def edit_Profile(request):
     users = User.objects.get(id=request.user.id)
-    admin = users.store_manager
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     context= {
         'admin':admin,
     }
@@ -165,7 +199,8 @@ def chage_password(request):
 
 def chage_profile_pic(request):
     users = User.objects.get(id=request.user.id)
-    admin = users.store_manager
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     context= {
         'admin':admin,
     }
@@ -181,7 +216,8 @@ def chage_profile_pic(request):
 
 def delete_profile_pic(request):
     users = User.objects.get(id=request.user.id)
-    admin = users.store_manager
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     context= {
         'admin':admin,
     }
@@ -231,7 +267,7 @@ def new_action(request):
             Qty=request.POST.get('qty')
             unit=request.POST.get('unit')
             remark=request.POST.get('remark')
-            form2=form2temp.objects.create(form1=form1,Description=des,unit=unit,qty=Qty,Remark=remark)
+            form2=form2temp.objects.create(form1=form1,Description=des,unit=unit,req_qty=Qty,Remark=remark)
             if form2:
                 messages.success(request,'You have sumite Form-2 successfuly.')
                 return redirect('purchase')
@@ -356,3 +392,81 @@ def send_message(request):
 def report(request):
     
     return render(request,'Store_manager/Report/index.html',)
+
+
+
+def add_to_store(request):
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
+    re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
+    try:
+        all_catagory = Catagory.objects.filter(store=re_Store)
+    except Catagory.DoesNotExist:
+        all_catagory = None
+    print(all_catagory)
+    context ={
+        'all_catagory':all_catagory,
+        
+    }
+    if request.method == 'POST':
+        Reseaon = request.POST.get('res')
+        if (Reseaon=='Gift'):
+            print("this is gift item")
+        elif (Reseaon=='Purchased'):
+            OrderId= request.POST.get('OrderId')
+            item_name= request.POST.get('item_name')
+            Qty= int(request.POST.get('Qty'))
+            catagory= request.POST.get('catagory')
+            item=form2permanent.objects.get(id=OrderId)
+            item.add_qty=item.add_qty+Qty
+            print(item.add_qty)
+            if (item.req_qty-item.add_qty==0):
+                
+                item.Status="Completed"
+            elif(item.req_qty>item.add_qty):
+                
+                item.Status="Pending"
+            elif(item.req_qty<item.add_qty):
+                item.add_qty=item.add_qty-Qty
+                messages.error(request,'Sorry, the data you entered is not valid.')
+                return redirect('list_for_purchase')
+            item.save()
+            print('-------------------')
+        elif (Reseaon=='Other'):
+            print("this is Other item")
+        elif (Reseaon=='Returned'):
+            print("this is Returned item")
+        print(Reseaon)
+        return redirect('list_for_purchase')
+    return render(request,"Store_manager/Add_to_Store/add_to_store.html",context)
+def add_item(request,id):
+    catagory=Catagory.objects.get(pk=id)
+    context={
+        'catagory':catagory
+    }
+    if request.method == 'POST':
+        item_name = request.POST.get('itemname')
+        amount = request.POST.get('total')
+        new_item=Item.objects.create(Catagory=catagory,item_name=item_name,total_item_in_Stok=amount)
+        if new_item:
+            messages.success(request,"You have added New Item Successfully.")
+            return redirect('catagory-detail' ,id)
+    return render(request,'Store_manager/Catagory/catagory_detail.html',context)
+
+
+
+class GeneratePdf(View):
+   def get(self, request, *args, **kwargs):
+    all_form= form1temp.objects.all()
+    if all_form:
+        form1=all_form[0]
+        all_item=form2temp.objects.filter(form1=form1)
+        # if all_item:
+        #     data={
+        #         'form1':form1,
+        #         'all_item':all_item,
+        #     }
+        open('templates/temp.html', "w").write(render_to_string('Store_manager/for_purchase/invoce.html',{'data': all_item} ))
+        pdf = html_to_pdf('temp.html')
+    return HttpResponse(pdf, content_type='application/pdf')
