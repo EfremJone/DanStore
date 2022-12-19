@@ -133,6 +133,11 @@ def add_new_department(request):
         departmentName = request.POST.get('departmentName')
         departmentDescription = request.POST.get('departmentDescription')
         departmentHead = request.POST.get('departmentHead')
+
+        setDept = employ.objects.get(Full_Name = departmentHead)
+        setDept.inDepartment = departmentName
+        setDept.save()
+
         dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription,departmentHead=departmentHead)
         if dept:
             messages.success(request,'You Have Successfully added new department.')

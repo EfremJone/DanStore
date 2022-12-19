@@ -15,7 +15,11 @@
       </ol>
     </nav>
   </div>
-
+  {% for mssg in messages%} {% if mssg.tags == 'success' %}
+  <div class="alert alert-success" role="alert">{{mssg}}</div>
+  {%else %}
+  <div class="alert alert-danger" role="alert">{{mssg}}</div>
+  {% endif %} {% endfor %}
   <section class="section">
     <div class="row">
       <div class="col-lg-10">

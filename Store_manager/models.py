@@ -102,7 +102,7 @@ class employ(models.Model):
     instagram = models.CharField(max_length=200, null=True,blank=True)
     about = models.TextField(max_length=500, null=True)
     address = models.CharField(max_length=200, null=True)
-    inDepartment = models.ForeignKey(department,max_length=300,null=True,on_delete=models.CASCADE)
+    inDepartment = models.CharField(max_length=300,null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     def __str__(self):
         return str(self.user)
