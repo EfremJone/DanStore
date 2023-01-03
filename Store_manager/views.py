@@ -18,6 +18,7 @@ from .process import html_to_pdf
 #Creating a class based view
 def store_dashboard(request):
     id=(request.user.id)
+   
     user=User.objects.get(id=id)
     re_emp=employ.objects.get(user=user)
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
@@ -47,7 +48,9 @@ def manage_catagory(request):
     }
     if request.method == 'POST':
         new_catagory = request.POST.get('catagory')
-        add_new_catagory=Catagory.objects.create(store=re_Store,Catagory_Name=new_catagory)
+        Type_of_Asset=request.POST.get('typeasset')
+        
+        add_new_catagory=Catagory.objects.create(store=re_Store,Catagory_Name=new_catagory,Type_of_Asset=Type_of_Asset)
 
         if add_new_catagory:
             messages.success(request,"You have added a new category successfully.")
@@ -126,7 +129,7 @@ def add_to_store1(request):
         all_catagory = Catagory.objects.filter(store=re_Store)
     except Catagory.DoesNotExist:
         all_catagory = None
-    print(all_catagory)
+   
     
     if request.method == 'POST':
         res=request.POST.get('reson')
@@ -232,10 +235,8 @@ def list_for_purchase(request):
     return render(request,'Store_manager/for_purchase/purchase_list.html',)
 def new_action1(request):
     if form1temp.objects.all().count() !=0:
-        
         all_form= form1temp.objects.all()
         form1=all_form[0]
-      
         form1temp.objects.all().delete()
         if request.method == 'POST':
             Request_by=request.POST.get('Request_by')
@@ -310,9 +311,9 @@ def list_for_purchase(request):
             for item in all_item:
                 Description=item.Description
                 unit=item.unit
-                qty=item.qty
+                qty=item.req_qty
                 Remark=item.Remark
-                form2permanent.objects.create(form1per=form1per,Description=Description,unit=unit,qty=qty,Remark=Remark)
+                form2permanent.objects.create(form1per=form1per,Description=Description,unit=unit,req_qty=qty,Remark=Remark)
                 # messages.success(request,'You have submitted your purchase request successfully.')
                 form1temp.objects.all().delete()
             messages.success(request,'You have submitted your purchase request successfully.')
@@ -335,11 +336,11 @@ def chat(request):
             chat_team.append(team.me_with)
             
 
-    print("--------------")
+    
     for a in chat_team:
         chat_group1=employ.objects.get(pk=a.id)
-    print(chat_group1)
-    print("--------------")
+    
+   
     if request.method == 'POST':
         user=request.POST.get('serach')
         serch=User.objects.get(username=user)
@@ -404,7 +405,7 @@ def add_to_store(request):
         all_catagory = Catagory.objects.filter(store=re_Store)
     except Catagory.DoesNotExist:
         all_catagory = None
-    print(all_catagory)
+    
     context ={
         'all_catagory':all_catagory,
         
@@ -412,32 +413,67 @@ def add_to_store(request):
     if request.method == 'POST':
         Reseaon = request.POST.get('res')
         if (Reseaon=='Gift'):
-            print("this is gift item")
+            pass
         elif (Reseaon=='Purchased'):
             OrderId= request.POST.get('OrderId')
             item_name= request.POST.get('item_name')
+            
+            print("this is item name",item_name)
+            
             Qty= int(request.POST.get('Qty'))
-            catagory= request.POST.get('catagory')
+            catagory= request.POST.get('catagory_name')
+           
+            print("This is catagory name",catagory)
+            
             item=form2permanent.objects.get(id=OrderId)
             item.add_qty=item.add_qty+Qty
-            print(item.add_qty)
+           
             if (item.req_qty-item.add_qty==0):
-                
                 item.Status="Completed"
-            elif(item.req_qty>item.add_qty):
+                cat=Catagory.objects.get(Catagory_Name=catagory)
+                if cat.Type_of_Asset=="Fixed assets":
+                    new_item=Item.objects.create(
+                    store=re_Store,
+                    Catagory=cat,
+                    Order_Id=OrderId,
+                    item_name=item_name,
+                    Reason='Purchased',
+                    total_item_in_Stok= item.add_qty,
+                    add_by=re_emp,
+                    Action='New_Add',
+                    )
+                    if new_item:
+                        print("new item added")
+                elif cat.Type_of_Asset=="Current assets":
+                    print("this is Current assets")
+                else:
+                    print("not assiged")
                 
+            elif(item.req_qty>item.add_qty):
                 item.Status="Pending"
+                # new_item=Item.objects.create(
+                # store=re_Store,
+                # Catagory=catagory,
+                # Order_Id=OrderId,
+                # item_name=item_name,
+                # Reason='Purchased',
+                # total_item_in_Stok= item.add_qty,
+                # add_by=re_emp,
+                # Action='New_Add',
+                # )
+                # if new_item:
+                #     print("new item added")
             elif(item.req_qty<item.add_qty):
                 item.add_qty=item.add_qty-Qty
                 messages.error(request,'Sorry, the data you entered is not valid.')
                 return redirect('list_for_purchase')
             item.save()
-            print('-------------------')
+            
         elif (Reseaon=='Other'):
-            print("this is Other item")
+            pass
         elif (Reseaon=='Returned'):
-            print("this is Returned item")
-        print(Reseaon)
+            pass
+       
         return redirect('list_for_purchase')
     return render(request,"Store_manager/Add_to_Store/add_to_store.html",context)
 def add_item(request,id):
@@ -462,11 +498,10 @@ class GeneratePdf(View):
     if all_form:
         form1=all_form[0]
         all_item=form2temp.objects.filter(form1=form1)
-        # if all_item:
-        #     data={
-        #         'form1':form1,
-        #         'all_item':all_item,
-        #     }
-        open('templates/temp.html', "w").write(render_to_string('Store_manager/for_purchase/invoce.html',{'data': all_item} ))
+        data={
+            'form1':form1,
+            'all_item':all_item,
+        }
+        open('templates/temp.html', "w").write(render_to_string('Store_manager/for_purchase/invoce.html',data ))
         pdf = html_to_pdf('temp.html')
     return HttpResponse(pdf, content_type='application/pdf')

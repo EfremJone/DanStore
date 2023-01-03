@@ -15,5 +15,13 @@ admin.site.register(department)
 admin.site.register(vendor)
 admin.site.register(allRole)
 admin.site.register(allStore)
+admin.site.register(employe_request_form1)
+admin.site.register(employe_request_form2)
+
+admin.site.register(employe_request_form1_permanent)
+
+
+
+
 
 

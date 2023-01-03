@@ -16,8 +16,16 @@
 
   <section class="section dashboard">
     <div class="row">
+      <div class="col-6">
+    <div class="card p-3">
+    <div class="cadr-body">
+    <h1 class="card-title"> Fixed Assets</h1>
+    <div class="row">
+      
       {% for catagory in all_catagory %}
-      <div class="col-lg-3 col-md-6" style="margin-top: 20px">
+      {% if catagory.Type_of_Asset == "Fixed assets" %}
+      
+      <div class="col-6 p-2" >
         <div class="card info-card sales-card newshadow">
           <a href="{% url 'catagory-detail' catagory.id %}">
             <div class="card-body">
@@ -38,7 +46,52 @@
           </a>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
+      
+    </div>
+    </div>
+</div>
+      </div>
+
+      <div class="col-6">
+        <div class="card p-3">
+        <div class="cadr-body">
+        <h1 class="card-title"> Current Assets</h1>
+        <div class="row">
+          
+          {% for catagory in all_catagory %}
+          {% if catagory.Type_of_Asset == "Current assets" %}
+          
+          <div class="col-6 p-2" >
+            <div class="card info-card sales-card newshadow">
+              <a href="{% url 'catagory-detail' catagory.id %}">
+                <div class="card-body">
+                  <h5 class="card-title" style="color: black">
+                    {{catagory.Catagory_Name}}
+                  </h5>
+                  <div class="d-flex align-items-center">
+                    <!-- <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-cart"></i>
+                          </div> -->
+                    <div class="ps-3">
+                      <span style="color: black">
+                        {{catagory.item_set.all.count}} Item
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          
+        </div>
+        </div>
+    </div>
+          </div>
+
     </div>
   </section>
 </main>

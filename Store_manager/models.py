@@ -12,6 +12,7 @@ class allStore(models.Model):
         
 class Catagory(models.Model):
     Catagory_Name = models.CharField(max_length=200, null=True, blank=True)
+    Type_of_Asset = models.CharField(max_length=200, null=True, blank=True)
     store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     def __str__(self):
         return str(self.Catagory_Name)
@@ -59,7 +60,7 @@ class form2permanent(models.Model):
     Description=models.CharField(max_length=100,null=True,blank=True)
     unit=models.CharField(max_length=100,null=True,blank=True)
     req_qty=models.IntegerField(null=True,blank=True)
-    add_qty=models.IntegerField(null=True,blank=True)
+    add_qty=models.IntegerField(null=True,blank=True,default=0)
     Status=models.CharField(max_length=200,null=True,blank=True,choices=status,default="Pending")
     date=models.DateField(auto_now_add=True,null=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
@@ -67,7 +68,7 @@ class form2permanent(models.Model):
 class department(models.Model):
     departmentName = models.CharField(max_length=100, null=False)
     departmentDescription = models.TextField(max_length=500, null=False)
-    departmentHead = models.CharField(max_length=40, null=False)
+    departmentHead = models.CharField(max_length=40, null=True,default="TBA")
     def __str__(self) -> str:
         return str(self.departmentName)
 
@@ -91,8 +92,9 @@ class employ(models.Model):
     instagram = models.CharField(max_length=200, null=True,blank=True)
     about = models.TextField(max_length=500, null=True)
     address = models.CharField(max_length=200, null=True)
-    inDepartment = models.ForeignKey(department,max_length=300,null=True,on_delete=models.CASCADE)
+    inDepartment = models.CharField(max_length=300,null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    Thechnologist =models.BooleanField(blank=True,null=True,default=False)
     accessStore=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     def __str__(self):
         return str(self.user)
@@ -168,3 +170,44 @@ class ItemHistory(models.Model):
     Action=models.CharField(max_length=200,choices=action_choice)
     Approved=models.CharField(max_length=200,blank=True,null=True)
     last_update=models.DateField(auto_now_add=True)
+
+class employe_request_form1(models.Model):
+    request_store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
+    date=models.DateField(auto_now_add=True,null=True)
+    Request_by=models.CharField(max_length=100,null=True,blank=True)
+    Department=models.CharField(max_length=100,null=True,blank=True)
+    checkd_by=models.ForeignKey(employ,null=True,blank=True,on_delete=models.CASCADE) 
+class employe_request_form2(models.Model):
+    employe_request_form1=models.ForeignKey(employe_request_form1,null=True,blank=True,on_delete=models.CASCADE)
+    Description=models.CharField(max_length=100,null=True,blank=True)
+    unit=models.CharField(max_length=100,null=True,blank=True)
+    req_qty=models.CharField(max_length=100,null=True,blank=True)
+    Remark=models.CharField(max_length=100,null=True,blank=True)
+
+
+class employe_request_form1_permanent(models.Model):
+    store_Keeper_action_choice=(
+        ('Pending','Pending'),
+        ('Allowed','Allowed'),
+        ('wait','wait'),
+        ('Reject','Reject'),
+    )
+    dept_head_action_choice=(
+        ('Pending','Pending'),
+        ('Approved','Approved'),
+        ('Rejected','Rejected'),
+    )
+
+    request_store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
+    date=models.DateField(auto_now_add=True,null=True)
+    dept_head_Action=models.CharField(max_length=200,null=True,choices=dept_head_action_choice,default='Pending')
+    Store_Keeper_Action=models.CharField(max_length=200,null=True,choices=store_Keeper_action_choice,default='Pending')
+    Request_by=models.CharField(max_length=100,null=True,blank=True)
+    Department=models.CharField(max_length=100,null=True,blank=True)
+    checkd_by=models.ForeignKey(employ,null=True,blank=True,on_delete=models.CASCADE)
+    Description=models.CharField(max_length=100,null=True,blank=True)
+    unit=models.CharField(max_length=100,null=True,blank=True)
+    req_qty=models.CharField(max_length=100,null=True,blank=True)
+    Remark=models.CharField(max_length=100,null=True,blank=True)
+    
+

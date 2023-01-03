@@ -287,7 +287,7 @@
             <div class="row pb-2">
               <div class="col-lg-12  text-end">
                 <div class="btn-group " role="group" aria-label="Basic example">
-                  <a href="{% url 'request' %}" class="btn btn-outline-secondary">New Request</a>
+                  <a href="{% url 'emp_request' %}" class="btn btn-outline-secondary">New Request</a>
                 </div>
               </div>
             </div>
@@ -306,25 +306,37 @@
                           <th scope="col">Describtion</th>
                           <th scope="col">Unit</th>
                           <th scope="col">Qty</th>
-  
-                          <th scope="col">Status</th>
-                          <th scope="col">Request By</th>
+                          <th scope="col">Department Head Approval</th>
+                          <th scope="col">Store Manager Action</th>
                           <th scope="col">Date</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for item in all_list_item %}
+                        {% for item in all_emp_request %}
                         <tr>
                           <!-- <th scope="row">1</th> -->
                           <td>{{item.Description}}</td>
                           <td>{{item.unit}}</td>
-                          <td>{{item.qty}}</td>
-                          {% if item.Status == 'Pending' %}
-                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
-                          {% elif item.Status == 'Accepte' %}
-                          <td><span class="badge bg-success">{{item.Status}}</span></td>
-                          {% endif %}
-                          <td>{{item.form1per.Request_by}}</td>
+                          <td>{{item.req_qty}}</td>
+                    
+                          {% if item.dept_head_Action == 'Pending' %}
+                          <td><span class="badge bg-warning text-dark">{{item.dept_head_Action}}</span></td>
+                          {% elif item.dept_head_Action == 'Approved' %}
+                          <td><span class="badge bg-success">{{item.dept_head_Action}}</span></td>
+                          {% elif item.dept_head_Action == 'Rejected' %}
+                          <td><span class="badge bg-danger">{{item.dept_head_Action}}</span></td>
+                          {% endif %} 
+
+                          {% if item.Store_Keeper_Action == "Pending" %}
+                          <td><span class="badge bg-warning text-dark">{{item.Store_Keeper_Action}}</span></td>
+                          {% elif item.Store_Keeper_Action == 'Allowed' %}
+                          <td><span class="badge bg-success">{{item.Store_Keeper_Action}}</span></td>
+                          {% elif item.Store_Keeper_Action == 'wait' %}
+                          <td><span class="badge bg-info">{{item.Store_Keeper_Action}}</span></td>
+                          {% elif item.Store_Keeper_Action == 'Reject' %}
+                          <td><span class="badge bg-danger">{{item.Store_Keeper_Action}}</span></td>
+                          {% endif %} 
+                        
                           <td>{{item.date}}</td>
                         </tr>
                        {% endfor %}

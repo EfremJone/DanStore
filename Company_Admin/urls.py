@@ -13,6 +13,8 @@ urlpatterns = [
     path('departments', views.departments, name='departments'),
     path('add-new-department',views.add_new_department,name='add-new-department'),
     path('department-details/<int:id>',views.department_details,name='department-details'),
+    path('set_dept_head',views.set_dept_head,name='set_dept_head'),
+    
 
     # Vendors
     path('vendors', views.vendors, name='vendors'),

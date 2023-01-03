@@ -147,42 +147,49 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title">
-                <h3
-                  style="color: black; display: flex; justify-content: center"
-                >
-                  Delete Department
-                </h3>
-                <span>
-                  To confirm write the department name in the space provided.
-                </span>
-                <div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h2 style="color: black; display: flex; justify-content: center">
+                Manage Department head
+              </h2>
+              <div class="col-12">
+                <form action="{% url 'set_dept_head' %}" method="POST">
+                  {% csrf_token %}
                   <label for="inputNanme4" class="form-label"
-                    ><span style="color: rgb(255, 54, 54)"
-                      >Department Name</span
-                    ></label
+                    ><span>Department Head name</span></label
                   >
-                  <input type="text" class="form-control" id="inputNanme4" />
-                </div>
-                <div style="display: flex; justify-content: flex-end">
-                  <button
-                    style="margin: 10px"
-                    type="button"
-                    class="btn btn-outline-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#verticalycentered"
-                  >
-                    Confirm
-                  </button>
-                </div>
+                 
+                  <input
+                    type="hidden"
+                    name="departmentId"
+                    value="{{selectedDepartment.id}}"
+                  />
+                  <select name="dept_head" class="form-control">
+                     <option disabled value="">Select Department Head</option>
+                     {% for dep in departmentHeads %}
+                      <option value="{{dep.Full_Name}}">{{dep.Full_Name}}</option>
+                     {% endfor %}
+                  </select>
+                  <div style="display: flex; justify-content: flex-end">
+                    <button
+                      style="margin: 10px"
+                      type="submit"
+                      class="btn btn-outline-warning"
+                    >
+                      Set
+                    </button>
+                    
+                  </div>
+                </form>
+               </div>
               </div>
             </div>
           </div>
-        </div> -->
-      </div>
+        </div>
+        </div>
+      
     </div>
   </section>
 </main>

@@ -10,7 +10,7 @@
               <h5 class="card-title">Request Form </h5>
     
               <!-- Floating Labels Form -->
-              <form class="row g-2" action="{% url 'new_action' %}" method="POST">
+              <form class="row g-2" action="{% url 'emp_request2' %}" method="POST">
                 {% csrf_token %}
                 <div class="col-md-12">
                   <div class="form-floating">
@@ -75,32 +75,21 @@
                           </tr>
                         </thead>
                         <tbody>
-                         
+                         {% for req in emp_req %}
                           <tr>
-                            <!-- <th scope="row">1</th> -->
-                            <td>pc</td>
-                            <td>no</td>
-                            <td>1</td>
-                            <td>for use</td>
+                           
+                            <td>{{req.Description}}</td>
+                            <td>{{req.unit}}</td>
+                            <td>{{req.req_qty}}</td>
+                            <td>{{req.Remark}}</td>
                           </tr>
-                          <tr>
-                            <!-- <th scope="row">1</th> -->
-                            <td>pc</td>
-                            <td>no</td>
-                            <td>1</td>
-                            <td>for use</td>
-                          </tr>
-                          <tr>
-                            <!-- <th scope="row">1</th> -->
-                            <td>pc</td>
-                            <td>no</td>
-                            <td>1</td>
-                            <td>for use</td>
-                          </tr>
-                         
+                        {% endfor %}
+                    
+                      
                         </tbody>
                       </table>
-                      <a href="{% url 'list_for_purchase' %}" class="btn btn-outline-success">Complete request</a>
+                      <a href="{% url 'complet_request' %}" class="btn btn-outline-success">Complete request</a>
+                      <a href="{% url 'reste_request_form' %}" class="btn btn-outline-danger">Reset</a>
            
                       
                     </div>

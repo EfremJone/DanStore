@@ -82,7 +82,7 @@ def add_new_employe(request):
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
                         elif(role == 'Employee'):
-                            new_group = Group.objects.get(name='Employee')
+                            new_group = Group.objects.get(name='Employe')
                             new_group.user_set.add(user)
                             newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
                             if newEmployee:
@@ -132,8 +132,8 @@ def add_new_department(request):
     if request.method == 'POST':
         departmentName = request.POST.get('departmentName')
         departmentDescription = request.POST.get('departmentDescription')
-        departmentHead = request.POST.get('departmentHead')
-        dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription,departmentHead=departmentHead)
+        
+        dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription)
         if dept:
             messages.success(request,'You Have Successfully added new department.')
             
@@ -142,6 +142,7 @@ def add_new_department(request):
     return render(request,'Company_Admin/Departments/add_new_department.html', context)
 
 def department_details(request,id):
+    DeptHead = employ.objects.filter(role = 'Dept_Head')
     if request.method == 'POST':
         updatedDepartmentName = request.POST.get('updatedDepartmentName')
         departmentId = request.POST.get('departmentId')
@@ -151,10 +152,21 @@ def department_details(request,id):
     selectedDepartment = department.objects.get(pk=id)
     memebers = employ.objects.filter(inDepartment = selectedDepartment.id)
     context={
+         "departmentHeads" : DeptHead,
         'selectedDepartment': selectedDepartment,
         'members': memebers
     }
     return render(request,'Company_Admin/Departments/department_details.html', context)
+def set_dept_head(request):
+    if request.method =="POST":
+        dept_id=request.POST.get('departmentId')
+        dept_head=request.POST.get('dept_head')
+        update_dept=department.objects.get(id=dept_id)
+        update_dept.departmentHead = dept_head
+        update_dept.save()
+        print("dept_id",dept_id)
+        print("dept_head",dept_head)
+    return redirect('department-details',dept_id)
 
 def department_delete(request,id):
     tobedeleted = department.objects.filter(pk=id).delete()

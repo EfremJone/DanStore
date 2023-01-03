@@ -32,7 +32,13 @@
  
     </table></td>
   
-   
+    <div class="col-lg-6">
+      <p><strong>Request by: {{form1.Request_by}}</strong></p>
+      <p><strong> Department: {{form1.Department}}</strong></p>
+      <p><strong>Checked By: {{form1.checkd_by}}</strong></p>
+      <p><strong>Approved By: {{form1.Approved_by}}</strong></p>
+      <p><strong> Date: {{form1.date}} </strong></p>
+  </div>
   </tr>
   <tr>
     <td colspan="2">&nbsp;</td>
@@ -46,12 +52,12 @@
         <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:600; font-size:13px; border-top:1px solid #333; border-bottom:1px solid #333; border-right:1px solid #333;" width="30%" align="center">Remark</td>
       </tr>
 
-      {% for item in data %}
+      {% for item in all_item %}
       <tr>
         <!-- <th scope="row">1</th> -->
         <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{item.Description}}</td>
         <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{item.unit}}</td>
-        <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{item.qty}}</td>
+        <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{item.req_qty}}</td>
         <td style="padding-top:10px;font-family:Verdana, Geneva, sans-serif; font-weight:300; font-size:13px; border-bottom:1px solid #333; border-left:1px solid #333; border-right:1px solid #333;" height="32" align="center">{{item.Remark}}</td>
         
       </tr>
