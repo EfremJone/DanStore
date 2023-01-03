@@ -2,14 +2,17 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from Store_manager.models import * 
 from django.db.models import Q
-
+from .form import *
+from django.contrib.auth import update_session_auth_hash
 def employe_view(request):
-    user=request.user
-    emp=employ.objects.get(user=user)
-    Request_by=emp.Full_Name
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
     all_emp_request=employe_request_form1_permanent.objects.filter(Request_by=Request_by)   
     context={
         'all_emp_request':all_emp_request,
+        'admin':admin,
     } 
     return render(request,'employe/index.html',context)
 
@@ -90,5 +93,95 @@ def reste_request_form(request):
     employe_request_form2.objects.filter(employe_request_form1=form1).delete()
 
     return render(request,'employe/request.html',)
-def add_employe(request):
-    return render(request,'Department_head/add_employe.html',)
+
+
+
+
+# ---------------------- Profile ------------------------
+
+def user_Profile(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    return render(request,'employe/profile/show_profile.html',context)
+
+def edit_Profile(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    
+    if request.method == 'POST':
+        admin.about = request.POST.get('about')
+        admin.phone1 = request.POST.get('phone1')
+        admin.phone2 = request.POST.get('phone2')
+        admin.address = request.POST.get('address')
+        admin.facebook = request.POST.get('facebook')
+        admin.telegram = request.POST.get('telegram')
+        admin.instagram = request.POST.get('instagram')
+        users.first_name = request.POST.get('first_name')
+        users.last_name = request.POST.get('last_name')
+        users.email = request.POST.get('email')
+        admin.save()
+        users.save()
+        messages.success(request,'Your profile has been updated successfully. ')
+        return redirect('emp_user-Profile')
+    return render(request,'employe/profile/edit_profile.html',context)
+
+def chage_password(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    
+    form = passwordform(request.user)
+    if request.method == 'POST':
+        form = passwordform(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password was successfully updated!')
+            return redirect('emp_user-Profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = passwordform(request.user)
+    context = {
+        'form': form,
+        'admin':admin,
+        }
+    return render(request,'employe/profile/chage_pass.html',context)
+
+def emp_chage_profile_pic(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    if len(request.FILES.get('newimg', "")) != 0:
+        
+        admin.profile_pic.delete()
+        admin.profile_pic = request.FILES.get('newimg', "")
+        admin.save()
+        messages.success(request,'Your profile picture has been updated successfully.')
+        return redirect('emp_user-Profile')
+    else:
+        return render(request,'employe/profile/change_profile_pic.html',context)
+
+def delete_profile_pic(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    if len(admin.profile_pic) != 0:
+        admin.profile_pic.delete()
+        return redirect('emp_user-Profile')
+    return render(request,)

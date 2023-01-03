@@ -228,6 +228,7 @@ def delete_profile_pic(request):
         admin.profile_pic.delete()
         return redirect('user-Profile')
     return render(request,)
+
 def purchase(request):
    
     return render(request,'Store_manager/for_purchase/purchase.html')
