@@ -9,7 +9,7 @@ def employe_view(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
-    all_emp_request=employe_request_form1_permanent.objects.filter(Request_by=Request_by)   
+    all_emp_request=employe_request_form1_permanent.objects.filter(Request_by=Request_by)  
     context={
         'all_emp_request':all_emp_request,
         'admin':admin,
@@ -17,23 +17,26 @@ def employe_view(request):
     return render(request,'employe/index.html',context)
 
 def emp_request(request):
-    user=request.user
-    emp=employ.objects.get(user=user)
-    Request_by=emp.Full_Name
-    Department=(emp.inDepartment)
-    request_store=(emp.accessStore)
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+    Department=(re_employ.inDepartment)
+    request_store=(re_employ.accessStore)
+    context={
+        'admin':admin,
+    }
     checkd_by = employ.objects.get(Q(role = "Dept_Head") & Q(inDepartment=Department))
     if employe_request_form1.objects.filter(Request_by=Request_by).count() !=0:
         employe_request_form1.objects.filter(Request_by=Request_by).delete()
         form1=employe_request_form1.objects.create(request_store=request_store,Request_by=Request_by,Department=Department,checkd_by=checkd_by)
     else:
         form1=employe_request_form1.objects.create(request_store=request_store,Request_by=Request_by,Department=Department,checkd_by=checkd_by)
-   
     form1=employe_request_form1.objects.filter(Request_by=Request_by)
     new_form1=form1[0]
     if request.method == "POST":
         employe_request_form2.objects.create(employe_request_form1=new_form1)
-    return render(request,'employe/request.html')
+    return render(request,'employe/request.html',context)
 def emp_request2(request):
     user=request.user
     emp=employ.objects.get(user=user)

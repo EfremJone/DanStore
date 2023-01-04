@@ -97,19 +97,22 @@
         </ul>
         <!-- End Notification Dropdown Items -->
       </li>
-      <!-- End Notification Nav -->
+      
 
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-chat-left-text"></i>
-          <span class="badge bg-success badge-number">3</span> </a
-        ><!-- End Messages Icon -->
+          {% if all_my_message_.count %}
+          <span class="badge bg-success badge-number">{{all_my_message_.count}}</span> 
+        </a>
+           {% endif %}
+        
+        <!-- End Messages Icon -->
 
-        <ul
-          class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages"
-        >
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+        
           <li class="dropdown-header">
-            You have 3 new messages
+            You have {{all_my_message_.count}} new messages
             <a href="#"
               ><span class="badge rounded-pill bg-primary p-2 ms-2"
                 >View all</span
@@ -119,70 +122,31 @@
           <li>
             <hr class="dropdown-divider" />
           </li>
-
+        {% for message in all_my_message_ %}
+       
           <li class="message-item">
-            <a href="#">
+            <a href="{% url 'dept_check_mess' message.id %}">
               <img
                 src="{% static '/img/messages-1.jpg' %}"
                 alt=""
                 class="rounded-circle"
               />
               <div>
-                <h4>Maria Hudson</h4>
+                <h4>{{message.me_with.Full_Name}}</h4>
                 <p>
-                  Velit asperiores et ducimus soluta repudiandae labore officia
-                  est ut...
+                  {{message.message}}
                 </p>
-                <p>4 hrs. ago</p>
+                <p>{{message.date}}</p>
               </div>
             </a>
           </li>
+        
           <li>
             <hr class="dropdown-divider" />
           </li>
-
-          <li class="message-item">
-            <a href="#">
-              <img
-                src="{% static '/img/messages-2.jpg' %}"
-                alt=""
-                class="rounded-circle"
-              />
-              <div>
-                <h4>Anna Nelson</h4>
-                <p>
-                  Velit asperiores et ducimus soluta repudiandae labore officia
-                  est ut...
-                </p>
-                <p>6 hrs. ago</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-
-          <li class="message-item">
-            <a href="#">
-              <img
-                src="{% static '/img/messages-3.jpg' %}"
-                alt=""
-                class="rounded-circle"
-              />
-              <div>
-                <h4>David Muldon</h4>
-                <p>
-                  Velit asperiores et ducimus soluta repudiandae labore officia
-                  est ut...
-                </p>
-                <p>8 hrs. ago</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-
+          
+         {% endfor %}
+          
           <li class="dropdown-footer">
             <a href="#">Show all messages</a>
           </li>
@@ -197,9 +161,9 @@
           href="#"
           data-bs-toggle="dropdown"
         >
-          {% if user.store_manager.profile_pic %}
+          {% if admin.profile_pic %}
           <img
-            src="{{user.store_manager.profile_pic.url}}"
+            src="{{admin.profile_pic.url}}"
             alt="Profile"
             class="rounded-circle"
           />
@@ -221,7 +185,7 @@
           <li>
             <a
               class="dropdown-item d-flex align-items-center"
-              href="{% url 'user-Profile' %}"
+              href="{% url 'dept_user-Profile' %}"
             >
               <i class="bi bi-person"></i>
               <span>My Profile</span>
@@ -275,45 +239,53 @@
           <span style="color: rgb(96, 96, 96)">Dashboard</span>
         </a>
       </li>
+      
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'add_employe' %}">
-        <i class="bi bi-grid" style="color: black"></i>
+        <i class="bi bi-person-plus-fill" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Add Employe</span>
       </a>
     </li>
     <!-- End Dashboard Nav -->
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'check_request' %}">
-        <i class="bi bi-bookshelf" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Check Request</span>
+        <i class="bi bi-patch-question" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Check Employer Request</span>
       </a>
     </li>
-    <!-- End Dashboard Nav -->
-    
+    <li class="nav-item">
+      <a class="nav-link collapsed active" href="{% url 'rejected_emp_request' %}">
+        <i class="bi bi-cart-x" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Rejected Employe Request </span>
+      </a>
+    </li>
 
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'make_request' %}">
-        <i class="ri ri-store-3-line" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)"> Make Request</span>
+        <i class="bi bi-list-task" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)"> Make Request as dep't head</span>
       </a>
     </li>
-
-  
-    <!-- <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'report' %}">
-        <i class="bx bxs-report" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)"> Report</span>
-      </a>
-    </li> -->
-
-    
+   
     <li class="nav-item">
-      <a class="nav-link collapsed active" href="{% url 'chat' %}">
-        <i class="bi bi-chat-dots" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)"> Chat</span>
+      <a class="nav-link collapsed active" href="{% url 'all_item_taken_by' %}">
+        <i class="bi bi-tools" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">All Item taken by this Dep't</span>
       </a>
     </li>
-    <!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed active" href="{% url 'unreceived-request' %}">
+        <i class="bi bi-cart" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Unreceived Request</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed active" href="{% url 'dept_chat' %}">
+        <i class="bi bi-chat-dots" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Chat</span>
+      </a>
+    </li>
+   
   </ul>
 </aside>
 <!-- End Sidebar-->
