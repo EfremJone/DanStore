@@ -96,8 +96,37 @@ def reste_request_form(request):
     employe_request_form2.objects.filter(employe_request_form1=form1).delete()
 
     return render(request,'employe/request.html',)
+def view_request(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+    all_emp_request=employe_request_form1_permanent.objects.get(pk=id)  
+    context={
+        'item':all_emp_request,
+        'admin':admin,
+    } 
+    return render(request,'employe/view_request.html',context)
 
 
+
+def accept_approveal(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    all_emp_request=employe_request_form1_permanent.objects.get(pk=id)  
+    all_emp_request.Recival_status_by_Employer="Received"
+    all_emp_request.save()
+    return redirect('employe_dashboard')
+
+def cancel_request(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    all_emp_request=employe_request_form1_permanent.objects.get(pk=id)  
+    all_emp_request.Recival_status_by_Employer="Not_Received"
+    all_emp_request.save()
+    return redirect('employe_dashboard')   
 
 
 # ---------------------- Profile ------------------------

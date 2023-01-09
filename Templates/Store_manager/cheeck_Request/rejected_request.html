@@ -30,24 +30,21 @@
                         <th scope="col">Request tool</th>
                         <th scope="col">Total Amount</th>
                         <th scope="col">Check by </th>
-                        <th scope="col">Approved</th>
-                        
-                        <th scope="col">Reject</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for request in emp_request %}
-                      {% if request.Store_Keeper_Action == "Pending" %}
+                      {% if request.Store_Keeper_Action == "Reject" %}
                       <tr>
                         <td>{{request.date}}</td>
                         <td>{{request.Request_by}}</td>
                         <td>{{request.Description}}</td>
                         <td>{{request.req_qty}}</td>
                         <td>{{request.checkd_by.Full_Name}}</td>
-                        <td><a href="{% url 'send-message-req' request.id %}" class="btn btn-success"><i class="bi bi-check-circle"></i></a></td>
+                        <td><span class="badge bg-danger">Reject</span></td>
                         
-                        <td><a href="{% url 'message_to_reject' request.id  %}" class="btn btn-danger"><i class="bi bi-exclamation-octagon"></i></a></td>
-                      </tr>
+                         </tr>
                       {% endif %}
                       {% endfor %}
                      

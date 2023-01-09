@@ -40,6 +40,6 @@ class dept_request_form1_permanent(models.Model):
     unit=models.CharField(max_length=100,null=True,blank=True)
     req_qty=models.CharField(max_length=100,null=True,blank=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
-    
+    note=models.TextField(max_length=100,null=True,blank=True)
 
 # Create your models here.

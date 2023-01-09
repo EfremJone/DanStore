@@ -89,21 +89,13 @@
                     value="{{selectedDepartment.id}}"
                   />
                   <div style="display: flex; justify-content: flex-end">
-                    <button
-                      style="margin: 10px"
-                      type="submit"
-                      class="btn btn-outline-warning"
-                    >
-                      Update
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-danger btn-sm"
-                      data-bs-toggle="modal"
-                      data-bs-target="#verticalycentered"
-                    >
-                      Delete
-                    </button>
+                   
+                 
+                    <div class="pt-2">
+                      <button type="submit" class="btn btn-warning "> Update </button>
+                      <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                       Delete
+                      </button>
                   </div>
                 </form>
                 <div class="modal fade" id="verticalycentered" tabindex="-1">
@@ -147,7 +139,7 @@
             </div>
           </div>
         </div>
-
+</div>
         <div class="card">
           <div class="card-body">
             <div class="card-title">
@@ -169,6 +161,7 @@
                   <select name="dept_head" class="form-control">
                      <option disabled value="">Select Department Head</option>
                      {% for dep in departmentHeads %}
+                     
                       <option value="{{dep.Full_Name}}">{{dep.Full_Name}}</option>
                      {% endfor %}
                   </select>

@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect, reverse
 from .form import *
 from .models import chatbot
 from .models import *
+from itertools import chain
+from Department_Head.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
@@ -18,7 +20,6 @@ from .process import html_to_pdf
 #Creating a class based view
 def store_dashboard(request):
     id=(request.user.id)
-   
     user=User.objects.get(id=id)
     re_emp=employ.objects.get(user=user)
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
@@ -147,8 +148,110 @@ def add_to_store1(request):
     return redirect('add-to-store')
    
 def cheeck_request(request):
-    return render(request,"Store_manager/cheeck_Request/cheeck_request.html")
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    context={
+        'emp_request':all_unreseved_req
+    }
+    return render(request,"Store_manager/cheeck_Request/cheeck_request.html",context)
 
+def aproved_request(request):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    context={
+        'emp_request':all_unreseved_req
+    }
+    return render(request,'Store_manager/cheeck_Request/approved_request.html',context)
+
+def rejected_request(request):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    context={
+        'emp_request':all_unreseved_req
+    }
+    return render(request,'Store_manager/cheeck_Request/rejected_request.html',context)
+def put_message_rejected_request(request,id):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    for requ in all_unreseved_req:
+        if requ.id==id:
+            searchedReq=requ
+            print(searchedReq)
+    context={
+        'searchedReq':searchedReq,
+    }
+    
+    if request.method == 'POST':
+        mess=request.POST.get('store_message')
+        id=str(request.POST.get('request_id'))
+        for requ in all_unreseved_req:
+            if str(requ.id)==id:
+                searchedReq=requ
+                searchedReq.note=mess
+                searchedReq.Store_Keeper_Action="Reject"
+                searchedReq.save()
+                return redirect('rejected-request')
+    return render(request,"Store_manager/cheeck_Request/message1.html",context)
+
+def send_message_to_request(request,id):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    for requ in all_unreseved_req:
+        if requ.id==id:
+            searchedReq=requ
+            print(searchedReq)
+    context={
+        'searchedReq':searchedReq,
+    }
+    
+    return render(request,"Store_manager/cheeck_Request/message.html",context)
+def store_manage_approve(request):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    
+    if request.method == 'POST':
+        mess=request.POST.get('store_message')
+        id=str(request.POST.get('request_id'))
+        for requ in all_unreseved_req:
+            if str(requ.id)==id:
+                searchedReq=requ
+                searchedReq.note=mess
+                searchedReq.Store_Keeper_Action="Allowed"
+                searchedReq.save()
+                return redirect('aproved_request')
+
+
+    return render(request,"Store_manager/cheeck_Request/message.html")
 def user_Profile(request):
     users = User.objects.get(id=request.user.id)
     re_employ=employ.objects.get(user=users)

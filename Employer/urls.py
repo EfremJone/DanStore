@@ -6,6 +6,9 @@ urlpatterns = [
    path('emp_request2',views.emp_request2,name="emp_request2"),
    path('complet_request',views.complet_request,name="complet_request"),
    path('reste_request_form',views.reste_request_form,name="reste_request_form"),
+   path('view_request/<int:id>',views.view_request,name="view_request"),
+   path('approved_accept/<int:id>',views.accept_approveal,name="approved_accept"),
+   path('cancel_request/<int:id>',views.cancel_request,name="cancel_request"),
   
   # -------- profile --------- #
    path('emp_user_Profile',views.user_Profile,name="emp_user-Profile"),

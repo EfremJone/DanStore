@@ -123,7 +123,7 @@
             <hr class="dropdown-divider" />
           </li>
         {% for message in all_my_message_ %}
-       
+           {% if message.me_with != request.user %}
           <li class="message-item">
             <a href="{% url 'dept_check_mess' message.id %}">
               <img
@@ -144,7 +144,7 @@
           <li>
             <hr class="dropdown-divider" />
           </li>
-          
+          {% endif %}
          {% endfor %}
           
           <li class="dropdown-footer">

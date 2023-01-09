@@ -35,6 +35,10 @@ def manage_employee(request):
 
 
 def add_new_employe(request):
+    all_store=allStore.objects.all()
+    context={
+        'all_store':all_store,
+    }
     if request.method == 'POST':
         firstName = request.POST.get('firstName')
         lastName = request.POST.get('lastName')
@@ -44,6 +48,9 @@ def add_new_employe(request):
         gender = request.POST.get('gender')
         email = request.POST.get('email')
         role = request.POST.get('role')
+        store = request.POST.get('store')
+        access_store=allStore.objects.get(pk=store)
+        print(access_store)
         Full_Name = firstName +" " + lastName
         if password1 == password2:
             new = User.objects.filter(username=userName)
@@ -63,35 +70,35 @@ def add_new_employe(request):
                         if role == 'Company_Admin':
                             new_group = Group.objects.get(name='Company_Admin')
                             new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
                             if newEmployee:
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
                         elif (role == 'Dept_Head'):
                             new_group = Group.objects.get(name='Dept_Head')
                             new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
                             if newEmployee:
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
                         elif (role == 'Store_Manager'):
                             new_group = Group.objects.get(name='Store_Manager')
                             new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
                             if newEmployee:
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
                         elif(role == 'Employee'):
                             new_group = Group.objects.get(name='Employe')
                             new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
                             if newEmployee:
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
                         elif(role == 'Finance'):
                             new_group = Group.objects.get(name='Finance')
                             new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender)
+                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
                             if newEmployee:
                                 messages.success(request,'You Have Successfully Created New Employee')
                                 return redirect("manage-employee")
@@ -102,7 +109,7 @@ def add_new_employe(request):
         else:
             messages.error(request, "password not match")
 
-    return render(request,'Company_Admin/ManageEmployee/add_new_employee.html')
+    return render(request,'Company_Admin/ManageEmployee/add_new_employee.html',context)
 
 #----------------- END of manage Employee ---------------#
 
@@ -244,16 +251,26 @@ def store(request):
     return render(request,'Company_Admin/Store/index.html', context)
 
 def store_details(request,id):
+    store=allStore.objects.get(pk=id)
     all_category = Catagory.objects.filter(store=id)
     all_category.storeId = id
-   
+    storeKeepers = employ.objects.filter(role = 'Store_Manager')
     context = {
         'all_category': all_category,
-        'storeId':id
+        'storeId':id,
+        'store':store,
+        'storeKeepers': storeKeepers
     }
-   
+    if request.method == "POST":
+        new_store_name=request.POST.get('store_name')
+        store.storeName =new_store_name
+        store.save()
+        print(new_store_name)
     return render(request,"Company_Admin/Store/store_detail.html", context)
 
+def delete_store(request,id):
+    allStore.objects.get(pk=id).delete()
+    return redirect('store')
 def add_new_store(request):
     storeKeepers = employ.objects.filter(role = 'Store_Manager')
     context={
@@ -263,16 +280,23 @@ def add_new_store(request):
     if request.method == 'POST':
         storeName = request.POST.get('storeName')
         storeDescription = request.POST.get('storeDescription')
-        storeKeeper = request.POST.get('storeKeeper')
+        
         storeLocation = request.POST.get('storeLocation')
 
 
-        addedStore = allStore.objects.create(storeName=storeName,storeDescription=storeDescription,storeKeeper=storeKeeper,storeLocation=storeLocation)
+        addedStore = allStore.objects.create(storeName=storeName,storeDescription=storeDescription,storeLocation=storeLocation)
         if addedStore:
             return redirect('store')
         
     return render(request, 'Company_Admin/Store/add_new_store.html', context)
-
+def store_manager_update(request,id):
+    store=allStore.objects.get(id=id)
+    if request.method == "POST":
+        new_store_keeper=request.POST.get("store_keeper")
+        store.storeKeeper=new_store_keeper
+        store.save()
+        print("This is store manager",new_store_keeper)
+    return redirect('store-details',id)
 def cat_item_detail(request,id):
     category = Catagory.objects.get(pk=id)
     context={
