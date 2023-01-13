@@ -8,10 +8,12 @@ urlpatterns = [
     path('',include("account.urls") ),
     path('comp-admin/',include("Company_Admin.urls")),
     path('Store_Manager/',include("Store_manager.urls")),
-   
     path('department_head/',include("Department_Head.urls")),
     path('Employer/',include("Employer.urls")),
     path('Finance/',include("Finance.urls")),
+    path('Human_Resource/',include("human_resource.urls")),
+
+    
     
 
     

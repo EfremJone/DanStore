@@ -96,6 +96,14 @@ class employ(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     Thechnologist =models.BooleanField(blank=True,null=True,default=False)
     accessStore=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
+    Titel = models.CharField(max_length=20,null=True,blank=True)
+    Filed_Study = models.CharField(max_length=20,null=True,blank=True)
+    Collage = models.CharField(max_length=20,null=True,blank=True)
+    grade=models.CharField(max_length=20,null=True,blank=True)
+    Year_Graguation = models.DateField(null=True,blank=True)
+    Document=models.FileField(null=True,blank=True,upload_to="File/Document")
+
+  
     def __str__(self):
         return str(self.user)
 class chatbot(models.Model):
