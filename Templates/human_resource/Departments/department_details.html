@@ -24,24 +24,18 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Manage Department</h5>
-                <form action="{% url 'set_dept_head' %}" method="POST">
+                <form action="{% url 'hr_dept_name_change' %}" method="POST">
                   {% csrf_token %}
                   <label for="inputNanme4" class="form-label"
                     ><span>Department Name</span></label
                   >
-                 
                   <input
-                    type="hidden"
-                    name="departmentId"
-                    value="#"
-                  />
-                  <select name="dept_head" class="form-control">
-                     <option disabled value="">Select Department Head</option>
-                     {% for dep in departmentHeads %}
-                     
-                      <option value="{{dep.Full_Name}}">{{dep.Full_Name}}</option>
-                     {% endfor %}
-                  </select>
+                  type="hidden"
+                  name="departmentId"
+                  value="{{selectedDepartment.id}}"
+                />
+                 
+                   <input type="text" name="deptname" id="" class="form-control" value="{{selectedDepartment.departmentName}}">
                   <div style="display: flex; justify-content: flex-end">
                     <button
                       style="margin: 10px"
@@ -50,16 +44,38 @@
                     >
                       Update
                     </button>
-                    <button
-                      style="margin: 10px"
-                      type="submit"
-                      class="btn btn-outline-danger"
-                    >
-                      Delete
-                    </button>
-                    
+                  <!-- Vertically centered Modal -->
+              <button type="button" 
+              style="margin: 10px"
+             
+              class="btn btn-outline-danger"
+              data-bs-toggle="modal" data-bs-target="#verticalycentered">
+
+
+
+                Delete
+              </button>
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Delete Department</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                     Are You Sure to delete Department {{selectedDepartment.departmentName}} ? </div>
+                    <div class="modal-footer">
+                      <a href="{% url 'hr-department-detail' selectedDepartment.id %}" class="btn btn-info" data-bs-dismiss="modal">No</a>
+                      <a href="{% url 'hr-department-delete' selectedDepartment.id %}" class="btn btn-danger">Yes</a>
+                    </div>
                   </div>
-                </form>
+                </div>
+              </div><!-- End Vertically centered Modal-->
+
+                  </div>
+                </form><!-- Vertical Form -->
+            <!-- Vertically centered Modal -->
+           
               </div>
             </div>
           </div>
@@ -69,7 +85,7 @@
                 <h5 class="card-title">Manage Department Head</h5>
               </h2>
               
-                <form action="{% url 'set_dept_head' %}" method="POST">
+                <form action="{% url 'hr_set_dept_head' %}" method="POST">
                   {% csrf_token %}
                   <label for="inputNanme4" class="form-label"
                     ><span>Department Head Name</span></label
@@ -78,7 +94,7 @@
                   <input
                     type="hidden"
                     name="departmentId"
-                    value="#"
+                    value="{{selectedDepartment.id}}"
                   />
                   <select name="dept_head" class="form-control">
                      <option disabled value="">Select Department Head</option>

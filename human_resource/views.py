@@ -251,11 +251,13 @@ def hr_department(request):
     return render(request,'human_resource/Departments/index.html',context)
 
 def hr_department_detail(request,id):
+    DeptHead = employ.objects.filter(role = 'Dept_Head')
     req_dep=department.objects.get(pk=id)
     all_emp=employ.objects.all()
     indep=req_dep.departmentName
     all_employer=employ.objects.filter(inDepartment=indep)
     context={
+         "departmentHeads" : DeptHead,
         'selectedDepartment':req_dep,
         'all_emp':all_emp,
         'all_employer':all_employer,
@@ -278,6 +280,30 @@ def add_emp_to_dep(request):
     
     
     return redirect('hr-department-detail',selec_dep.id)
+def hr_set_dept_head(request):
+    if request.method =="POST":
+        dept_id=request.POST.get('departmentId')
+        dept_head=request.POST.get('dept_head')
+        update_dept=department.objects.get(id=dept_id)
+        update_dept.departmentHead = dept_head
+        update_dept.save()
+        print("dept_id",dept_id)
+        print("dept_head",dept_head)
+    return redirect('hr-department-detail',dept_id)
+
+def hr_dept_name_change(request):
+    if request.method =="POST":
+        dept_id=request.POST.get('departmentId')
+        dept_name=request.POST.get('deptname')
+        update_dept=department.objects.get(id=dept_id)
+        update_dept.departmentName = dept_name
+        update_dept.save()
+        print("dept_id",dept_id)
+        print("dept_head",dept_name)
+    return redirect('hr-department-detail',dept_id)
+def hr_department_delete(request,id):
+    department.objects.get(id=id).delete()
+    return redirect('hr-department')
 
 def hr_add_new_department(request):
     DeptHead = employ.objects.filter(role = 'Dept_Head')

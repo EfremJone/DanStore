@@ -21,6 +21,10 @@ urlpatterns = [
     path('hr_department_detail/<int:id>', views.hr_department_detail, name='hr-department-detail'),
     path('hr_add-new-department',views.hr_add_new_department,name='hr_add-new-department'),
     path('add_emp_to_dep', views.add_emp_to_dep, name='add_emp_to_dep'),
+    path('hr_set_dept_head', views.hr_set_dept_head, name='hr_set_dept_head'),
+    path('hr_dept_name_change', views.hr_dept_name_change, name='hr_dept_name_change'),
+    path('hr-department-delete/<int:id>', views.hr_department_delete, name='hr-department-delete'),
+    
     
     # END DEPARTMENT  
    ]
