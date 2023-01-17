@@ -24,7 +24,8 @@
         <div class="card shadow">
           <div class="card-body" style="margin: 20px">
             <h4>Department Name</h4>
-            <h3>{{dept_name}}</h3>
+            <h2><span class="badge bg-primary">{{dept_name}}</span><h2>
+            
           </div>
         </div>
       </div>
@@ -32,7 +33,8 @@
         <div class="card shadow">
           <div class="card-body" style="margin: 20px">
             <h4>Members</h4>
-            <h3>{{all_emp.count}}</h3>
+            
+            <h2><span class="badge bg-primary">{{all_emp.count}}</span><h2></h2>
           </div>
         </div>
       </div>
@@ -40,7 +42,8 @@
         <div class="card shadow">
           <div class="card-body" style="margin: 20px">
             <h4>Pending Request</h4>
-            <h3>{{No_pending_req}}</h3>
+            <h2><span class="badge bg-warning">{{No_pending_req}}</span><h2></h2>
+            
           </div>
         </div>
       </div>
@@ -64,7 +67,7 @@
             >
             {{selectedDepartment.departmentDescription}}
 
-            <h4>Members of {{selectedDepartment.departmentName}}</h4>
+            
             <table class="table table-striped datatable">
               <thead>
                 <tr>

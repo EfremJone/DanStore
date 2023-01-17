@@ -306,19 +306,68 @@ def hr_department_delete(request,id):
     return redirect('hr-department')
 
 def hr_add_new_department(request):
-    DeptHead = employ.objects.filter(role = 'Dept_Head')
-    
-    context = {
-        "departmentHeads" : DeptHead
-    }
     if request.method == 'POST':
         departmentName = request.POST.get('departmentName')
         departmentDescription = request.POST.get('departmentDescription')
-        
-        dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription)
-        if dept:
-            messages.success(request,'You Have Successfully added new department.')
-            
+        all_dep=department.objects.filter(departmentName=departmentName)
+        if all_dep.count():
+            messages.error(request, "Department Name Already Exist")
+            return render(request,'human_resource/Departments/add_new_department.html',)
+        else:
+            dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription)
+            if dept:
+                messages.success(request,'You Have Successfully added new department.')
         return redirect('hr-department')
+    return render(request,'human_resource/Departments/add_new_department.html',)
 
-    return render(request,'human_resource/Departments/add_new_department.html', context)
+def manage_emp_role(request,id):
+    req_emp=employ.objects.get(pk=id)
+    user=req_emp.user
+    if request.method == 'POST':
+        if request.POST.get('r1') == 'on':
+            req_emp.role = 'Employe'
+            user.groups.clear()
+            new_group = Group.objects.get(name='Employe')
+            new_group.user_set.add(user)
+        elif request.POST.get('r2') == 'on':
+            req_emp.role = 'Dept_Head'
+            user.groups.clear()
+            new_group = Group.objects.get(name='Dept_Head')
+            new_group.user_set.add(user)
+        elif request.POST.get('r3') == 'on':
+            req_emp.role = 'Store_Manager'
+            user.groups.clear()
+            new_group = Group.objects.get(name='Store_Manager')
+            new_group.user_set.add(user)
+        elif request.POST.get('r4') == 'on':
+            req_emp.role = 'Finance'
+            user.groups.clear()
+            new_group = Group.objects.get(name='Finance')
+            new_group.user_set.add(user)
+        new=request.POST.get('R1')
+        print('this is:',new)
+        req_emp.save()
+    return redirect('employe-ditel',id)
+
+def hr_set_dept_emp(request,id):
+    req_emp=employ.objects.get(pk=id)
+    print(req_emp.inDepartment)
+    if request.method == 'POST':
+        dept_name=request.POST.get('dept_name')
+        print(dept_name)
+        req_emp.inDepartment=dept_name
+    req_emp.save()  
+    return redirect('employe-ditel',id)
+    
+def hr_active_status(request,id):
+    req_emp=employ.objects.get(pk=id)
+    print(req_emp.user.is_active)
+    if request.method == 'POST':
+        if (request.POST.get('active')) == 'on':
+            req_emp.user.is_active = True
+        else:
+            req_emp.user.is_active = False
+        
+    req_emp.user.save() 
+    return redirect('employe-ditel',id)
+    

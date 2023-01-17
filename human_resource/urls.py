@@ -10,9 +10,10 @@ urlpatterns = [
     path('unaproveEmploye-ditel/<int:id>',views.unapproveEmploye_ditel, name='un-employe-ditel'),
     path('rejected_emp_approved_request',views.rejected_emp_approved_request, name='rejected-emp-approved-request'),
     path('reject-request-unemp/<int:id>',views.reject_request, name='reject-request-unemp'),
-     
-   
     path('approve-unaproved-emp/<int:id>',views.approve_unaproved_emp, name='approve-unaproved-emp'),
+    path('hr_set_dept_emp/<int:id>',views.hr_set_dept_emp, name='hr_set_dept_emp'),
+    path('manage_emp_role/<int:id>',views.manage_emp_role, name='manage_emp_role'),
+    path('hr_active_status/<int:id>',views.hr_active_status, name='hr_active_status'),
     
     #  End Employe 
      
