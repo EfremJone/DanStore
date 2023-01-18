@@ -285,7 +285,7 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
-    <li>Admin</li>
+   
     <li class="nav-item">
       <a class="nav-link collapsed active" href="{% url 'admin-dashboard' %}">
         <i class="bi bi-speedometer" style="color: black"></i>
@@ -293,23 +293,42 @@
       </a>
     </li>
     <!-- End Dashboard Nav -->
-    <li>Employees</li>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'manage-employee' %}">
-        <i class="bi bi-people-fill" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Manage Employees</span>
+      <a class="nav-link collapsed" href="{% url 'store' %}">
+        <i class="bi bi bi-shop" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">item in  Store</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'departments' %}">
         <i class="bi bi-boxes" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Departments</span>
+        <span style="color: rgb(96, 96, 96)">item in Departments</span>
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'manage-employee' %}">
+        <i class="bi bi-people-fill" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">item in Employees</span>
+      </a>
+    </li>
+  
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'departments' %}">
+        <i class="bi bi-boxes" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Approve Purchase item</span>
+      </a>
+    </li>
+    
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'vendors' %}">
         <i class="bi bi-basket-fill" style="color: black"></i>
         <span style="color: rgb(96, 96, 96)">Vendors</span>
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{% url 'store' %}">
+        <i class="bi bi bi-shop" style="color: black"></i>
+        <span style="color: rgb(96, 96, 96)">Create New  Store</span>
       </a>
     </li>
     <li class="nav-item">
@@ -318,21 +337,12 @@
         <span style="color: rgb(96, 96, 96)">Roles</span>
       </a>
     </li>
-    <li style="color: black">Store</li>
+    
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'store' %}">
-        <i class="bi bi bi-shop" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Store</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="{% url 'reports' %}">
-        <i class="bi bi-file-earmark-medical" style="color: black"></i>
-        <span style="color: rgb(96, 96, 96)">Reports</span>
-      </a>
-    </li>
-    <li style="color: black">Chat</li>
+    
+    
+   
+    
     <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'admin-chat' %}">
         <i class="bi bi-chat-left-text" style="color: black"></i>

@@ -28,4 +28,6 @@ urlpatterns = [
     
     
     # END DEPARTMENT  
+    path('hr-role', views.role_details, name='hr-role'),
+    
    ]

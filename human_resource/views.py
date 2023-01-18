@@ -253,7 +253,7 @@ def hr_department(request):
 def hr_department_detail(request,id):
     DeptHead = employ.objects.filter(role = 'Dept_Head')
     req_dep=department.objects.get(pk=id)
-    all_emp=employ.objects.all()
+    all_emp=employ.objects.filter(role='Employe')
     indep=req_dep.departmentName
     all_employer=employ.objects.filter(inDepartment=indep)
     context={
@@ -371,3 +371,12 @@ def hr_active_status(request,id):
     req_emp.user.save() 
     return redirect('employe-ditel',id)
     
+def role_details(request):
+    user=User.objects.get(id=request.user.id)
+    group=Group.objects.get(user=user)
+   
+    context={
+        'req_emp':group,
+        'user':user,
+    }
+    return render(request,'human_resource/role_details.html',context)
