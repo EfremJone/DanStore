@@ -57,6 +57,8 @@ def manage_catagory(request):
             messages.success(request,"You have added a new category successfully.")
             return redirect('manage-catagory')
     return render(request,'Store_manager/Catagory/manage_catagory.html',context)
+def search_catagory(request):
+    return render(request,'Store_manager/Catagory/search_catagory.html',{})
 def add_new_catagory(request):
     all_catagory = Catagory.objects.all()
     context ={

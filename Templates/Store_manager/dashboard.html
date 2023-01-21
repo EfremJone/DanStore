@@ -16,54 +16,38 @@
 
   <section class="section dashboard">
     <div class="row">
-      <div class="col-6">
-    <div class="card p-3">
-    <div class="cadr-body">
-    <h1 class="card-title"> Fixed Assets</h1>
-    <div class="row">
-      
-      {% for catagory in all_catagory %}
-      {% if catagory.Type_of_Asset == "Fixed assets" %}
-      
-      <div class="col-6 p-2" >
-        <div class="card info-card sales-card newshadow">
-          <a href="{% url 'catagory-detail' catagory.id %}">
-            <div class="card-body">
-              <h5 class="card-title" style="color: black">
-                {{catagory.Catagory_Name}}
-              </h5>
-              <div class="d-flex align-items-center">
-                <!-- <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-cart"></i>
-                      </div> -->
-                <div class="ps-3">
-                  <span style="color: black">
-                    {{catagory.item_set.all.count}} Item
-                  </span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-      {% endif %}
-      {% endfor %}
-      
-    </div>
-    </div>
-</div>
-      </div>
-
-      <div class="col-6">
+     
+     <div class="col-12">
         <div class="card p-3">
         <div class="cadr-body">
-        <h1 class="card-title"> Current Assets</h1>
+          <div class="row ">
+            
+            <form action="{% url 'search-catagory' %}" method="POST"></form>
+            <div class="col-5">
+              <span class="card-title">All Item In Store</span>
+            </div>
+            <div class="col-7 ">
+              
+              <div class="row ">
+                <div class="col-10">
+                  <input type="text" name="query" placeholder="Search" class="form-control">
+                </div>
+                <div class="col-2">
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-search" class="form-control"></i>Serche</button>
+                </div>
+            
+              </div>
+            </form>
+            </div><!-- End Search Bar -->
+        
+          </div>
+        
+        <hr>
+        {% block forsearch %}
         <div class="row">
           
           {% for catagory in all_catagory %}
-          {% if catagory.Type_of_Asset == "Current assets" %}
-          
-          <div class="col-6 p-2" >
+          <div class="col-4 p-2" >
             <div class="card info-card sales-card newshadow">
               <a href="{% url 'catagory-detail' catagory.id %}">
                 <div class="card-body">
@@ -76,18 +60,25 @@
                           </div> -->
                     <div class="ps-3">
                       <span style="color: black">
-                        {{catagory.item_set.all.count}} Item
+                        <h2><span class="badge bg-info"> {{catagory.item_set.all.count}} </span><span class="h5"> Item in Stok</span> </h2>
                       </span>
+                      
+                      
+                      <span class="text-primary">
+                        {{catagory.Type_of_Asset}} 
+                      </span>
+                      
                     </div>
                   </div>
                 </div>
               </a>
             </div>
           </div>
-          {% endif %}
+          
           {% endfor %}
           
         </div>
+        {% endblock forsearch %}
         </div>
     </div>
           </div>

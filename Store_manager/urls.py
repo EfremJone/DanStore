@@ -28,6 +28,7 @@ urlpatterns = [
    
    # ---------- Catagory ---------- #
    path('manage_catagory/',views.manage_catagory,name="manage-catagory"),
+   path('search_catagory/',views.search_catagory,name="search-catagory"),
    path('add_new_catagory',views.add_new_catagory,name="new-catagory"),
    path('catagory_detail/<int:id>',views.catagory_detail,name="catagory-detail"),
    path('catagory_delete/<int:id>',views.delete_catagory,name="catagory-delete"),
