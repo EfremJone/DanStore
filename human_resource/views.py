@@ -57,16 +57,20 @@ def add_new_employe(request):
             phone1=request.POST.get('phone1')
             phone2=request.POST.get('phone2')
             gender=request.POST.get('gender')
-           
-            new_form1.objects.create(
-                First_Name=First_Name,
-                Last_Name=Last_Name,
-                Emila=Emila,
-                Address=Address,
-                phone1=phone1,
-                phone2=phone2,
-                gender=gender,)
-            return redirect('hr_registration-form2',)
+            new = User.objects.filter(email=Emila)
+            if new.count():
+                    messages.error(request, "Eamil Already Exist")
+                    return redirect('hr-add-new-employe')
+            else:
+                new_form1.objects.create(
+                    First_Name=First_Name,
+                    Last_Name=Last_Name,
+                    Emila=Emila,
+                    Address=Address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    gender=gender,)
+                return redirect('hr_registration-form2',)
     else:
         if request.method == "POST":
             First_Name=request.POST.get('firstName')
@@ -76,18 +80,22 @@ def add_new_employe(request):
             phone1=request.POST.get('phone1')
             phone2=request.POST.get('phone2')
             gender=request.POST.get('gender')
-           
-            from1=new_form1.objects.create(
-                First_Name=First_Name,
-                Last_Name=Last_Name,
-                Emila=Emila,
-                Address=Address,
-                phone1=phone1,
-                phone2=phone2,
-                gender=gender,
-                )
-           
-            return redirect('hr_registration-form2',)
+            new = User.objects.filter(email=Emila)
+            if new.count():
+                    messages.error(request, "Eamil Already Exist")
+                    return redirect('hr-add-new-employe')
+            else:
+                from1=new_form1.objects.create(
+                    First_Name=First_Name,
+                    Last_Name=Last_Name,
+                    Emila=Emila,
+                    Address=Address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    gender=gender,
+                    )
+            
+                return redirect('hr_registration-form2',)
     return render(request,'human_resource/ManageEmployee/add_new_employee.html',{})
 
 def hr_registration_form2(request):
@@ -124,7 +132,7 @@ def hr_registration_form2(request):
                 year=year,
                 file=file,
             )
-            return redirect('registration-form3',)
+            return redirect('hr_registration-form3',)
     else:
         if request.method == "POST":
             Title=request.POST.get('title')
@@ -141,7 +149,6 @@ def hr_registration_form2(request):
                 phone1=phone1,
                 phone2=phone2,
                 gender=gender,
-              
                 Titel=Title,
                 Filed_Study=Filed_Stud,
                 Collage=Collage,
@@ -149,9 +156,9 @@ def hr_registration_form2(request):
                 Year_Graguation=year,
                 Document=file,
             )
-            return redirect('registration-form3',)
+            return redirect('hr_registration-form3',)
+    return render(request,'human_resource/ManageEmployee/add_new_employee_form2.html',{})
 
-    return render(request,'account/form2.html',{})
 def hr_registration_form3(request):
     username= generate_username(1)[0]
     length=8
@@ -180,21 +187,57 @@ def hr_registration_form3(request):
     grade=b_form.grade
     Year_Graguation=b_form.Year_Graguation
     Document=b_form.Document
+    Full_Name=First_Name + Last_Name
     if request.method == 'POST':
         Branch=request.POST.get('branch')
         Department=request.POST.get('dep')
         role=request.POST.get('role')
         new = User.objects.filter(username=username)
+        access_store=allStore.objects.get(storeName=Branch)
         if new.count():
             messages.error(request, "User Already Exist")
+            print("User Already Exist")
+            return redirect('hr_registration-form3')
         else:
-            new = User.objects.filter(email=Emila)
-            if new.count():
-                    messages.error(request, "Eamil Already Exist")
-            else:
-                pass
-        return redirect('thanks')
-    return render(request,'account/form3.html',context)
+            user = User.objects.create_user(
+                        username=username, 
+                        email=Emila, 
+                        password=password, 
+                        first_name=First_Name, 
+                        last_name=Last_Name)
+            user.save()
+        if  role == 'Employe':
+                    new_group = Group.objects.get(name='Employe')
+                    new_group.user_set.add(user)
+                    newEmployee = employ.objects.create(user=user,
+                    role=role,
+                    Full_Name=Full_Name,
+                    gender=gender,
+                    accessStore=access_store,
+                    address=Address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    Titel=Titel,
+                    Filed_Study=Filed_Study,
+                    profile_pic=profile_pic,
+                    Collage=Collage,
+                    grade=grade,
+                    Year_Graguation=Year_Graguation,
+                    Document=Document,
+                    inDepartment=Department
+                    )
+                    if newEmployee:
+                        send_mail(
+                                    ' Wellcome DanEnergy ',
+                                    'Dear '+ First_Name + '\n' + 'This is your username and password \n'+ 'Username: ' +  username + '\n' + 'Password: ' +  password + '\n' + 'Please change your username and password before proceeding.',
+                                    'bgiethipia.hade@gmail.com',
+                                    [Emila],
+                                    fail_silently=False,)
+                        
+                        messages.success(request,'You Have Successfully Created New Employee')
+                        
+                        return redirect('hr-manage-employee')
+    return render(request,'human_resource/ManageEmployee/add_new_employee_form3.html',context)
 
 
 def employe_ditel(request,id):
@@ -257,7 +300,6 @@ def approve_unaproved_emp(request,id):
     un_employ=unAproved_employees.objects.get(pk=id)
     un_employ.cheek = True
     un_employ.save()
-    print(un_employ.cheek)
     email=un_employ.Emila
     firstName=un_employ.First_Name
     lastName=un_employ.Last_Name
@@ -322,12 +364,100 @@ def approve_unaproved_emp(request,id):
                                     'bgiethipia.hade@gmail.com',
                                     [email],
                                     fail_silently=False,)
-                        un_employ.cheek = True
-                        un_employ.save()
+                        
                         messages.success(request,'You Have Successfully Created New Employee')
                         
                         return redirect('hr-manage-employee')
+                elif (role == 'Dept_Head'):
+                    new_group = Group.objects.get(name='Dept_Head')
+                    new_group.user_set.add(user)
+                    newEmployee = employ.objects.create(user=user,
+                    role=role,
+                    Full_Name=Full_Name,
+                    gender=gender,
+                    accessStore=access_store,
+                    address=address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    Titel=Titel,
+                    Filed_Study=Filed_Study,
+                    profile_pic=profile_pic,
+                    Collage=Collage,
+                    grade=grade,
+                    Year_Graguation=Year_Graguation,
+                    Document=Document,
+                    inDepartment=inDepartment
+                    )
+                    if newEmployee:
+                        send_mail(
+                                    ' Wellcome DanEnergy ',
+                                    'Dear '+ firstName + '\n' + 'This is your username and password \n'+ 'Username: ' +  username + '\n' + 'Password: ' +  password + '\n' + 'Please change your username and password before proceeding.',
+                                    'bgiethipia.hade@gmail.com',
+                                    [email],
+                                    fail_silently=False,)
                         
+                        messages.success(request,'You Have Successfully Created New Employee')
+                        
+                        return redirect('hr-manage-employee')
+                elif (role == 'Store_Manager'):
+                    new_group = Group.objects.get(name='Store_Manager')
+                    newEmployee = employ.objects.create(user=user,
+                    role=role,
+                    Full_Name=Full_Name,
+                    gender=gender,
+                    accessStore=access_store,
+                    address=address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    Titel=Titel,
+                    Filed_Study=Filed_Study,
+                    profile_pic=profile_pic,
+                    Collage=Collage,
+                    grade=grade,
+                    Year_Graguation=Year_Graguation,
+                    Document=Document,
+                    inDepartment=inDepartment
+                    )
+                    if newEmployee:
+                        send_mail(
+                                    ' Wellcome DanEnergy ',
+                                    'Dear '+ firstName + '\n' + 'This is your username and password \n'+ 'Username: ' +  username + '\n' + 'Password: ' +  password + '\n' + 'Please change your username and password before proceeding.',
+                                    'bgiethipia.hade@gmail.com',
+                                    [email],
+                                    fail_silently=False,)
+                        
+                        messages.success(request,'You Have Successfully Created New Employee')
+                        return redirect('hr-manage-employee')
+            elif(role == 'Finance'):
+                new_group = Group.objects.get(name='Finance')
+                new_group.user_set.add(user)
+                newEmployee = employ.objects.create(user=user,
+                    role=role,
+                    Full_Name=Full_Name,
+                    gender=gender,
+                    accessStore=access_store,
+                    address=address,
+                    phone1=phone1,
+                    phone2=phone2,
+                    Titel=Titel,
+                    Filed_Study=Filed_Study,
+                    profile_pic=profile_pic,
+                    Collage=Collage,
+                    grade=grade,
+                    Year_Graguation=Year_Graguation,
+                    Document=Document,
+                    inDepartment=inDepartment
+                    )
+                if newEmployee:
+                    send_mail(
+                                ' Wellcome DanEnergy ',
+                                'Dear '+ firstName + '\n' + 'This is your username and password \n'+ 'Username: ' +  username + '\n' + 'Password: ' +  password + '\n' + 'Please change your username and password before proceeding.',
+                                'bgiethipia.hade@gmail.com',
+                                [email],
+                                fail_silently=False,)
+                    
+                    messages.success(request,'You Have Successfully Created New Employee')
+                    return redirect('hr-manage-employee')
     return redirect('hr-aprove-employe')
     
 #----------------- END of manage Employee ---------------#

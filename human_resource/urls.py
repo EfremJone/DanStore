@@ -8,8 +8,8 @@ urlpatterns = [
    
    # add new employe
     path('hr_add-new-employe',views.add_new_employe, name='hr-add-new-employe'),
-    path('hr_registration_form2',views.hr_registration_form2,name="hr_registration-form2"),
-    path('hr_registration_form3',views.hr_registration_form3,name="hr_registration-form3"),
+    path('hr_registration_form2',views.hr_registration_form2,name='hr_registration-form2'),
+    path('hr_registration_form3',views.hr_registration_form3,name='hr_registration-form3'),
    # end add new employe
 
 
