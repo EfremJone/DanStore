@@ -9,9 +9,13 @@ from django.core.mail import send_mail
 import random
 import string
 from random_username.generate import generate_username
-
+from .form import *
+from django.contrib.auth import update_session_auth_hash
 
 def hr_dashboard(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     totall_NoEmp=employ.objects.all().count()
     totall_NoDep=department.objects.all().count()
     totall_NoRole=allRole.objects.all().count()
@@ -23,130 +27,228 @@ def hr_dashboard(request):
         'totall_NoRole':totall_NoRole,
         'allEmployees':allEmployees,
         'allunAprove':allunAprove,
+        'admin':admin,
     }
    
     return render(request,'human_resource/index.html',context)
 #----------------- MANAGE EMPLOYEE ---------------#
 def manage_employee(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     allEmployees = employ.objects.all()
     context = {
-        'all_emplyees': allEmployees
+        'all_emplyees': allEmployees,
+        'admin':admin,
     }
 
     return render(request,'human_resource/ManageEmployee/index.html', context)
 
 
 def add_new_employe(request):
+    abc=new_form1.objects.all()
+    if abc:
+        new_form1.objects.all().delete()
+        if request.method == "POST":
+            First_Name=request.POST.get('firstName')
+            Last_Name=request.POST.get('lastname')
+            Emila=request.POST.get('email')
+            Address=request.POST.get('address')
+            phone1=request.POST.get('phone1')
+            phone2=request.POST.get('phone2')
+            gender=request.POST.get('gender')
+           
+            new_form1.objects.create(
+                First_Name=First_Name,
+                Last_Name=Last_Name,
+                Emila=Emila,
+                Address=Address,
+                phone1=phone1,
+                phone2=phone2,
+                gender=gender,)
+            return redirect('hr_registration-form2',)
+    else:
+        if request.method == "POST":
+            First_Name=request.POST.get('firstName')
+            Last_Name=request.POST.get('lastname')
+            Emila=request.POST.get('email')
+            Address=request.POST.get('address')
+            phone1=request.POST.get('phone1')
+            phone2=request.POST.get('phone2')
+            gender=request.POST.get('gender')
+           
+            from1=new_form1.objects.create(
+                First_Name=First_Name,
+                Last_Name=Last_Name,
+                Emila=Emila,
+                Address=Address,
+                phone1=phone1,
+                phone2=phone2,
+                gender=gender,
+                )
+           
+            return redirect('hr_registration-form2',)
+    return render(request,'human_resource/ManageEmployee/add_new_employee.html',{})
+
+def hr_registration_form2(request):
+    a_form1=new_form1.objects.all()[0]
+    First_Name=a_form1.First_Name
+    Last_Name=a_form1.Last_Name
+    Emila=a_form1.Emila
+    Address=a_form1.Address
+    phone1=a_form1.phone1
+    phone2=a_form1.phone2
+    gender=a_form1.gender
+    b_form2=new_form2.objects.all()
+    if b_form2:
+        new_form2.objects.all().delete()
+        if request.method == "POST":
+            Title=request.POST.get('title')
+            Filed_Stud=request.POST.get('filed_st')
+            Collage=request.POST.get('collage')
+            Grade=request.POST.get('grade')
+            year=request.POST.get('year')
+            file=request.FILES.get('file')
+            new_form2.objects.create(
+                First_Name=First_Name,
+                Last_Name=Last_Name,
+                Emila=Emila,
+                Address=Address,
+                phone1=phone1,
+                phone2=phone2,
+                gender=gender,
+                Title=Title,
+                Filed_Stud=Filed_Stud,
+                Collage=Collage,
+                Grade=Grade,
+                year=year,
+                file=file,
+            )
+            return redirect('registration-form3',)
+    else:
+        if request.method == "POST":
+            Title=request.POST.get('title')
+            Filed_Stud=request.POST.get('filed_st')
+            Collage=request.POST.get('collage')
+            Grade=request.POST.get('grade')
+            year=request.POST.get('year')
+            file=request.FILES.get('file')
+            new_form2.objects.create(
+                First_Name=First_Name,
+                Last_Name=Last_Name,
+                Emila=Emila,
+                Address=Address,
+                phone1=phone1,
+                phone2=phone2,
+                gender=gender,
+              
+                Titel=Title,
+                Filed_Study=Filed_Stud,
+                Collage=Collage,
+                grade=Grade,
+                Year_Graguation=year,
+                Document=file,
+            )
+            return redirect('registration-form3',)
+
+    return render(request,'account/form2.html',{})
+def hr_registration_form3(request):
+    username= generate_username(1)[0]
+    length=8
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    password=result_str
+    all_dep=department.objects.all()
     all_store=allStore.objects.all()
     context={
+        'all_dep':all_dep,
         'all_store':all_store,
     }
+    
+    b_form=new_form2.objects.all()[0]
+    First_Name=b_form.First_Name
+    Last_Name=b_form.Last_Name
+    Emila=b_form.Emila
+    Address=b_form.Address
+    phone1=b_form.phone1
+    phone2=b_form.phone2
+    gender=b_form.gender
+    profile_pic=b_form.profile_pic
+    Titel=b_form.Titel
+    Filed_Study=b_form.Filed_Study
+    Collage=b_form.Collage
+    grade=b_form.grade
+    Year_Graguation=b_form.Year_Graguation
+    Document=b_form.Document
     if request.method == 'POST':
-        firstName = request.POST.get('firstName')
-        lastName = request.POST.get('lastName')
-        userName = request.POST.get('userName')
-        password1 = request.POST.get('temporaryPassword')
-        password2 = request.POST.get('temporaryPasswordConfirm')
-        gender = request.POST.get('gender')
-        email = request.POST.get('email')
-        role = request.POST.get('role')
-        store = request.POST.get('store')
-        access_store=allStore.objects.get(pk=store)
-        print(access_store)
-        Full_Name = firstName +" " + lastName
-        if password1 == password2:
-            new = User.objects.filter(username=userName)
-            if new.count():
-                messages.error(request, "User Already Exist")
-            else:
-                new = User.objects.filter(email=email)
-                if new.count():
-                    a = new.count()
-                   
-                    messages.error(request, "Eamil Already Exist")
-                else:
-                     user = User.objects.create_user(
-                         username=userName, email=email, password=password1, first_name=firstName, last_name=lastName)
-                     user.save()
-                     if user:
-                        if role == 'Company_Admin':
-                            new_group = Group.objects.get(name='Company_Admin')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif (role == 'Dept_Head'):
-                            new_group = Group.objects.get(name='Dept_Head')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif (role == 'Store_Manager'):
-                            new_group = Group.objects.get(name='Store_Manager')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif(role == 'Employee'):
-                            new_group = Group.objects.get(name='Employe')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif(role == 'Finance'):
-                            new_group = Group.objects.get(name='Finance')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        
-                        
-                   
-
+        Branch=request.POST.get('branch')
+        Department=request.POST.get('dep')
+        role=request.POST.get('role')
+        new = User.objects.filter(username=username)
+        if new.count():
+            messages.error(request, "User Already Exist")
         else:
-            messages.error(request, "password not match")
+            new = User.objects.filter(email=Emila)
+            if new.count():
+                    messages.error(request, "Eamil Already Exist")
+            else:
+                pass
+        return redirect('thanks')
+    return render(request,'account/form3.html',context)
 
-    return render(request,'human_resource/ManageEmployee/add_new_employee.html',context)
+
 def employe_ditel(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     req_emp=employ.objects.get(pk=id)
     all_dep=department.objects.all()
     context={
         'req_emp':req_emp,
         'all_dep':all_dep,
+        'admin':admin,
     }
     return render(request,'human_resource/ManageEmployee/employe_ditel.html',context)
 
 def aprove_employe(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     allUnAprove=unAproved_employees.objects.filter(cheek=None)
     context={
         'allUnAprove':allUnAprove,
+        'admin':admin,
     }
     return render(request,'human_resource/ManageEmployee/aprove_employe.html',context)
 def unapproveEmploye_ditel(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     un_employ=unAproved_employees.objects.get(pk=id)
     context={
         'un_employ':un_employ,
+        'admin':admin,
     }
     return render(request,'human_resource/ManageEmployee/unapproved_detial.html',context)
 def rejected_emp_approved_request(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     allUnAprove=unAproved_employees.objects.filter(cheek=False)
     context={
-        'allUnAprove':allUnAprove
+        'allUnAprove':allUnAprove,
+        'admin':admin,
     }
     return render(request,'human_resource/ManageEmployee/rejected_applicant.html',context)
 def reject_request(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     un_employ=unAproved_employees.objects.get(pk=id)
     un_employ.cheek=False
     un_employ.save()
     return redirect('rejected-emp-approved-request')
 def approve_unaproved_emp(request,id):
-    
-
     username= generate_username(1)[0]
     length=8
     letters = string.ascii_lowercase
@@ -231,6 +333,9 @@ def approve_unaproved_emp(request,id):
 #----------------- END of manage Employee ---------------#
 
 def hr_department(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     all_depts = department.objects.all()
     dep_emp={}
     all_dep_name=[]
@@ -246,11 +351,15 @@ def hr_department(request):
     print(dep_emp)
     context={
         'all_dept': all_depts,
-        'data':data
+        'data':data,
+        'admin':admin,
     }
     return render(request,'human_resource/Departments/index.html',context)
 
 def hr_department_detail(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     DeptHead = employ.objects.filter(role = 'Dept_Head')
     req_dep=department.objects.get(pk=id)
     all_emp=employ.objects.filter(role='Employe')
@@ -261,6 +370,7 @@ def hr_department_detail(request,id):
         'selectedDepartment':req_dep,
         'all_emp':all_emp,
         'all_employer':all_employer,
+        'admin':admin,
     }
     return render (request,'human_resource/Departments/department_details.html',context)
 
@@ -277,8 +387,6 @@ def add_emp_to_dep(request):
         select_emp=employ.objects.get(Full_Name=full_name)
         select_emp.inDepartment=dep
         select_emp.save()
-    
-    
     return redirect('hr-department-detail',selec_dep.id)
 def hr_set_dept_head(request):
     if request.method =="POST":
@@ -306,21 +414,30 @@ def hr_department_delete(request,id):
     return redirect('hr-department')
 
 def hr_add_new_department(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context={
+        'admin':admin,
+    }
     if request.method == 'POST':
         departmentName = request.POST.get('departmentName')
         departmentDescription = request.POST.get('departmentDescription')
         all_dep=department.objects.filter(departmentName=departmentName)
         if all_dep.count():
             messages.error(request, "Department Name Already Exist")
-            return render(request,'human_resource/Departments/add_new_department.html',)
+            return render(request,'human_resource/Departments/add_new_department.html',context)
         else:
             dept = department.objects.create(departmentName = departmentName,departmentDescription=departmentDescription)
             if dept:
                 messages.success(request,'You Have Successfully added new department.')
         return redirect('hr-department')
-    return render(request,'human_resource/Departments/add_new_department.html',)
+    return render(request,'human_resource/Departments/add_new_department.html',context)
 
 def manage_emp_role(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     req_emp=employ.objects.get(pk=id)
     user=req_emp.user
     if request.method == 'POST':
@@ -351,7 +468,7 @@ def manage_emp_role(request,id):
 
 def hr_set_dept_emp(request,id):
     req_emp=employ.objects.get(pk=id)
-    print(req_emp.inDepartment)
+    
     if request.method == 'POST':
         dept_name=request.POST.get('dept_name')
         print(dept_name)
@@ -372,11 +489,200 @@ def hr_active_status(request,id):
     return redirect('employe-ditel',id)
     
 def role_details(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
     user=User.objects.get(id=request.user.id)
     group=Group.objects.get(user=user)
    
     context={
         'req_emp':group,
         'user':user,
+        'admin':admin,
     }
     return render(request,'human_resource/role_details.html',context)
+
+
+
+# ------------------------ Chat ----------------------------------------------
+
+def hr_chat(request):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    me_with=exploreU
+    my_message=chatbot.objects.filter(me_with=me_with)
+    admin = exploreU
+    me=exploreU.user
+    me_with=exploreU
+    all_chate_team=[]
+    all_chat=chatbot.objects.filter(Q(me_with=me_with) | Q(me=me))
+    for a in all_chat:
+        if a.me_with in all_chate_team:
+            pass
+        else:
+            all_chate_team.append(a.me_with)
+    if request.method == 'POST':
+        user=request.POST.get('serach')
+        serch=User.objects.get(username=user)
+        chat_group1=employ.objects.get(user=serch)
+   
+        context={
+            'admin':admin,
+            'chat_group1':chat_group1,
+            'my_message':my_message,
+        }
+        return render(request,'human_resource/chat/index1.html',context)
+
+    context={
+            'chat_group':all_chate_team,
+             'admin':admin,
+             'my_message':my_message,
+        }
+    return render(request,'human_resource/chat/index.html',context)
+def hr_chat_profile(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    chat_employ=employ.objects.get(pk=id)
+    context={
+        'admin':admin,
+        'chat_employ':chat_employ,
+    }
+    return render(request,'human_resource/chat/profile.html',context)
+
+
+
+
+def hr_chat_pepol(request,id):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    chat_employ=employ.objects.get(pk=id)
+    user=User.objects.get(pk=request.user.id)
+    me=employ.objects.get(user=user)
+    
+    all_message=chatbot.objects.filter(Q(Q(me_with=chat_employ) | Q(me=chat_employ)) & Q(Q(me_with=me) | Q(me=me)))
+    if request.method == 'POST':
+        me_with=employ.objects.get(pk=id)
+        me=me
+        message=request.POST.get('mess')
+        newmess=chatbot.objects.create(me_with=me_with,me=me,message=message)
+        if newmess:
+            return redirect('hr_chat_pepol',id)
+    context={
+        'chat_employ':chat_employ,
+        'message':all_message,
+        'id':id,
+        'me':me,
+        'admin':admin,
+    }
+    return render(request,'human_resource/chat/chat.html',context)
+
+def hr_all_user(request):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    me_with=exploreU
+    my_message=chatbot.objects.filter(me_with=me_with)
+    admin = exploreU
+    chat_group1=employ.objects.filter(~Q(user=curretnUser))
+    context={
+        'admin':admin,
+        'my_message':my_message,
+        'chat_group2':chat_group1,
+    }
+    return render(request,'human_resource/chat/index2.html',context)
+def hr_check_mess(request,id):
+    req_messages=chatbot.objects.get(pk=id)
+    req_messages.checked=True
+    req_messages.save()
+    emp_id=req_messages.me_with.id
+
+    return redirect("hr_chat_pepol",emp_id)
+# ------------------------------- end chat ---------------------------------
+
+
+# ---------------------- Profile ------------------------
+
+def hr_user_Profile(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    return render(request,'human_resource/profile/show_profile.html',context)
+
+
+def hr_edit_Profile(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    
+    if request.method == 'POST':
+        admin.about = request.POST.get('about')
+        admin.phone1 = request.POST.get('phone1')
+        admin.phone2 = request.POST.get('phone2')
+        admin.address = request.POST.get('address')
+        admin.facebook = request.POST.get('facebook')
+        admin.telegram = request.POST.get('telegram')
+        admin.instagram = request.POST.get('instagram')
+        users.first_name = request.POST.get('first_name')
+        users.last_name = request.POST.get('last_name')
+        users.email = request.POST.get('email')
+        admin.save()
+        users.save()
+        messages.success(request,'Your profile has been updated successfully. ')
+        return redirect('hr_user-Profile')
+    return render(request,'human_resource/profile/edit_profile.html',context)
+
+def hr_chage_password(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    form = passwordform(request.user)
+    if request.method == 'POST':
+        form = passwordform(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password was successfully updated!')
+            return redirect('hr_user-Profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = passwordform(request.user)
+    context = {
+        'form': form,
+        'admin':admin,
+        }
+    return render(request,'human_resource/profile/chage_pass.html',context)
+
+def hr_chage_profile_pic(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    context= {
+        'admin':admin,
+    }
+    if len(request.FILES.get('newimg', "")) != 0:
+        
+        admin.profile_pic.delete()
+        admin.profile_pic = request.FILES.get('newimg', "")
+        admin.save()
+        messages.success(request,'Your profile picture has been updated successfully.')
+        return redirect('hr_user-Profile')
+    else:
+        return render(request,'human_resource/profile/change_profile_pic.html',context)
+
+def delete_profile_pic(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    if len(admin.profile_pic) != 0:
+        admin.profile_pic.delete()
+        return redirect('hr_user-Profile')
+    return render(request,)
