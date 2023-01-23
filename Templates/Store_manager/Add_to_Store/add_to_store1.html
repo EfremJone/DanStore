@@ -144,29 +144,22 @@
       <input type="hidden" name="res" value={{res}}>
       <div class="col-12">
         <label for="inputNanme4" class="form-label">Returned by</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputNanme4"
-          placeholder="Name of Employer"
-        />
+        
+        <select name=""  class="form-control" >
+          <option disabled>Name of Employer</option>
+          {% for emp in all_emp %}
+          <option value="">{{emp.Full_Name}}</option>
+          {% endfor %}
+        </select>
       </div>
-      <div class="col-12">
-        <label for="inputNanme4" class="form-label">Approved by</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputNanme4"
-          placeholder="Approved by"
-        />
-      </div>
+      
 
       <div class="col-12">
         <label for="inputState" class="form-label">Item</label>
         <select id="inputState" class="form-select">
           <option disabled value="">Choose Item</option>
-          {% for item in all_item %}
-          <option>{{item.item_name}}</option>
+          {% for item in all_receved_req %}
+          <option value="">{{item.Description}}</option>
           {% endfor %}
         </select>
       </div>

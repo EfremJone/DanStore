@@ -128,6 +128,53 @@ def cancel_request(request,id):
     all_emp_request.save()
     return redirect('employe_dashboard')   
 
+def pending_item(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+   
+    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
+    context={
+        'all_emp_request':all_emp_request,
+        'admin':admin,
+    } 
+    return render(request,'employe/pending.html',context)
+def total_item_in_me(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+   
+    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    context={
+        'all_emp_request':all_emp_request,
+        'admin':admin,
+    } 
+    return render(request,'employe/totali_item_in_me.html',context)
+def Returned_item(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+    all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    context={
+        'all_emp_request':all_emp_request_retun,
+        'admin':admin,
+    } 
+    return render(request,'employe/Returned_item.html',context)
+def Rejected_Canceld(request):
+    users = User.objects.get(id=request.user.id)
+    re_employ=employ.objects.get(user=users)
+    admin = re_employ
+    Request_by=re_employ.Full_Name
+   
+    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    context={
+        'all_emp_request':all_emp_request,
+        'admin':admin,
+    } 
+    return render(request,'employe/Rejected_Canceld.html',context)
 
 # ---------------------- Profile ------------------------
 

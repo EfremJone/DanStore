@@ -28,7 +28,12 @@ class dept_request_form1_permanent(models.Model):
         ('Approved','Approved'),
         ('Rejected','Rejected'),
     )
-
+    Recival_status=(
+        ('Received ','Received'),
+        ('Not_Received ','Not_Received'),
+         ('Returned','Returned'),
+    )
+    Recival_status_by_Employer=models.CharField(max_length=200,null=True,choices=Recival_status)
     request_store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     date=models.DateField(auto_now_add=True,null=True)
     dept_head_Action=models.CharField(max_length=200,null=True,choices=dept_head_action_choice,default='Approved')

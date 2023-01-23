@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from Store_manager import models
 from .process import html_to_pdf 
-
+from django.core.exceptions import ObjectDoesNotExist
 
 #Creating a class based view
 def store_dashboard(request):
@@ -50,15 +50,36 @@ def manage_catagory(request):
     if request.method == 'POST':
         new_catagory = request.POST.get('catagory')
         Type_of_Asset=request.POST.get('typeasset')
-        
-        add_new_catagory=Catagory.objects.create(store=re_Store,Catagory_Name=new_catagory,Type_of_Asset=Type_of_Asset)
-
-        if add_new_catagory:
-            messages.success(request,"You have added a new category successfully.")
-            return redirect('manage-catagory')
+        new=Catagory.objects.filter(Catagory_Name=new_catagory)
+        if new.count():
+            
+            messages.error(request,"A category name already exists. Please alter the category name.")
+        else:
+            add_new_catagory=Catagory.objects.create(store=re_Store,Catagory_Name=new_catagory,Type_of_Asset=Type_of_Asset)
+            if add_new_catagory:
+                messages.success(request,"You have added a new category successfully.")
+                return redirect('manage-catagory')
     return render(request,'Store_manager/Catagory/manage_catagory.html',context)
 def search_catagory(request):
-    return render(request,'Store_manager/Catagory/search_catagory.html',{})
+    if request.method == 'POST':
+        serched_catagory_name = request.POST.get('query')
+        if serched_catagory_name:
+            try:
+                serched_catagory=Catagory.objects.get(Catagory_Name=serched_catagory_name)
+                context={
+              'serched_catagory':serched_catagory
+            }
+            except ObjectDoesNotExist:
+                messages.error(request,"Please type the proper shelf name.")
+                return redirect('store-dashboard')
+                
+            
+            return render(request,'Store_manager/Catagory/search_catagory.html',context)
+        else:
+            messages.error(request,"Please enter shelf name")
+            return redirect('store-dashboard')
+    
+    return render(request,'Store_manager/Catagory/search_catagory.html',context)
 def add_new_catagory(request):
     all_catagory = Catagory.objects.all()
     context ={
@@ -130,6 +151,7 @@ def add_to_store1(request):
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
     try:
         all_catagory = Catagory.objects.filter(store=re_Store)
+        all_emp=employ.objects.filter(accessStore=re_Store)
     except Catagory.DoesNotExist:
         all_catagory = None
    
@@ -138,14 +160,22 @@ def add_to_store1(request):
         res=request.POST.get('reson')
         all_item=Item.objects.all()
         all_orderd=form2permanent.objects.all()
+        requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(request_store=re_Store) & Q(Recival_status_by_Employer="Received")).order_by("-id") 
+        requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(request_store=re_Store) & Q(Recival_status_by_Employer="Received")).order_by("-id") 
+        all_receved_req=list(chain(requ_by_dept_recv, requ_by_emp_recv))
+    
         context={
             
             'res':res,
             'all_item':all_item,
             'all_orderd':all_orderd,
             'all_catagory':all_catagory,
+            'all_emp':all_emp,
+            'all_receved_req':all_receved_req,
 
         }
+  
+        
         return render(request,"Store_manager/Add_to_Store/add_to_store1.html",context)
     return redirect('add-to-store')
    

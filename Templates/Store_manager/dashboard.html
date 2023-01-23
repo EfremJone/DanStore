@@ -13,7 +13,17 @@
     </nav>
   </div>
   <!-- End Page Title -->
-
+  {% for mssg in messages%}
+  {% if mssg.tags == 'success' %}
+  <div class="alert alert-success" role="alert">
+    {{mssg}}
+  </div>
+  {%else %}
+  <div class="alert alert-danger" role="alert">
+    {{mssg}}
+  </div>
+  {% endif %}
+  {% endfor %}
   <section class="section dashboard">
     <div class="row">
      
@@ -22,22 +32,26 @@
         <div class="cadr-body">
           <div class="row ">
             
-            <form action="{% url 'search-catagory' %}" method="POST"></form>
             <div class="col-5">
-              <span class="card-title">All Item In Store</span>
+              <a href="{% url 'store-dashboard' %}" ><span class="card-title">All Item In Store</span></a>
             </div>
-            <div class="col-7 ">
+            <div class="col-7">
               
-              <div class="row ">
+
+             
+              <form action="{% url 'search-catagory' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
                 <div class="col-10">
-                  <input type="text" name="query" placeholder="Search" class="form-control">
+                  <input type="text" name="query" placeholder="Search by Catagory Name" class="form-control">
                 </div>
                 <div class="col-2">
-                  <button type="submit" class="btn btn-primary"><i class="bi bi-search" class="form-control"></i>Serche</button>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-search" class="form-control"></i>Search</button>
                 </div>
-            
               </div>
-            </form>
+              </form>
+           
+            </div>
             </div><!-- End Search Bar -->
         
           </div>

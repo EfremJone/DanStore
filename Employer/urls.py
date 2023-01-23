@@ -7,9 +7,14 @@ urlpatterns = [
    path('complet_request',views.complet_request,name="complet_request"),
    path('reste_request_form',views.reste_request_form,name="reste_request_form"),
    path('view_request/<int:id>',views.view_request,name="view_request"),
-   path('approved_accept/<int:id>',views.accept_approveal,name="approved_accept"),
+   path('approved_accept/<int:id>',views.accept_approveal,name="approved_accept"),  
    path('cancel_request/<int:id>',views.cancel_request,name="cancel_request"),
-  
+   path('pending_item',views.pending_item,name="pending_item"),
+   path('total_item_in_me',views.total_item_in_me,name="total_item_in_me"),
+   path('Returned_item',views.Returned_item,name="Returned_item"),
+   path('Rejected_Canceld',views.Rejected_Canceld,name="Rejected_Canceld"),
+        
+        
   # -------- profile --------- #
    path('emp_user_Profile',views.user_Profile,name="emp_user-Profile"),
    path('emp_edit_Profile',views.edit_Profile,name="emp_edit-Profile"),

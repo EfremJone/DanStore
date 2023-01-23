@@ -208,6 +208,7 @@ class employe_request_form1_permanent(models.Model):
     Recival_status=(
         ('Received ','Received'),
         ('Not_Received ','Not_Received'),
+        ('Returned','Returned'),
     )
     request_store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)
     date=models.DateField(auto_now_add=True,null=True)
