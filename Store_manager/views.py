@@ -217,6 +217,24 @@ def rejected_request(request):
         'emp_request':all_unreseved_req
     }
     return render(request,'Store_manager/cheeck_Request/rejected_request.html',context)
+
+def check_in_stok(request,Description):
+    req_item_inlower=Description.lower()
+    req_item_inupper=Description.capitalize()
+    try: 
+        order_item=Item.objects.filter(item_name=req_item_inlower)
+    except ObjectDoesNotExist:
+        try:
+            order_item=Item.objects.filter(item_name=req_item_inupper)
+        except ObjectDoesNotExist:
+            order_item=None
+    print(order_item)
+    for item in order_item: 
+        print(item.item_name)
+    context={
+           'order_item':order_item
+    }
+    return render(request,'Store_manager/cheeck_Request/check_in_soke.html',context)
 def put_message_rejected_request(request,id):
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
@@ -612,6 +630,33 @@ def add_to_store(request):
        
         return redirect('list_for_purchase')
     return render(request,"Store_manager/Add_to_Store/add_to_store.html",context)
+def add_to_store_by_return(request):
+    
+    if request.method == 'POST':
+        name_id=int(str(request.POST.get('name')))
+        Description=str(request.POST.get('item'))
+        qty=int(str(request.POST.get('qty')))
+    req_item_inlower=Description.lower()
+    req_item_inupper=Description.capitalize()
+    try: 
+        ret_item=Item.objects.get(item_name=req_item_inlower)
+    except ObjectDoesNotExist:
+        try:
+            ret_item=Item.objects.get(item_name=req_item_inupper)
+        except ObjectDoesNotExist:
+            ret_item=None
+    ret_emp=employ.objects.get(id=name_id)
+    Request_by=ret_emp.Full_Name
+    current_instok=int(ret_item.total_item_in_Stok)
+    updated=current_instok + qty
+    ret_item.total_item_in_Stok=str(updated)
+    ret_item.save()
+
+    ItemHistory.objects.create(Item=ret_item,Reason='Returned Material',Action='Add',Amount=qty)
+    returend_item=employe_request_form1_permanent.objects.get(Q(Request_by=Request_by) & Q(Description=Description))
+    returend_item.Recival_status_by_Employer='Returned'
+    returend_item.save()
+    return redirect('item_detail', ret_item.id)
 def add_item(request,id):
     catagory=Catagory.objects.get(pk=id)
     context={

@@ -16,10 +16,12 @@ urlpatterns = [
    # -------- End profile --------- #
 
    path('add_to_store',views.add_to_store,name="add-to-store"),
+   path('add_to_store_by_return',views.add_to_store_by_return,name="add-to-store-by-return"),
    path('add_to_store1',views.add_to_store1,name="add-to-store1"),
    path('cheek_request',views.cheeck_request,name="cheeck-request"),
    path('aproved_request',views.aproved_request,name="aproved_request"),
    path('rejected-request',views.rejected_request,name="rejected-request"),
+   path('check-in-stok/<str:Description>',views.check_in_stok,name="check-in-stok"),
    
    path('meassge_to_reject/<int:id>',views.put_message_rejected_request,name="message_to_reject"),
    path('send_message_req/<int:id>',views.send_message_to_request,name="send-message-req"),

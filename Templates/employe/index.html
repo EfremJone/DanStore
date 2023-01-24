@@ -207,6 +207,7 @@
 {% block profile1 %} 
 <main style="margin-top: 100px; " class="container">
     <section class="section">
+      
       {% block employer %} 
       <div class="row">
         <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
@@ -219,7 +220,7 @@
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                <h1><span class="badge bg-warning">{{all_emp_request.count}}</span><h1></h1>
+                <h1><span class="badge bg-warning">{{all_emp_request_pending.count}}</span><h1></h1>
             </div>
             <div class="ps-3">
               <span class="text-muted small pt-2 ps-1">Items</span>
@@ -239,7 +240,7 @@
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                <h1><span class="badge bg-success">{{all_emp_request.count}}</span><h1></h1>
+                <h1><span class="badge bg-success">{{all_emp_request_in_me.count}}</span><h1></h1>
             </div>
             <div class="ps-3">
               <span class="text-muted small pt-2 ps-1">items</span>
@@ -259,7 +260,7 @@
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                <h1><span class="badge bg-info">{{all_emp_request.count}}</span><h1></h1>
+                <h1><span class="badge bg-info">{{all_emp_request_retun.count}}</span><h1></h1>
             </div>
             <div class="ps-3">
               <span class="text-muted small pt-2 ps-1">Items</span>
@@ -280,7 +281,7 @@
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                <h1><span class="badge bg-danger">{{all_emp_request.count}}</span><h1></h1>
+                <h1><span class="badge bg-danger">{{all_emp_request_reject.count}}</span><h1></h1>
             </div>
             <div class="ps-3">
               <span class="text-muted small pt-2 ps-1">Items</span>

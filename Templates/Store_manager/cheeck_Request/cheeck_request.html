@@ -30,8 +30,8 @@
                         <th scope="col">Request tool</th>
                         <th scope="col">Total Amount</th>
                         <th scope="col">Check by </th>
+                        <th scope="col">Check in Stok</th>
                         <th scope="col">Approved</th>
-                        
                         <th scope="col">Reject</th>
                       </tr>
                     </thead>
@@ -44,8 +44,8 @@
                         <td>{{request.Description}}</td>
                         <td>{{request.req_qty}}</td>
                         <td>{{request.checkd_by.Full_Name}}</td>
+                        <td><a href="{% url 'check-in-stok' request.Description  %}" class="btn btn-info"><i class="bi bi-eye"></i></a></td>
                         <td><a href="{% url 'send-message-req' request.id %}" class="btn btn-success"><i class="bi bi-check-circle"></i></a></td>
-                        
                         <td><a href="{% url 'message_to_reject' request.id  %}" class="btn btn-danger"><i class="bi bi-exclamation-octagon"></i></a></td>
                       </tr>
                       {% endif %}

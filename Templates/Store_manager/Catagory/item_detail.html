@@ -41,16 +41,18 @@
                           
                           <th scope="col">Action</th>
                           <th scope="col">Resone</th>
-                          <th scope="col">Approved by</th>
+                          <th scope="col">Amount</th>
+
                           <th scope="col">Last_update</th>
                         </tr>
                       </thead>
                       <tbody>
                         {% for ItemHistory in item_history  %}
                         <tr>
-                            <td>{{ItemHistory.Reason}}</td>
+                           
                             <td>{{ItemHistory.Action}}</td>
-                            <td>{{ItemHistory.Approved}}</td>
+                            <td>{{ItemHistory.Reason}}</td>
+                            <td>{{ItemHistory.Amount}}</td>
                             <td>{{ItemHistory.last_update}}</td>
                         </tr>
                         {% endfor %}

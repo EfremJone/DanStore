@@ -161,7 +161,7 @@ class Item(models.Model):
 
 class ItemHistory(models.Model):
     action_choice=(
-        ('New_Add','New_Add'),
+        ('Add','Add'),
         ('Removed','Removed'),
     )
    
@@ -175,8 +175,8 @@ class ItemHistory(models.Model):
     
     Item=models.ForeignKey(Item,null=True,blank=True, on_delete=models.CASCADE)
     Reason=models.CharField(max_length=200,blank=True,null=True,choices=Add_Reason)
+    Amount=models.CharField(max_length=200,blank=True,null=True,)
     Action=models.CharField(max_length=200,choices=action_choice)
-    Approved=models.CharField(max_length=200,blank=True,null=True)
     last_update=models.DateField(auto_now_add=True)
 
 class employe_request_form1(models.Model):

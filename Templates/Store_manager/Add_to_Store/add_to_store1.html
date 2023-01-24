@@ -139,16 +139,16 @@
     </form>
     <!-- Vertical Form -->
     {% elif res == "Returned Material" %}
-    <form class="row g-3" action="add_to_store" method="POST">
+    <form class="row g-3" action="{% url 'add-to-store-by-return' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="res" value={{res}}>
       <div class="col-12">
         <label for="inputNanme4" class="form-label">Returned by</label>
         
-        <select name=""  class="form-control" >
+        <select name="name"  class="form-control" >
           <option disabled>Name of Employer</option>
           {% for emp in all_emp %}
-          <option value="">{{emp.Full_Name}}</option>
+          <option value="{{emp.id}}">{{emp.Full_Name}}</option>
           {% endfor %}
         </select>
       </div>
@@ -156,10 +156,10 @@
 
       <div class="col-12">
         <label for="inputState" class="form-label">Item</label>
-        <select id="inputState" class="form-select">
+        <select id="inputState" class="form-select" name="item">
           <option disabled value="">Choose Item</option>
           {% for item in all_receved_req %}
-          <option value="">{{item.Description}}</option>
+          <option value="{{item.Description}}">{{item.Description}}</option>
           {% endfor %}
         </select>
       </div>
@@ -170,7 +170,7 @@
           type="text"
           class="form-control"
           id="product"
-          onclick="test_func()"
+          name="qty"
           placeholder="Product Name or Devic Name"
         />
       </div>

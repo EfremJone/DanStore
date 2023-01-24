@@ -9,8 +9,18 @@ def employe_view(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
-    all_emp_request=employe_request_form1_permanent.objects.filter(Request_by=Request_by)  
+    all_emp_request=employe_request_form1_permanent.objects.filter(Request_by=Request_by)
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
+    
+
     context={
+        'all_emp_request_pending':all_emp_request_pending,
+        'all_emp_request_in_me':all_emp_request_in_me,
+        'all_emp_request_retun':all_emp_request_retun,
+        'all_emp_request_reject':all_emp_request_reject,
         'all_emp_request':all_emp_request,
         'admin':admin,
     } 
@@ -133,10 +143,15 @@ def pending_item(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
-   
-    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
     context={
-        'all_emp_request':all_emp_request,
+        'all_emp_request_pending':all_emp_request_pending,
+        'all_emp_request_in_me':all_emp_request_in_me,
+        'all_emp_request_retun':all_emp_request_retun,
+        'all_emp_request_reject':all_emp_request_reject,
         'admin':admin,
     } 
     return render(request,'employe/pending.html',context)
@@ -145,10 +160,16 @@ def total_item_in_me(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
    
-    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
     context={
-        'all_emp_request':all_emp_request,
+        'all_emp_request_pending':all_emp_request_pending,
+        'all_emp_request_in_me':all_emp_request_in_me,
+        'all_emp_request_retun':all_emp_request_retun,
+        'all_emp_request_reject':all_emp_request_reject,
         'admin':admin,
     } 
     return render(request,'employe/totali_item_in_me.html',context)
@@ -157,9 +178,16 @@ def Returned_item(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
     all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
+   
     context={
-        'all_emp_request':all_emp_request_retun,
+       'all_emp_request_pending':all_emp_request_pending,
+        'all_emp_request_in_me':all_emp_request_in_me,
+        'all_emp_request_retun':all_emp_request_retun,
+        'all_emp_request_reject':all_emp_request_reject,
         'admin':admin,
     } 
     return render(request,'employe/Returned_item.html',context)
@@ -168,10 +196,16 @@ def Rejected_Canceld(request):
     re_employ=employ.objects.get(user=users)
     admin = re_employ
     Request_by=re_employ.Full_Name
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
+    all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))  
    
-    all_emp_request=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
     context={
-        'all_emp_request':all_emp_request,
+        'all_emp_request_pending':all_emp_request_pending,
+        'all_emp_request_in_me':all_emp_request_in_me,
+        'all_emp_request_retun':all_emp_request_retun,
+        'all_emp_request_reject':all_emp_request_reject,
         'admin':admin,
     } 
     return render(request,'employe/Rejected_Canceld.html',context)
