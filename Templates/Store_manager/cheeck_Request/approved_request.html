@@ -40,7 +40,14 @@
                       <tr>
                         <td>{{request.date}}</td>
                         <td>{{request.Request_by}}</td>
+                        {% if request.Recival_status_by_Employer == 'Received' %}
+                        <td><a href="{% url 'check_delivered_item' request.id  %}" >{{request.Description}}</a></td>
+                        
+                        {% elif request.Recival_status_by_Employer == 'Not_Received' %}
                         <td>{{request.Description}}</td>
+                        {% else %}
+                        <td><a href="{% url 'Item_Delivery_form' request.id  %}" >{{request.Description}}</a></td>
+                        {% endif %}
                         <td>{{request.req_qty}}</td>
                         <td>{{request.checkd_by.Full_Name}}</td>
                         <td><span class="badge bg-success">Approved</span></td>

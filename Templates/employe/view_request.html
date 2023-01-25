@@ -61,11 +61,25 @@
                      
                   </ul>
                   
-                  
+                  <h5><strong>Item Specifications:</strong></h5>
+                  <ul>
+                    {% if item.Type_of_item %}
+                    <li><p><span>Item Type:</span> <span class="badge h5 bg-info">{{item.Type_of_item}}</span></p></li>
+                    {% endif %}
+                    {% if item.Serial_No %}
+                    <li><p><p><span>Item  Serial No:</span> <span class="badge h5 bg-info">{{item.Serial_No}}</span></p></p></li>
+                    {% endif %}
+                    {% if item.Unique_Name_No %}
+                    <li><p><p><span>Item Unique_Name_No:</span> <span class="badge h5 bg-info">{{item.Unique_Name_No}}</span></p></p></li>
+                    {% endif %}
+                  </ul>
                   <!-- End Table with stripped rows -->
                  
               
         </div>
+      </div>
+      <div class="text-end pb-3">
+        <button type="button" class="btn btn-secondary"><i class="bi bi-printer"></i>Print</button>
       </div>
     </div>
 

@@ -220,7 +220,7 @@
                 <div
                   class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                 >
-                <h1><span class="badge bg-warning">{{all_emp_request_pending.count}}</span><h1></h1>
+                <h1><span class="badge bg-warning">{{total_pending}}</span><h1></h1>
             </div>
             <div class="ps-3">
               <span class="text-muted small pt-2 ps-1">Items</span>
@@ -335,7 +335,6 @@
                           {% elif item.dept_head_Action == 'Rejected' %}
                           <td><span class="badge bg-danger">{{item.dept_head_Action}}</span></td>
                           {% endif %} 
-
                           {% if item.Store_Keeper_Action == "Pending" %}
                           <td><span class="badge bg-warning text-dark">{{item.Store_Keeper_Action}}</span></td>
                           {% elif item.Store_Keeper_Action == 'Allowed' %}
@@ -361,6 +360,8 @@
                              <td><span class="badge bg-success">Completed_Request</span></td>
                           {% elif item.Recival_status_by_Employer == 'Not_Received' %}
                           <td><span class="badge bg-info">Request_Cancelled</span></td>
+                          {% elif item.Recival_status_by_Employer == 'Returned' %}
+                          <td><span class="badge bg-primary">Item is Returned</span></td>
                           {% else  %}
                           <td>
                             <a href="{% url 'approved_accept' item.id %}" class="btn btn-sm btn-success text-dark ">Yes</a>

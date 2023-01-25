@@ -17,9 +17,15 @@ urlpatterns = [
 
    path('add_to_store',views.add_to_store,name="add-to-store"),
    path('add_to_store_by_return',views.add_to_store_by_return,name="add-to-store-by-return"),
+   path('add_to_store_by_gift',views.add_to_store_by_gift,name="add-to-store-by-gift"),
+   path('add_to_store_by_other',views.add_to_store_by_other,name="add_to_store_by_other"),
+        
    path('add_to_store1',views.add_to_store1,name="add-to-store1"),
    path('cheek_request',views.cheeck_request,name="cheeck-request"),
    path('aproved_request',views.aproved_request,name="aproved_request"),
+   path('Item_Delivery_form/<int:id>',views.Item_Delivery_form,name="Item_Delivery_form"),
+   path('set_item_specifications/<int:id>',views.set_item_specifications,name="set_item_specifications"),
+   path('check_delivered_item/<int:id>',views.check_delivered_item,name="check_delivered_item"),
    path('rejected-request',views.rejected_request,name="rejected-request"),
    path('check-in-stok/<str:Description>',views.check_in_stok,name="check-in-stok"),
    

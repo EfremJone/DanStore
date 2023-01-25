@@ -177,6 +177,9 @@ class ItemHistory(models.Model):
     Reason=models.CharField(max_length=200,blank=True,null=True,choices=Add_Reason)
     Amount=models.CharField(max_length=200,blank=True,null=True,)
     Action=models.CharField(max_length=200,choices=action_choice)
+    Other_Reseaon=models.CharField(blank=True,null=True,max_length=200)
+    gift_by=models.CharField(max_length=200,null=True,blank=True)
+    return_by=models.CharField(max_length=200,null=True,blank=True)
     last_update=models.DateField(auto_now_add=True)
 
 class employe_request_form1(models.Model):
@@ -223,5 +226,7 @@ class employe_request_form1_permanent(models.Model):
     req_qty=models.CharField(max_length=100,null=True,blank=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
     note=models.TextField(max_length=100,null=True,blank=True)
-    
+    Type_of_item=models.TextField(max_length=100,null=True,blank=True)
+    Serial_No=models.TextField(max_length=100,null=True,blank=True)
+    Unique_Name_No=models.TextField(max_length=100,null=True,blank=True)
 

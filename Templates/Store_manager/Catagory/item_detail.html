@@ -51,7 +51,15 @@
                         <tr>
                            
                             <td>{{ItemHistory.Action}}</td>
+                            {% if ItemHistory.Reason == 'Gift' %}
+                            <td>{{ItemHistory.Reason}}  <span class="badge bg-info"> By: {{ItemHistory.gift_by}} </span> </td>
+                            {% elif ItemHistory.Reason == 'Other'  %}
+                            <td>{{ItemHistory.Other_Reseaon}}</td>
+                            {% elif ItemHistory.Reason == 'Returned Material' %}
+                            <td>{{ItemHistory.Reason}}  <span class="badge bg-success"> By: {{ItemHistory.return_by}} </span> </td>
+                            {% else %}
                             <td>{{ItemHistory.Reason}}</td>
+                            {% endif %}
                             <td>{{ItemHistory.Amount}}</td>
                             <td>{{ItemHistory.last_update}}</td>
                         </tr>

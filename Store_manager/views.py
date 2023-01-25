@@ -17,6 +17,7 @@ from Store_manager import models
 from .process import html_to_pdf 
 from django.core.exceptions import ObjectDoesNotExist
 
+
 #Creating a class based view
 def store_dashboard(request):
     id=(request.user.id)
@@ -66,14 +67,20 @@ def search_catagory(request):
         if serched_catagory_name:
             try:
                 serched_catagory=Catagory.objects.get(Catagory_Name=serched_catagory_name)
+
                 context={
               'serched_catagory':serched_catagory
-            }
-            except ObjectDoesNotExist:
-                messages.error(request,"Please type the proper shelf name.")
-                return redirect('store-dashboard')
-                
-            
+               }
+            except:
+                try:
+                    item_ser=Item.objects.get(item_name=serched_catagory_name)
+                    serched_catagory=item_ser.Catagory
+                    context={
+                    'serched_catagory':serched_catagory
+                    }
+                except ObjectDoesNotExist:
+                    messages.error(request,"Please type the proper shelf name or Item name.")
+                    return redirect('store-dashboard')
             return render(request,'Store_manager/Catagory/search_catagory.html',context)
         else:
             messages.error(request,"Please enter shelf name")
@@ -116,14 +123,18 @@ def add_item(request,id):
     if request.method == 'POST':
         item_name = request.POST.get('itemname')
         amount = request.POST.get('total')
-        new_item=Item.objects.create(Catagory=catagory,item_name=item_name,total_item_in_Stok=amount)
-        if new_item:
-            messages.success(request,"You have added New Item Successfully.")
-            return redirect('catagory-detail' ,id)
+        check=Item.objects.filter(item_name=item_name)
+        if check.count():
+            messages.error(request,'Please change the item Name.')
+        else:
+            new_item=Item.objects.create(Catagory=catagory,item_name=item_name,total_item_in_Stok=amount)
+            if new_item:
+                ItemHistory.objects.create(Item=new_item,Reason='Other',Action='Add',Amount=amount,Other_Reseaon='currently in store')
+                messages.success(request,"You have added New Item Successfully.")
+                return redirect('catagory-detail' ,id)
     return render(request,'Store_manager/Catagory/catagory_detail.html',context)
 def item_detail(request,id):
     item=Item.objects.get(pk=id)
-
     item_history=ItemHistory.objects.filter(Item=item)
     context={
         'item':item,
@@ -151,7 +162,19 @@ def add_to_store1(request):
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
     try:
         all_catagory = Catagory.objects.filter(store=re_Store)
-        all_emp=employ.objects.filter(accessStore=re_Store)
+        all_emp=[]
+        
+        requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(request_store=re_Store) & Q(Recival_status_by_Employer="Received")).order_by("-id") 
+        requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(request_store=re_Store) & Q(Recival_status_by_Employer="Received")).order_by("-id") 
+        all_receved_req=list(chain(requ_by_dept_recv, requ_by_emp_recv))
+        all_req=[]
+        for emp in all_receved_req:
+            if emp.Request_by in all_req:
+                pass
+            else:
+                all_req.append(emp.Request_by)
+        for emp in all_req:
+            all_emp.append(employ.objects.get(Full_Name=emp))
     except Catagory.DoesNotExist:
         all_catagory = None
    
@@ -204,7 +227,70 @@ def aproved_request(request):
         'emp_request':all_unreseved_req
     }
     return render(request,'Store_manager/cheeck_Request/approved_request.html',context)
-
+def Item_Delivery_form(request,id):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    both_request={}
+    for i in all_unreseved_req:
+        if i.id == id:
+            both_request=i
+    full_name=both_request.Request_by
+    req_em=employ.objects.get(Full_Name=full_name)
+    
+    context={
+        'item':both_request,
+        'req_em':req_em,
+    }
+    
+    return render(request,'Store_manager/cheeck_Request/Item_Delivery_form.html',context)
+def check_delivered_item(request,id):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    both_request={}
+    for i in all_unreseved_req:
+        if i.id == id:
+            both_request=i
+    full_name=both_request.Request_by
+    req_em=employ.objects.get(Full_Name=full_name)
+    
+    context={
+        'item':both_request,
+        'req_em':req_em,
+    }
+    
+    return render(request,'Store_manager/cheeck_Request/check_delivered_item.html',context)
+def set_item_specifications(request,id):
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    name=exploreU.Full_Name
+    store=allStore.objects.get(storeKeeper=name)
+    emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
+    all_unreseved_req=list(chain(emp_request, dep_request))
+    ser_request={}
+    if request.method == 'POST':
+        Type_of_item=request.POST.get('type')
+        Serial_No=request.POST.get('seralNo')
+        Unique_Name_No=request.POST.get('uniqueNo')
+        try:
+            ser_request=employe_request_form1_permanent.objects.get(id=id)
+        except:
+            ser_request=dept_request_form1_permanent.objects.get(id=id)
+        ser_request.Type_of_item=Type_of_item
+        ser_request.Serial_No=Serial_No
+        ser_request.Unique_Name_No=Unique_Name_No
+        ser_request.save()
+    return redirect('aproved_request')
 def rejected_request(request):
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
@@ -586,18 +672,22 @@ def add_to_store(request):
                 item.Status="Completed"
                 cat=Catagory.objects.get(Catagory_Name=catagory)
                 if cat.Type_of_Asset=="Fixed assets":
-                    new_item=Item.objects.create(
-                    store=re_Store,
-                    Catagory=cat,
-                    Order_Id=OrderId,
-                    item_name=item_name,
-                    Reason='Purchased',
-                    total_item_in_Stok= item.add_qty,
-                    add_by=re_emp,
-                    Action='New_Add',
-                    )
-                    if new_item:
-                        print("new item added")
+                    check=Item.objects.filter(item_name=item_name)
+                    if check.count():
+                       messages.error(request,'Please change the item Name.')
+                    else:
+                        new_item=Item.objects.create(
+                        store=re_Store,
+                        Catagory=cat,
+                        Order_Id=OrderId,
+                        item_name=item_name,
+                        Reason='Purchased',
+                        total_item_in_Stok= item.add_qty,
+                        add_by=re_emp,
+                        Action='New_Add',
+                        )
+                        if new_item:
+                            print("new item added")
                 elif cat.Type_of_Asset=="Current assets":
                     print("this is Current assets")
                 else:
@@ -605,18 +695,6 @@ def add_to_store(request):
                 
             elif(item.req_qty>item.add_qty):
                 item.Status="Pending"
-                # new_item=Item.objects.create(
-                # store=re_Store,
-                # Catagory=catagory,
-                # Order_Id=OrderId,
-                # item_name=item_name,
-                # Reason='Purchased',
-                # total_item_in_Stok= item.add_qty,
-                # add_by=re_emp,
-                # Action='New_Add',
-                # )
-                # if new_item:
-                #     print("new item added")
             elif(item.req_qty<item.add_qty):
                 item.add_qty=item.add_qty-Qty
                 messages.error(request,'Sorry, the data you entered is not valid.')
@@ -631,7 +709,6 @@ def add_to_store(request):
         return redirect('list_for_purchase')
     return render(request,"Store_manager/Add_to_Store/add_to_store.html",context)
 def add_to_store_by_return(request):
-    
     if request.method == 'POST':
         name_id=int(str(request.POST.get('name')))
         Description=str(request.POST.get('item'))
@@ -640,39 +717,63 @@ def add_to_store_by_return(request):
     req_item_inupper=Description.capitalize()
     try: 
         ret_item=Item.objects.get(item_name=req_item_inlower)
-    except ObjectDoesNotExist:
+    except:
         try:
             ret_item=Item.objects.get(item_name=req_item_inupper)
         except ObjectDoesNotExist:
             ret_item=None
     ret_emp=employ.objects.get(id=name_id)
     Request_by=ret_emp.Full_Name
+    
     current_instok=int(ret_item.total_item_in_Stok)
     updated=current_instok + qty
-    ret_item.total_item_in_Stok=str(updated)
-    ret_item.save()
-
-    ItemHistory.objects.create(Item=ret_item,Reason='Returned Material',Action='Add',Amount=qty)
     returend_item=employe_request_form1_permanent.objects.get(Q(Request_by=Request_by) & Q(Description=Description))
-    returend_item.Recival_status_by_Employer='Returned'
+    request_qty=int(str(returend_item.req_qty))
+    if request_qty == qty: 
+        ret_item.total_item_in_Stok=str(updated)
+        returend_item.Recival_status_by_Employer='Returned'
+        ItemHistory.objects.create(Item=ret_item,Reason='Returned Material',Action='Add',Amount=qty,return_by=Request_by)
+        
+    elif request_qty > qty:
+         ret_item.total_item_in_Stok=str(updated)
+         after_ret=request_qty-qty
+         returend_item.req_qty=str(after_ret)
+         ItemHistory.objects.create(Item=ret_item,Reason='Returned Material',Action='Add',Amount=qty,return_by=Request_by)
+    else : 
+        messages.error(request,'Please enter valid data.')
+        return redirect('add-to-store1')
     returend_item.save()
+    ret_item.save()
     return redirect('item_detail', ret_item.id)
-def add_item(request,id):
-    catagory=Catagory.objects.get(pk=id)
-    context={
-        'catagory':catagory
-    }
+ 
+def add_to_store_by_gift(request):
     if request.method == 'POST':
-        item_name = request.POST.get('itemname')
-        amount = request.POST.get('total')
-        new_item=Item.objects.create(Catagory=catagory,item_name=item_name,total_item_in_Stok=amount)
-        if new_item:
-            messages.success(request,"You have added New Item Successfully.")
-            return redirect('catagory-detail' ,id)
-    return render(request,'Store_manager/Catagory/catagory_detail.html',context)
+        gifted_by=request.POST.get('gifted_by')
+        item_name=request.POST.get('item')
+        amount=request.POST.get('amount')
+        qty=int(str(amount))
+        ret_item=Item.objects.get(item_name=item_name)
+        current_instok=int(ret_item.total_item_in_Stok)
+        updated=current_instok + qty
+        ret_item.total_item_in_Stok=str(updated)
+        ret_item.save()
+        ItemHistory.objects.create(Item=ret_item,Reason='Gift',Action='Add',Amount=amount,gift_by=gifted_by)
+    return redirect('item_detail', ret_item.id)
 
-
-
+def add_to_store_by_other(request):
+    if request.method == 'POST':
+        reseaon=request.POST.get('reseaon')
+        item_name=request.POST.get('item')
+        amount=request.POST.get('amount')
+        qty=int(str(amount))
+        ret_item=Item.objects.get(item_name=item_name)
+        current_instok=int(ret_item.total_item_in_Stok)
+        updated=current_instok + qty
+        ret_item.total_item_in_Stok=str(updated)
+        ret_item.save()
+        ItemHistory.objects.create(Item=ret_item,Reason='Other',Action='Add',Amount=amount,Other_Reseaon=reseaon)
+    
+    return redirect('item_detail', ret_item.id)
 class GeneratePdf(View):
    def get(self, request, *args, **kwargs):
     all_form= form1temp.objects.all()

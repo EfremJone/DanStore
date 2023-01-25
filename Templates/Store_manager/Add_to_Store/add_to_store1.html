@@ -74,25 +74,18 @@
           type="text"
           class="form-control"
           id="product"
-          onclick="test_func()"
+         
           placeholder="Product Name or Devic Name"
         />
       </div>
       <div class="text-center d-grid pt-2">
         <button type="submit" class="btn btn-success">Add</button>
-        <script type="text/javascript">
-          function test_func() {
-            var product = document.getElementById("product").value;
-            if (product == "hi") {
-              console.log("ok");
-            }
-          }
-        </script>
+       
       </div>
     </form>
     <!-- Vertical Form -->
     {% elif res == "Gift" %}
-    <form class="row g-3" action="add_to_store" method="POST">
+    <form class="row g-3" action="{% url 'add-to-store-by-gift' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="res" value={{res}}>
       <div class="col-12">
@@ -101,18 +94,18 @@
           type="text"
           class="form-control"
           id="inputNanme4"
-          placeholder="Enter Order Code"
+          name="gifted_by"
         />
       </div>
 
       <div class="col-12">
         <label for="inputState" class="form-label">Item</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputNanme4"
-          placeholder="Item name"
-        />
+        <select name="item" id="" class="form-select" >
+          {% for item in all_item %}
+          <option value="{{item.item_name}}">{{item.item_name}}</option>
+          {% endfor %}
+        </select>
+       
       </div>
 
       <div class="col-12">
@@ -121,20 +114,12 @@
           type="text"
           class="form-control"
           id="product"
-          onclick="test_func()"
-          placeholder="Product Name or Devic Name"
+          placeholder="Amount"
+          name="amount"
         />
       </div>
       <div class="text-center d-grid">
         <button type="submit" class="btn btn-success">Add</button>
-        <script type="text/javascript">
-          function test_func() {
-            var product = document.getElementById("product").value;
-            if (product == "hi") {
-              console.log("ok");
-            }
-          }
-        </script>
       </div>
     </form>
     <!-- Vertical Form -->
@@ -176,19 +161,12 @@
       </div>
       <div class="text-center d-grid">
         <button type="submit" class="btn btn-success">Add</button>
-        <script type="text/javascript">
-          function test_func() {
-            var product = document.getElementById("product").value;
-            if (product == "hi") {
-              console.log("ok");
-            }
-          }
-        </script>
+        
       </div>
     </form>
     <!-- Vertical Form -->
     {% elif res == "Other" %}
-    <form class="row g-3" action="add_to_store" method="POST">
+    <form class="row g-3" action="{% url 'add_to_store_by_other' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" name="res" value={{res}}>
       <div class="col-12">
@@ -197,18 +175,18 @@
           type="text"
           class="form-control"
           id="inputNanme4"
+          name="reseaon"
           placeholder="What is Reseaon"
         />
       </div>
 
       <div class="col-12">
         <label for="inputState" class="form-label">Item</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputNanme4"
-          placeholder="Item name"
-        />
+        <select name="item" id="" class="form-select" >
+          {% for item in all_item %}
+          <option value="{{item.item_name}}">{{item.item_name}}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="col-12">
@@ -217,20 +195,13 @@
           type="text"
           class="form-control"
           id="product"
-          onclick="test_func()"
-          placeholder="Product Name or Devic Name"
+          name="amount"
+          placeholder="Amount"
         />
       </div>
       <div class="text-center d-grid">
         <button type="submit" class="btn btn-success">Add</button>
-        <script type="text/javascript">
-          function test_func() {
-            var product = document.getElementById("product").value;
-            if (product == "hi") {
-              console.log("ok");
-            }
-          }
-        </script>
+       
       </div>
     </form>
     <!-- Vertical Form -->
