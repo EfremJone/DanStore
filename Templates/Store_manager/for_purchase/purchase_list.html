@@ -46,32 +46,41 @@
                       <thead>
                         <tr>
                           <!-- <th scope="col">#</th> -->
+                          <th scope="col">Date</th>
+                          <th scope="col">Order Code</th>
+                          <th scope="col">Request By</th>
                           <th scope="col">Describtion</th>
                           <th scope="col">Unit</th>
                           <th scope="col">Total No. Orderd</th>
                           <th scope="col">Total No. Added</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Request By</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">Order Code</th>
+                          <th scope="col">Admin Approval Status</th>
+                          <th scope="col">Finance Action</th>
+                          <th scope="col">Item Status</th>
+
+                          
+                        
+                          
                         </tr>
                       </thead>
                       <tbody>
                         {% for item in all_list_item %}
                         <tr>
-                          <!-- <th scope="row">1</th> -->
+                          <td>{{item.date}}</td>
+                          <td>{{item.id}}</td>
+                          <td>{{item.form1per.Request_by}}</td>
                           <td>{{item.Description}}</td>
                           <td>{{item.unit}}</td>
                           <td>{{item.req_qty}}</td>
                           <td>{{item.add_qty}}</td>
+                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
+                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
                           {% if item.Status == 'Pending' %}
                           <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
                           {% elif item.Status == 'Completed' %}
                           <td><span class="badge bg-success">{{item.Status}}</span></td>
                           {% endif %}
-                          <td>{{item.form1per.Request_by}}</td>
-                          <td>{{item.date}}</td>
-                          <td>{{item.id}}</td>
+                         
+                          
                         </tr>
                        {% endfor %}
   

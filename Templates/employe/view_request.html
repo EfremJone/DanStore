@@ -30,6 +30,7 @@
                     </tbody>
                   </table>
                   <br>
+                  <br>
                   <h5><strong>Request Status:</strong></h5>
                   <ul>
                     <li><p><span>Department Head Response:</span> <span class="h5">{{item.dept_head_Action}}</span></p></li>
@@ -79,7 +80,7 @@
         </div>
       </div>
       <div class="text-end pb-3">
-        <button type="button" class="btn btn-secondary"><i class="bi bi-printer"></i>Print</button>
+        <a href="{% url 'emp_dilverd_item' item.id %}" type="button" class="btn btn-secondary"><i class="bi bi-printer"></i>Print</a>
       </div>
     </div>
 

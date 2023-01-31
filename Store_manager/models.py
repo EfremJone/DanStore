@@ -37,31 +37,30 @@ class form1permanent(models.Model):
     Department=models.CharField(max_length=100,null=True,blank=True)
     checkd_by=models.CharField(max_length=100,null=True,blank=True)
     Approved_by=models.CharField(max_length=100,null=True,blank=True)
+
 class form2permanent(models.Model):
+   
+    Admin_Appruval_status=(
+        ('Pending','Pending'),
+        ('Approved','Approved'),
+        ('Reject','Reject'),
+    )
+    Finance_Action_status=(
+         ('Pending','Pending'),
+        ('Completed','Completed'),
+    )
     status=(
         ('Pending','Pending'),
         ('Completed','Completed'),
-        
-    )
-    form1=models.ForeignKey(form1temp,null=True,blank=True, on_delete=models.CASCADE)
-    Description=models.CharField(max_length=100,null=True,blank=True)
-    unit=models.CharField(max_length=100,null=True,blank=True)
-    req_qty=models.CharField(max_length=100,null=True,blank=True)
-    add_qty=models.CharField(max_length=100,null=True,blank=True,default="0")
-    Status=models.CharField(max_length=200,choices=status,default='Pending')
-    Remark=models.CharField(max_length=100,null=True,blank=True)
-
-class form2permanent(models.Model):
-    status=(
-        ('Pending','Pending'),
-        ('Accepte','Accepte'),
     )
     form1per=models.ForeignKey(form1permanent,null=True,blank=True, on_delete=models.CASCADE)
     Description=models.CharField(max_length=100,null=True,blank=True)
     unit=models.CharField(max_length=100,null=True,blank=True)
     req_qty=models.IntegerField(null=True,blank=True)
     add_qty=models.IntegerField(null=True,blank=True,default=0)
-    Status=models.CharField(max_length=200,null=True,blank=True,choices=status,default="Pending")
+    Admin_Appruval=models.CharField(max_length=200,choices=Admin_Appruval_status,default='Pending')
+    Finance_Action=models.CharField(max_length=200,choices=Finance_Action_status,default='Pending')
+    Item_Status=models.CharField(max_length=200,choices=status,default='Pending')
     date=models.DateField(auto_now_add=True,null=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
 
@@ -102,8 +101,6 @@ class employ(models.Model):
     grade=models.CharField(max_length=20,null=True,blank=True)
     Year_Graguation = models.DateField(null=True,blank=True)
     Document=models.FileField(null=True,blank=True,upload_to="File/Document")
-
-  
     def __str__(self):
         return str(self.user)
 class chatbot(models.Model):
@@ -181,6 +178,7 @@ class ItemHistory(models.Model):
     gift_by=models.CharField(max_length=200,null=True,blank=True)
     return_by=models.CharField(max_length=200,null=True,blank=True)
     last_update=models.DateField(auto_now_add=True)
+    taken_by=models.CharField(max_length=200,null=True,blank=True)
 
 class employe_request_form1(models.Model):
     request_store=models.ForeignKey(allStore,null=True,blank=True,on_delete=models.CASCADE)

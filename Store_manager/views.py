@@ -374,19 +374,44 @@ def store_manage_approve(request):
     emp_request=employe_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     all_unreseved_req=list(chain(emp_request, dep_request))
-    
+    searchedReq={}
+    # Description
+    # unit
+    # req_qty
+    # Remark
+    # Request_by
+    # Department
+    # checkd_by
     if request.method == 'POST':
         mess=request.POST.get('store_message')
         id=str(request.POST.get('request_id'))
-        for requ in all_unreseved_req:
-            if str(requ.id)==id:
-                searchedReq=requ
-                searchedReq.note=mess
-                searchedReq.Store_Keeper_Action="Allowed"
-                searchedReq.save()
-                return redirect('aproved_request')
+        order=request.POST.get('order')
+        if order == 'on':
+            for requ in all_unreseved_req:
+                if str(requ.id)==id:
+                    searchedReq=requ
 
+                    Request_by=searchedReq.Request_by
+                    Department=searchedReq.Department
+                    checkd_by=searchedReq.checkd_by
+                    Description=searchedReq.Description
+                    unit=searchedReq.unit
+                    req_qty=searchedReq.req_qty
+                    Remark=searchedReq.Remark
+                    form1permanent.objects.create(Request_by=Request_by,Department=Department,checkd_by=checkd_by)
+                    searchedReq.note=mess
+                    searchedReq.Store_Keeper_Action="Allowed"
+                    searchedReq.save()
 
+        else:
+            for requ in all_unreseved_req:
+                if str(requ.id)==id:
+                    searchedReq=requ
+                    searchedReq.note=mess
+                    searchedReq.Store_Keeper_Action="Allowed"
+                    searchedReq.save()
+        return redirect('aproved_request')
+        
     return render(request,"Store_manager/cheeck_Request/message.html")
 def user_Profile(request):
     users = User.objects.get(id=request.user.id)
@@ -471,8 +496,8 @@ def delete_profile_pic(request):
 def purchase(request):
    
     return render(request,'Store_manager/for_purchase/purchase.html')
-def list_for_purchase(request):
-    return render(request,'Store_manager/for_purchase/purchase_list.html',)
+
+
 def new_action1(request):
     if form1temp.objects.all().count() !=0:
         all_form= form1temp.objects.all()
@@ -786,4 +811,19 @@ class GeneratePdf(View):
         }
         open('templates/temp.html', "w").write(render_to_string('Store_manager/for_purchase/invoce.html',data ))
         pdf = html_to_pdf('temp.html')
+    return HttpResponse(pdf, content_type='application/pdf')
+
+
+
+class deliverd_item(View):
+   def get(self, request,id, *args, **kwargs,):
+    item=employe_request_form1_permanent.objects.get(id=id)
+    req=item.Request_by
+    req_em=employ.objects.get(Full_Name=req)
+    data={
+        'item':item,
+        'req_em':req_em,
+    }
+    open('templates/temp.html', "w").write(render_to_string('Store_manager/cheeck_Request/pdf_format_to delivered.html',data ))
+    pdf = html_to_pdf('temp.html')
     return HttpResponse(pdf, content_type='application/pdf')

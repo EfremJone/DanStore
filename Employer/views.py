@@ -4,6 +4,12 @@ from Store_manager.models import *
 from django.db.models import Q
 from .form import *
 from django.contrib.auth import update_session_auth_hash
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.views.generic import View
+from .process import html_to_pdf 
+
+
 def employe_view(request):
     users = User.objects.get(id=request.user.id)
     re_employ=employ.objects.get(user=users)
@@ -133,7 +139,19 @@ def accept_approveal(request,id):
     users = User.objects.get(id=request.user.id)
     re_employ=employ.objects.get(user=users)
     admin = re_employ
+    taken_by=re_employ.Full_Name
     all_emp_request=employe_request_form1_permanent.objects.get(pk=id)  
+    item_name=all_emp_request.Description
+    num=int(str(all_emp_request.req_qty))
+    req_item=Item.objects.get(item_name=item_name)
+    in_stock=int(str(req_item.total_item_in_Stok))
+    if in_stock >= num:
+        after_rece = str(in_stock-num)
+    else:
+        pass
+    req_item.total_item_in_Stok = after_rece
+    ItemHistory.objects.create(Item=req_item,Amount=num,Action='Removed',Other_Reseaon='Given To employee',taken_by=taken_by)
+    req_item.save()
     all_emp_request.Recival_status_by_Employer="Received"
     all_emp_request.save()
     return redirect('employe_dashboard')
@@ -347,3 +365,17 @@ def delete_profile_pic(request):
         admin.profile_pic.delete()
         return redirect('emp_user-Profile')
     return render(request,)
+
+
+class emp_deliverd_item(View):
+   def get(self, request,id, *args, **kwargs,):
+    item=employe_request_form1_permanent.objects.get(id=id)
+    req=item.Request_by
+    req_em=employ.objects.get(Full_Name=req)
+    data={
+        'item':item,
+        'req_em':req_em,
+    }
+    open('templates/temp.html', "w").write(render_to_string('employe/pdf_item_data.html',data ))
+    pdf = html_to_pdf('temp.html')
+    return HttpResponse(pdf, content_type='application/pdf')

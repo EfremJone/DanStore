@@ -1,11 +1,13 @@
 from django.urls import path
 from .import views
-from .views import GeneratePdf
+from .views import GeneratePdf,deliverd_item
 
 
 urlpatterns = [
    path('pdf/', GeneratePdf.as_view(),name="pdf"),
+   path('pdf_to_deliverd_item/<int:id>', deliverd_item.as_view(),name="dilverd_item"),
    path('',views.store_dashboard,name="store-dashboard"),
+        
    # 
    # -------- profile --------- #
    path('user_Profile',views.user_Profile,name="user-Profile"),

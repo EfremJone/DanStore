@@ -1,6 +1,9 @@
 from django.urls import path
 from .import views
+from .views import emp_deliverd_item
+    
 urlpatterns = [
+   path('emp_pdf_to_deliverd_item/<int:id>', emp_deliverd_item.as_view(),name="emp_dilverd_item"),
    path('',views.employe_view,name="employe_dashboard"),
    path('emp_request',views.emp_request,name="emp_request"),
    path('emp_request2',views.emp_request2,name="emp_request2"),
