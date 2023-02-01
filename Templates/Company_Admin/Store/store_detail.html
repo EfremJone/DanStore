@@ -18,10 +18,10 @@
   <section class="section">
     <div class="row">
       <!--  -->
-      <div class="col-lg-8">
+      <div class="col-lg-10">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Categories and Items that are stored at {{store.storeName}} branch are
+            <h5 class="card-title">Categories and Items that are stored at {{store.storeName}} are
               listed below.</h5>
 
             <!-- List group with Links and buttons -->
@@ -37,62 +37,7 @@
         </div>
 
       </div>
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">Manage Store</h1>
-           
-            <form action="" method="POST">
-              {% csrf_token %}
-            <div class="col-12">
-              <label for="inputNanme4" class="form-label">Store Name</label>
-              <input type="text" class="form-control"  name="store_name" placeholder="Enter Catagory" value="{{store.storeName}}" required>
-              </div>
-
-              <div class="pt-2">
-              <button type="submit" class="btn btn-warning "> Update </button>
-              <button type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#verticalycentered">
-               Delete
-              </button>
-            </div>
-            </form>
-            <div class="modal fade" id="verticalycentered" tabindex="-1">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Are You Sure to Delete Store {{store.storeName}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <P>This action will delete all data in the store.</P>
-                  <div class="modal-footer">
-                    <a href="{% url 'delete-store' store.id %}" class="btn btn-danger">Yes</a>
-                    <a href="{% url 'store-details' store.id %}" class="btn btn-info">No</a>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Vertically centered Modal-->
-              </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">Manage Store manager</h1>
-            <form action="{% url 'store_manager_update' store.id %}" method="POST">
-              {% csrf_token %}
-            <select class="form-select" id="validationDefault04" name="store_keeper">
-              <option selected disabled value="">{{store.storeKeeper}}</option>
-              {% for storeKeeper in storeKeepers %}
-              <option value="{{storeKeeper.Full_Name}}" >{{storeKeeper.Full_Name}}</option>
-              {% endfor %}
-            </select>
-            <div class="pt-2">
-              <button type="submit" class="btn btn-primary "> Update </button>
-            </div>
-          </form>
-          </div>
-        </div>
-      </div>
+     
       
     </div>
   </section>

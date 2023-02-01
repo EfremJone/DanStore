@@ -1,13 +1,13 @@
 {% extends 'Company_Admin/base.html' %} {% block admin %}
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1 style="color: black">Manage Employees</h1>
+    <h1 style="color: black">Item in Employees</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="{% url 'admin-dashboard' %}">Home</a>
         </li>
-        <li class="breadcrumb-item">Manage Employees</li>
+        <li class="breadcrumb-item">Item in Employees</li>
       </ol>
     </nav>
   </div>
@@ -25,31 +25,19 @@
   {% endfor %}
   <section class="section">
     <div class="row">
-      <div class="col-lg-11" style="display: flex; justify-content: right">
-        <div class="d-grid gap-2 m-3">
-          <a
-            href="{% url 'add-new-employe' %}"
-            class="btn btn-outline-secondary btn-lg"
-            type="button"
-          >
-            <i class="bi bi-person-plus"></i
-            ><span style="margin: 0 6px"> </span>Add New Employees
-          </a>
-        </div>
-      </div>
+      
     </div>
     <!-- Tabels -->
-    <div class="col-lg-11">
+    <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Employees</h5>
+          <h5 class="card-title">List of Item in Employees</h5>
           <table class="table table-border table-striped datatable">
             <thead>
               <tr>
-                <th scope="col"></th>
+                
                 <th scope="col">Full Name</th>
                 <th scope="col">Role</th>
-                <th scope="col">User Name</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Email</th>
                 <th scope="col">Access Store</th>
@@ -58,10 +46,9 @@
             <tbody>
               {% for employee in all_emplyees %}
               <tr>
-                <td></td>
-                <td>{{employee.Full_Name}}</td>
+                
+                <td><a href="{% url 'item_in_employee' employee.id %}">{{employee.Full_Name}}</a></td>
                 <td>{{employee.role}}</td>
-                <td>{{employee.user}}</td>
                 <td>{{employee.gender}}</td>
                 <td>{{employee.user.email}}</td>
                 <td>{{employee.accessStore}}</td>

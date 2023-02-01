@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class allStore(models.Model):
     storeName= models.CharField(max_length=300,null=False, blank=False)
     storeDescription = models.TextField(null=False,blank=False)
-    storeKeeper = models.CharField(max_length=300,null=False,blank=False)
+    storeKeeper = models.CharField(max_length=300,null=False,blank=False,default='TBA')
     storeLocation = models.TextField(null=False,blank=False)
     def __str__(self) -> str:
         return str(self.storeName)

@@ -2,29 +2,62 @@ from django.shortcuts import render,redirect
 from Store_manager.models import *
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
-
+from Department_Head.models import *
 from django.contrib import messages
 from django.shortcuts import render,redirect
-
+from itertools import chain
 # Create your views here.
 
 def home(request):
-    cate = Catagory.objects.all()
-    vend = vendor.objects.all()
-    dept = department.objects.all()
-    cateLength = cate.__len__()
-    vendLenth = vend.__len__()
-    deptLength = dept.__len__()
+    allDep=department.objects.all()
+    deptLength = allDep.__len__()
+    allstores=allStore.objects.all()
+    allDep=department.objects.all()
+    allemp=employ.objects.all()
+    emplength=allemp.__len__()
     context={
-        'cateLength': cateLength,
-        'vendLength': vendLenth,
-        'deptLength': deptLength
+        'deptLength': deptLength,
+        'allstores':allstores,
+        'allDep':allDep,
+        'emplength':emplength,
+        'allemp':allemp,
     }
     return render(request,'Company_Admin/Dashboard/index.html',context)
 
 def user_profile(request):
     return render(request,'Company_Admin/EditProfile/show_profile.html')
+def deparetment_dashboard(request):
+    allDep=department.objects.all()
+    deptLength = allDep.__len__()
+    allstores=allStore.objects.all()
+    allDep=department.objects.all()
+    allemp=employ.objects.all()
+    emplength=allemp.__len__()
+    context={
+        'deptLength': deptLength,
+        'allstores':allstores,
+        'allDep':allDep,
+        'emplength':emplength,
+        'allemp':allemp,
+    }
+    
+    return render(request,'Company_Admin/Dashboard/departments.html',context)
 
+def employees_dashboard(request):
+    allDep=department.objects.all()
+    deptLength = allDep.__len__()
+    allstores=allStore.objects.all()
+    allDep=department.objects.all()
+    allemp=employ.objects.all()
+    emplength=allemp.__len__()
+    context={
+        'deptLength': deptLength,
+        'allstores':allstores,
+        'allDep':allDep,
+        'emplength':emplength,
+        'allemp':allemp,
+    }
+    return render(request,'Company_Admin/Dashboard/employees.html',context)
 #----------------- MANAGE EMPLOYEE ---------------#
 def manage_employee(request):
 
@@ -36,82 +69,16 @@ def manage_employee(request):
     return render(request,'Company_Admin/ManageEmployee/index.html', context)
 
 
-def add_new_employe(request):
-    all_store=allStore.objects.all()
+def item_in_employee(request,id):
+    item_rec_emp=employ.objects.get(id=id)
+    Request_by=item_rec_emp.Full_Name
+    all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    
     context={
-        'all_store':all_store,
+       'all_emp_request_in_me':all_emp_request_in_me,
+       'Request_by':Request_by,
     }
-    if request.method == 'POST':
-        firstName = request.POST.get('firstName')
-        lastName = request.POST.get('lastName')
-        userName = request.POST.get('userName')
-        password1 = request.POST.get('temporaryPassword')
-        password2 = request.POST.get('temporaryPasswordConfirm')
-        gender = request.POST.get('gender')
-        email = request.POST.get('email')
-        role = request.POST.get('role')
-        store = request.POST.get('store')
-        access_store=allStore.objects.get(pk=store)
-        print(access_store)
-        Full_Name = firstName +" " + lastName
-        if password1 == password2:
-            new = User.objects.filter(username=userName)
-            if new.count():
-                messages.error(request, "User Already Exist")
-            else:
-                new = User.objects.filter(email=email)
-                if new.count():
-                    a = new.count()
-                   
-                    messages.error(request, "Eamil Already Exist")
-                else:
-                     user = User.objects.create_user(
-                         username=userName, email=email, password=password1, first_name=firstName, last_name=lastName)
-                     user.save()
-                     if user:
-                        if role == 'Company_Admin':
-                            new_group = Group.objects.get(name='Company_Admin')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif (role == 'Dept_Head'):
-                            new_group = Group.objects.get(name='Dept_Head')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif (role == 'Store_Manager'):
-                            new_group = Group.objects.get(name='Store_Manager')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif(role == 'Employee'):
-                            new_group = Group.objects.get(name='Employe')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        elif(role == 'Finance'):
-                            new_group = Group.objects.get(name='Finance')
-                            new_group.user_set.add(user)
-                            newEmployee = employ.objects.create(user=user,role=role,Full_Name=Full_Name,gender=gender,accessStore=access_store)
-                            if newEmployee:
-                                messages.success(request,'You Have Successfully Created New Employee')
-                                return redirect("manage-employee")
-                        
-                        
-                   
-
-        else:
-            messages.error(request, "password not match")
-
-    return render(request,'Company_Admin/ManageEmployee/add_new_employee.html',context)
+    return render(request,'Company_Admin/ManageEmployee/item_in_employee.html',context)
 
 #----------------- END of manage Employee ---------------#
 
@@ -119,15 +86,21 @@ def add_new_employe(request):
 #----------------- DEPARTMENTS ---------------#
 
 def departments(request):
-
-    if request.method == 'POST':
-        deptId = request.POST.get('deptId')
-
-       
-
     all_depts = department.objects.all()
+    dep_emp={}
+    all_dep_name=[]
+    num=[]
+    for dep in all_depts:
+            all_dep_name.append(dep.departmentName)
+    
+    for dep in all_dep_name:
+        dep_emp[dep]=employ.objects.filter(inDepartment=dep).count()
+    for i,j in dep_emp.items():
+        num.append(j)
+    data=zip(all_depts, num)
     context={
-        'all_dept': all_depts
+        'all_dept': all_depts,
+        'data':data,
     }
     
     return render(request,'Company_Admin/Departments/index.html', context)
@@ -150,21 +123,21 @@ def add_new_department(request):
 
     return render(request,'Company_Admin/Departments/add_new_department.html', context)
 
-def department_details(request,id):
-    DeptHead = employ.objects.filter(role = 'Dept_Head')
-    if request.method == 'POST':
-        updatedDepartmentName = request.POST.get('updatedDepartmentName')
-        departmentId = request.POST.get('departmentId')
-        toBeUpdate = department.objects.filter(id=departmentId).update(departmentName=updatedDepartmentName)
-        if toBeUpdate:
-            messages.success(request,'You Have Successfully updated the department Name')
-    selectedDepartment = department.objects.get(pk=id)
-    memebers = employ.objects.filter(inDepartment = selectedDepartment.id)
+def item_in_each_department(request,id):
+    req_dep=department.objects.get(pk=id)
+    dep_head=req_dep.departmentHead
+    re_employ=employ.objects.get(Full_Name=dep_head)
+    print(re_employ)
+    checkd_by=re_employ
+    Request_by=re_employ.Full_Name
+    requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(Request_by=Request_by) & Q(Store_Keeper_Action="Allowed") | Q(Recival_status_by_Employer='Received')).order_by("-id") 
+    requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(checkd_by=checkd_by) & Q(Store_Keeper_Action="Allowed") | Q(Recival_status_by_Employer='Received')).order_by("-id") 
+    all_receved_req=list(chain(requ_by_dept_recv, requ_by_emp_recv))
     context={
-         "departmentHeads" : DeptHead,
-        'selectedDepartment': selectedDepartment,
-        'members': memebers
+        
+        'all_receved_req':all_receved_req,
     }
+    
     return render(request,'Company_Admin/Departments/department_details.html', context)
 def set_dept_head(request):
     if request.method =="POST":
@@ -229,17 +202,7 @@ def role(request):
     context={
         'allRoles': allRoles
     }
-    return render(request,'Company_Admin/Role/index.html',context)
-
-def add_new_role(request):
-    return render(request, 'Company_Admin/Role/add_new_role.html')
-
-def role_details(request,id):
-    selectedRole = allRole.objects.get(pk=id)
-    context={
-        'selectedRole': selectedRole
-    }
-    return render(request, 'Company_Admin/Role/role_details.html',context)
+    return render(request,'Company_Admin/Role/role_details.html',context)
 
 #----------------- END of ROLE ---------------#
 
@@ -358,3 +321,12 @@ def send_message(request):
     if request.method == 'POST':
        pass
     return redirect('admin-chat_people')
+
+
+
+def Purchase_item(request):
+    all_perch_item=form2permanent.objects.all()
+    context={
+        'all_perch_item':all_perch_item
+    }
+    return render(request,'Company_Admin/Purchase_item/Approve_purchase_item.html')
