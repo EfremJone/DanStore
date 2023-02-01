@@ -1,7 +1,6 @@
-{% extends 'Store_manager/S_base.html'  %}
+{% extends 'Store_manager/chat/index.html'  %}
 
 {% block store %}
-
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -41,15 +40,15 @@
                 
                   <h5 >Full name: <span>{{chat_employ.user.first_name}} {{chat_employ.user.last_name}}</span>
                   </h5>
-                  <h5 >Username: <span>Milli</span>
+                  <h5 >Username: <span>{{chat_employ.user}}</span>
                   </h5>
-                  <h5 >Department : <span>ERP</span>
+                  <h5 >Department : <span>{{chat_employ.inDepartment}}</span>
                   </h5>
-                  <h5 >Role : <span>Technologist</span>
+                  <h5 >Role : <span>{{chat_employ.role}}</span>
                   </h5>
-                  <h5 >Phone : <span>0939816415</span>
+                  <h5 >Phone : <span>{{chat_employ.phone1}}</span>
                   </h5>
-                  <h5 >email : <span>mill@dan.com</span>
+                  <h5 >email : <span>{{chat_employ.user.email}}</span>
                   </h5>
               </div><!-- End Card with an image on top -->
     

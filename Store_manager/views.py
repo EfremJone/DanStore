@@ -46,6 +46,7 @@ def manage_catagory(request):
     
     context ={
         'all_catagory':all_catagory,
+        're_emp':re_emp,
          
     }
     if request.method == 'POST':
@@ -62,6 +63,9 @@ def manage_catagory(request):
                 return redirect('manage-catagory')
     return render(request,'Store_manager/Catagory/manage_catagory.html',context)
 def search_catagory(request):
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
     if request.method == 'POST':
         serched_catagory_name = request.POST.get('query')
         if serched_catagory_name:
@@ -69,7 +73,8 @@ def search_catagory(request):
                 serched_catagory=Catagory.objects.get(Catagory_Name=serched_catagory_name)
 
                 context={
-              'serched_catagory':serched_catagory
+              'serched_catagory':serched_catagory,
+              're_emp':re_emp,
                }
             except:
                 try:
@@ -88,9 +93,13 @@ def search_catagory(request):
     
     return render(request,'Store_manager/Catagory/search_catagory.html',context)
 def add_new_catagory(request):
+    id=(request.user.id)
+    user=User.objects.get(id=id)
+    re_emp=employ.objects.get(user=user)
     all_catagory = Catagory.objects.all()
     context ={
         'all_catagory':all_catagory,
+        're_emp':re_emp,
     }
     if request.method == 'POST':
         new_catagory = request.POST.get('catagory')
@@ -101,9 +110,13 @@ def add_new_catagory(request):
             messages.success(request,"You have added a new category successfully.")
     return render(request,'Store_manager/Catagory/manage_catagory.html',context)
 def catagory_detail(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     catagory = Catagory.objects.get(pk=id)
     context={
         'catagory':catagory,
+        're_emp':re_emp,
     }
     if request.method == 'POST':
         new_catagory = request.POST.get('catagory')
@@ -113,12 +126,17 @@ def catagory_detail(request,id):
             messages.success(request,"You have update Category Name successfully.")
     return render(request,'Store_manager/Catagory/catagory_detail.html',context)
 def delete_catagory(request,id):
+    
     Catagory.objects.get(pk=id).delete()
     return redirect('manage-catagory')
 def add_item(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     catagory=Catagory.objects.get(pk=id)
     context={
-        'catagory':catagory
+        'catagory':catagory,
+        're_emp':re_emp,
     }
     if request.method == 'POST':
         item_name = request.POST.get('itemname')
@@ -134,11 +152,15 @@ def add_item(request,id):
                 return redirect('catagory-detail' ,id)
     return render(request,'Store_manager/Catagory/catagory_detail.html',context)
 def item_detail(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     item=Item.objects.get(pk=id)
     item_history=ItemHistory.objects.filter(Item=item)
     context={
         'item':item,
         'item_history':item_history,
+        're_emp':re_emp
     }
     if request.method == 'POST':
         new_catagory = request.POST.get('item_name')
@@ -148,6 +170,7 @@ def item_detail(request,id):
             messages.success(request,"You have update item Name successfully.")
     return render(request,'Store_manager/Catagory/item_detail.html',context)
 def item_delete(request,id):
+    
     item=Item.objects.get(pk=id)
     catagory=item.Catagory
     id2=catagory.id
@@ -156,8 +179,8 @@ def item_delete(request,id):
 
 
 def add_to_store1(request):
-    id=(request.user.id)
-    user=User.objects.get(id=id)
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
     re_emp=employ.objects.get(user=user)
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
     try:
@@ -195,6 +218,7 @@ def add_to_store1(request):
             'all_catagory':all_catagory,
             'all_emp':all_emp,
             'all_receved_req':all_receved_req,
+            're_emp':re_emp,
 
         }
   
@@ -203,6 +227,9 @@ def add_to_store1(request):
     return redirect('add-to-store')
    
 def cheeck_request(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -211,11 +238,15 @@ def cheeck_request(request):
     dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     all_unreseved_req=list(chain(emp_request, dep_request))
     context={
-        'emp_request':all_unreseved_req
+        'emp_request':all_unreseved_req,
+        're_emp':re_emp,
     }
     return render(request,"Store_manager/cheeck_Request/cheeck_request.html",context)
 
 def aproved_request(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -224,10 +255,14 @@ def aproved_request(request):
     dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     all_unreseved_req=list(chain(emp_request, dep_request))
     context={
-        'emp_request':all_unreseved_req
+        'emp_request':all_unreseved_req,
+        're_emp':re_emp,
     }
     return render(request,'Store_manager/cheeck_Request/approved_request.html',context)
 def Item_Delivery_form(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -245,10 +280,14 @@ def Item_Delivery_form(request,id):
     context={
         'item':both_request,
         'req_em':req_em,
+        're_emp':re_emp
     }
     
     return render(request,'Store_manager/cheeck_Request/Item_Delivery_form.html',context)
 def check_delivered_item(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -266,10 +305,14 @@ def check_delivered_item(request,id):
     context={
         'item':both_request,
         'req_em':req_em,
+        're_emp':re_emp,
     }
     
     return render(request,'Store_manager/cheeck_Request/check_delivered_item.html',context)
 def set_item_specifications(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -292,6 +335,9 @@ def set_item_specifications(request,id):
         ser_request.save()
     return redirect('aproved_request')
 def rejected_request(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -300,11 +346,15 @@ def rejected_request(request):
     dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     all_unreseved_req=list(chain(emp_request, dep_request))
     context={
-        'emp_request':all_unreseved_req
+        'emp_request':all_unreseved_req,
+        're_emp':re_emp,
     }
     return render(request,'Store_manager/cheeck_Request/rejected_request.html',context)
 
 def check_in_stok(request,Description):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     req_item_inlower=Description.lower()
     req_item_inupper=Description.capitalize()
     try: 
@@ -318,10 +368,14 @@ def check_in_stok(request,Description):
     for item in order_item: 
         print(item.item_name)
     context={
-           'order_item':order_item
+           'order_item':order_item,
+           're_emp':re_emp,
     }
     return render(request,'Store_manager/cheeck_Request/check_in_soke.html',context)
 def put_message_rejected_request(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -335,6 +389,7 @@ def put_message_rejected_request(request,id):
             print(searchedReq)
     context={
         'searchedReq':searchedReq,
+        're_emp':re_emp,
     }
     
     if request.method == 'POST':
@@ -350,6 +405,9 @@ def put_message_rejected_request(request,id):
     return render(request,"Store_manager/cheeck_Request/message1.html",context)
 
 def send_message_to_request(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -363,10 +421,14 @@ def send_message_to_request(request,id):
             print(searchedReq)
     context={
         'searchedReq':searchedReq,
+        're_emp':re_emp,
     }
     
     return render(request,"Store_manager/cheeck_Request/message.html",context)
 def store_manage_approve(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
     name=exploreU.Full_Name
@@ -375,13 +437,6 @@ def store_manage_approve(request):
     dep_request=dept_request_form1_permanent.objects.filter(Q(request_store=store) & Q(dept_head_Action="Approved"))
     all_unreseved_req=list(chain(emp_request, dep_request))
     searchedReq={}
-    # Description
-    # unit
-    # req_qty
-    # Remark
-    # Request_by
-    # Department
-    # checkd_by
     if request.method == 'POST':
         mess=request.POST.get('store_message')
         id=str(request.POST.get('request_id'))
@@ -390,7 +445,6 @@ def store_manage_approve(request):
             for requ in all_unreseved_req:
                 if str(requ.id)==id:
                     searchedReq=requ
-
                     Request_by=searchedReq.Request_by
                     Department=searchedReq.Department
                     checkd_by=searchedReq.checkd_by
@@ -398,11 +452,13 @@ def store_manage_approve(request):
                     unit=searchedReq.unit
                     req_qty=searchedReq.req_qty
                     Remark=searchedReq.Remark
-                    form1permanent.objects.create(Request_by=Request_by,Department=Department,checkd_by=checkd_by)
+                    form1=form1permanent.objects.create(Request_by=Request_by,Department=Department,checkd_by=checkd_by)
+                    form2=form2permanent.objects.create(form1per=form1,Description=Description,unit=unit,req_qty=req_qty,Remark=Remark,Admin_Appruval='Pending', Finance_Action='Pending',Item_Status='Pending')
                     searchedReq.note=mess
                     searchedReq.Store_Keeper_Action="Allowed"
                     searchedReq.save()
-
+                    if form2:
+                       return redirect('list_for_purchase')
         else:
             for requ in all_unreseved_req:
                 if str(requ.id)==id:
@@ -419,6 +475,7 @@ def user_Profile(request):
     admin = re_employ
     context= {
         'admin':admin,
+        're_emp':admin,
     }
     return render(request,'Store_manager/profile/show_profile.html',context)
 
@@ -428,6 +485,7 @@ def edit_Profile(request):
     admin = re_employ
     context= {
         'admin':admin,
+        're_emp':admin,
     }
     if request.method == 'POST':
         admin.about = request.POST['about']
@@ -470,6 +528,7 @@ def chage_profile_pic(request):
     admin = re_employ
     context= {
         'admin':admin,
+        're_emp':admin,
     }
     if len(request.FILES.get('newimg', "")) != 0:
         
@@ -487,6 +546,7 @@ def delete_profile_pic(request):
     admin = re_employ
     context= {
         'admin':admin,
+        're_emp':admin,
     }
     if len(admin.profile_pic) != 0:
         admin.profile_pic.delete()
@@ -494,7 +554,7 @@ def delete_profile_pic(request):
     return render(request,)
 
 def purchase(request):
-   
+    
     return render(request,'Store_manager/for_purchase/purchase.html')
 
 
@@ -541,6 +601,9 @@ def new_action(request):
             messages.error(request,'First, you must complete and submit Form 1')
             return redirect('purchase')
 def check_out(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     all_form= form1temp.objects.all()
     if all_form:
         form1=all_form[0]
@@ -549,6 +612,7 @@ def check_out(request):
             context={
                 'form1':form1,
                 'all_item':all_item,
+                're_emp':re_emp
             }
             return render(request,'Store_manager/for_purchase/check_out.html',context)
         else:
@@ -559,8 +623,12 @@ def check_out(request):
 
 
 def list_for_purchase(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     all_list_item=form2permanent.objects.all().order_by('-id')
     context={
+        're_emp':re_emp,
         'all_list_item':all_list_item,
     }
     all_form= form1temp.objects.all()
@@ -585,45 +653,67 @@ def list_for_purchase(request):
                 
     return render(request,'Store_manager/for_purchase/purchase_list.html',context)
 
+# ------------------------------ chat ---------------------------------------
 def chat(request):
-    chat_team=[]
-    chat_team1=[]
-    chat_group=employ.objects.all()
-    # all_chat_team=chatbot.objects.filter()
-    user=User.objects.get(pk=request.user.id)
-    me=employ.objects.get(user=user)
-    all_message=chatbot.objects.filter(Q(me_with=me) | Q(me=me))
-    # result = any(item in test_list for item in test_list)
-    for team in all_message:
-        if (Q(team.me_with) | Q(team.me))  in chat_team:
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    me_with=exploreU
+    my_message=chatbot.objects.filter(me_with=me_with)
+    admin = exploreU
+    me=exploreU.user
+    me_with=exploreU
+    all_chate_team=[]
+    all_chat=chatbot.objects.filter(Q(me_with=me_with) | Q(me=me))
+    for a in all_chat:
+        if a.me_with in all_chate_team:
             pass
         else:
-            chat_team.append(team.me_with)
-            
-
-    
-    for a in chat_team:
-        chat_group1=employ.objects.get(pk=a.id)
-    
-   
+            all_chate_team.append(a.me_with)
     if request.method == 'POST':
         user=request.POST.get('serach')
         serch=User.objects.get(username=user)
         chat_group1=employ.objects.get(user=serch)
    
         context={
-            
-            'chat_group1':chat_group,
+            'admin':admin,
+            'chat_group1':chat_group1,
+            'my_message':my_message,
+            're_emp':re_emp,
         }
         return render(request,'Store_manager/chat/index1.html',context)
 
     context={
-            'chat_group':chat_group,
-            
+            'chat_group':all_chate_team,
+             'admin':admin,
+             'my_message':my_message,
+             're_emp':re_emp,
         }
     return render(request,'Store_manager/chat/index.html',context)
+def store_all_user(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
+    curretnUser = request.user
+    exploreU = employ.objects.get(user = curretnUser)
+    me_with=exploreU
+    my_message=chatbot.objects.filter(me_with=me_with)
+    admin = exploreU
+    chat_group1=employ.objects.all()
+    context={
+         'admin':admin,
+        'my_message':my_message,
+        'chat_group2':chat_group1,
+        're_emp':re_emp
+    }
+    return render(request,'Store_manager/chat/index2.html',context)
 
 def chat_pepol(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     chat_employ=employ.objects.get(pk=id)
     user=User.objects.get(pk=request.user.id)
     me=employ.objects.get(user=user)
@@ -640,21 +730,32 @@ def chat_pepol(request,id):
         'chat_employ':chat_employ,
         'message':all_message,
         'id':id,
-        'me':me
+        'me':me,
+        're_emp':re_emp,
     }
     return render(request,'Store_manager/chat/chat.html',context)
-
 def chat_profile(request,id):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     chat_employ=employ.objects.get(pk=id)
     context={
         'chat_employ':chat_employ,
+        're_emp':re_emp,
     }
     return render(request,'Store_manager/chat/profile.html',context)
 def send_message(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     me=request.user
     if request.method == 'POST':
         pass
     return redirect('chat_pepol')
+
+
+# --------------------------------- End Chat ----------------------------------
+
 def report(request):
     
     return render(request,'Store_manager/Report/index.html',)
@@ -662,6 +763,9 @@ def report(request):
 
 
 def add_to_store(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     id=(request.user.id)
     user=User.objects.get(id=id)
     re_emp=employ.objects.get(user=user)
@@ -673,6 +777,7 @@ def add_to_store(request):
     
     context ={
         'all_catagory':all_catagory,
+        're_emp':re_emp,
         
     }
     if request.method == 'POST':
@@ -682,44 +787,58 @@ def add_to_store(request):
         elif (Reseaon=='Purchased'):
             OrderId= request.POST.get('OrderId')
             item_name= request.POST.get('item_name')
-            
-            print("this is item name",item_name)
-            
             Qty= int(request.POST.get('Qty'))
             catagory= request.POST.get('catagory_name')
-           
-            print("This is catagory name",catagory)
-            
+
             item=form2permanent.objects.get(id=OrderId)
+
             item.add_qty=item.add_qty+Qty
            
             if (item.req_qty-item.add_qty==0):
-                item.Status="Completed"
+                item.Item_Status="Completed"
                 cat=Catagory.objects.get(Catagory_Name=catagory)
-                if cat.Type_of_Asset=="Fixed assets":
-                    check=Item.objects.filter(item_name=item_name)
-                    if check.count():
-                       messages.error(request,'Please change the item Name.')
-                    else:
-                        new_item=Item.objects.create(
-                        store=re_Store,
-                        Catagory=cat,
-                        Order_Id=OrderId,
-                        item_name=item_name,
-                        Reason='Purchased',
-                        total_item_in_Stok= item.add_qty,
-                        add_by=re_emp,
-                        Action='New_Add',
-                        )
-                        if new_item:
-                            print("new item added")
-                elif cat.Type_of_Asset=="Current assets":
-                    print("this is Current assets")
+                check=Item.objects.filter(item_name=item_name)
+                if check.count():
+                    add_item=Item.objects.get(item_name=item_name)
+                    add_item.total_item_in_Stok = str(item.add_qty)
+                    ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                    add_item.save()
                 else:
-                    print("not assiged")
-                
+                    new_item=Item.objects.create(
+                    store=re_Store,
+                    Catagory=cat,
+                    Order_Id=OrderId,
+                    item_name=item_name,
+                    Reason='Purchased',
+                    total_item_in_Stok= item.add_qty,
+                    add_by=re_emp,
+                    Action='New_Add',
+                    )
+                    if new_item:
+                        ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                    
+            
             elif(item.req_qty>item.add_qty):
-                item.Status="Pending"
+                item.Item_Status="Pending"
+                if check.count():
+                    add_item=Item.objects.get(item_name=item_name)
+                    add_item.total_item_in_Stok = str(item.add_qty)
+                    ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                    add_item.save()
+                else:
+                    new_item=Item.objects.create(
+                    store=re_Store,
+                    Catagory=cat,
+                    Order_Id=OrderId,
+                    item_name=item_name,
+                    Reason='Purchased',
+                    total_item_in_Stok= item.add_qty,
+                    add_by=re_emp,
+                    Action='New_Add',
+                    )
+                    if new_item:
+                        ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                    
             elif(item.req_qty<item.add_qty):
                 item.add_qty=item.add_qty-Qty
                 messages.error(request,'Sorry, the data you entered is not valid.')
@@ -734,6 +853,9 @@ def add_to_store(request):
         return redirect('list_for_purchase')
     return render(request,"Store_manager/Add_to_Store/add_to_store.html",context)
 def add_to_store_by_return(request):
+    user_id=(request.user.id)
+    user=User.objects.get(id=user_id)
+    re_emp=employ.objects.get(user=user)
     if request.method == 'POST':
         name_id=int(str(request.POST.get('name')))
         Description=str(request.POST.get('item'))
@@ -772,6 +894,7 @@ def add_to_store_by_return(request):
     return redirect('item_detail', ret_item.id)
  
 def add_to_store_by_gift(request):
+
     if request.method == 'POST':
         gifted_by=request.POST.get('gifted_by')
         item_name=request.POST.get('item')

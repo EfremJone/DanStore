@@ -72,21 +72,28 @@
                           <td>{{item.unit}}</td>
                           <td>{{item.req_qty}}</td>
                           <td>{{item.add_qty}}</td>
-                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
-                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
-                          {% if item.Status == 'Pending' %}
-                          <td><span class="badge bg-warning text-dark">{{item.Status}}</span></td>
-                          {% elif item.Status == 'Completed' %}
-                          <td><span class="badge bg-success">{{item.Status}}</span></td>
-                          {% endif %}
-                         
                           
+                           {% if item.Admin_Appruval == 'Pending' %}
+                           <td><span class="badge bg-warning text-dark">{{item.Admin_Appruval}}</span></td>
+                           {% elif item.Admin_Appruval == 'Approved' %}
+                           <td><span class="badge bg-success text-dark">{{item.Admin_Appruval}}</span></td>
+                           {% elif item.Admin_Appruval == 'Reject' %}
+                           <td><span class="badge bg-danger text-dark">Rejected</span></td>
+                           {% endif %}
+                           
+                          {% if item.Finance_Action == 'Pending' %}
+                          <td><span class="badge bg-warning text-dark">{{item.Finance_Action}}</span></td>
+                          {% elif item.Finance_Action == 'Completed' %}
+                          <td><span class="badge bg-success">{{item.Finance_Action}}</span></td>
+                          {% endif %}
+
+                          {% if item.Item_Status == 'Pending' %}
+                          <td><span class="badge bg-warning text-dark">{{item.Item_Status}}</span></td>
+                          {% elif item.Item_Status == 'Completed' %}
+                          <td><span class="badge bg-success">{{item.Item_Status}}</span></td>
+                          {% endif %}
                         </tr>
                        {% endfor %}
-  
-                          
-                        
-                      
                       </tbody>
                     </table>
                     <!-- End Table with stripped rows -->

@@ -272,10 +272,6 @@ def dept_chat_profile(request,id):
         'chat_employ':chat_employ,
     }
     return render(request,'Department_head/chat/profile.html',context)
-
-
-
-
 def dept_chat_pepol(request,id):
     users = User.objects.get(id=request.user.id)
     re_employ=employ.objects.get(user=users)
@@ -300,7 +296,6 @@ def dept_chat_pepol(request,id):
         'admin':admin,
     }
     return render(request,'Department_head/chat/chat.html',context)
-
 def all_user(request):
     curretnUser = request.user
     exploreU = employ.objects.get(user = curretnUser)
