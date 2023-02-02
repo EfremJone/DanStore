@@ -35,49 +35,60 @@
                   <table class="table table-border table-striped datatable">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Start Date</th>
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Date</th>
+                        <th scope="col">Order Code</th>
+                        <th scope="col">Request By</th>
+                        <th scope="col">Describtion</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Total No. Orderd</th>
+                        <th scope="col">Total No. Added</th>
+                        <th scope="col">Admin Approval Status</th>
+                        <th scope="col">Finance Action</th>
+                        <th scope="col">Item Status</th>
+
+                        
+                      
+                        
                       </tr>
                     </thead>
                     <tbody>
+                      {% for item in all_list_item %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Brandon Jacob</td>
-                        <td>Designer</td>
-                        <td>28</td>
-                        <td>2016-05-25</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.id}}</td>
+                        <td>{{item.form1per.Request_by}}</td>
+                        <td><a href="{% url 'admin_respons' item.id %}">{{item.Description}}</a></td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.req_qty}}</td>
+                        <td>{{item.add_qty}}</td>
+                        {% if item.Admin_Appruval == 'Pending' or item.Admin_Appruval == 'Approved' %}
+                           {% if item.Admin_Appruval == 'Pending' %}
+                           <td><span class="badge bg-warning text-white">{{item.Admin_Appruval}}</span></td>
+                           {% elif item.Admin_Appruval == 'Approved' %}
+                           <td><span class="badge bg-success text-white">{{item.Admin_Appruval}}</span></td>
+                           {% endif %}
+                           {% if item.Finance_Action == 'Pending' %}
+                          <td><span class="badge bg-warning text-white">{{item.Finance_Action}}</span></td>
+                          {% elif item.Finance_Action == 'Completed' %}
+                          <td><span class="badge bg-success">{{item.Finance_Action}}</span></td>
+                          {% endif %}
+
+                          {% if item.Item_Status == 'Pending' %}
+                          <td><span class="badge bg-warning text-white">{{item.Item_Status}}</span></td>
+                          {% elif item.Item_Status == 'Completed' %}
+                          <td><span class="badge bg-success">{{item.Item_Status}}</span></td>
+                          {% endif %}
+
+
+                        {% elif item.Admin_Appruval == 'Reject' %}
+                       
+                        <td><span class="badge bg-danger text-white">Rejected</span></td>
+                        <td><span class="badge bg-info text-white">Canceled</span></td>
+                        <td><span class="badge bg-info text-white">Canceled</span></td>
+                        {% endif %}
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Bridie Kessler</td>
-                        <td>Developer</td>
-                        <td>35</td>
-                        <td>2014-12-05</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Ashleigh Langosh</td>
-                        <td>Finance</td>
-                        <td>45</td>
-                        <td>2011-08-12</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">4</th>
-                        <td>Angus Grady</td>
-                        <td>HR</td>
-                        <td>34</td>
-                        <td>2012-06-11</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Raheem Lehner</td>
-                        <td>Dynamic Division Officer</td>
-                        <td>47</td>
-                        <td>2011-04-19</td>
-                      </tr>
+                     {% endfor %}
                     </tbody>
                   </table>
                   <!-- End Table with stripped rows -->

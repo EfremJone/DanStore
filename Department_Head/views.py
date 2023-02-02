@@ -218,8 +218,9 @@ def all_item_taken_by(request):
     admin = re_employ
     checkd_by=re_employ
     Request_by=re_employ.Full_Name
-    requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(Request_by=Request_by) & Q(Store_Keeper_Action="Allowed")).order_by("-id") 
-    requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(checkd_by=checkd_by) & Q(Store_Keeper_Action="Allowed")).order_by("-id") 
+    requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(Request_by=Request_by) & Q(Store_Keeper_Action="Allowed") & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received') ).order_by("-id") 
+    requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(checkd_by=checkd_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
+    
     all_receved_req=list(chain(requ_by_dept_recv, requ_by_emp_recv))
     context={
         'admin':admin,
@@ -318,7 +319,8 @@ def dept_check_mess(request,id):
     return redirect("dept_chat_pepol",emp_id)
 # ------------------------------- end chat ---------------------------------
 
-
+def role(request):
+    return render(request,'Department_head/role.html')
 
 # ---------------------- Profile ------------------------
 

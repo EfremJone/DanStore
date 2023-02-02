@@ -183,6 +183,7 @@ def add_to_store1(request):
     user=User.objects.get(id=user_id)
     re_emp=employ.objects.get(user=user)
     re_Store=allStore.objects.get(storeKeeper=re_emp.Full_Name)
+    all_oreder=form2permanent.objects.filter(Q(Admin_Appruval='Approved') & Q(Finance_Action='Completed'))
     try:
         all_catagory = Catagory.objects.filter(store=re_Store)
         all_emp=[]
@@ -219,6 +220,7 @@ def add_to_store1(request):
             'all_emp':all_emp,
             'all_receved_req':all_receved_req,
             're_emp':re_emp,
+            'all_oreder':all_oreder,
 
         }
   
@@ -300,12 +302,16 @@ def check_delivered_item(request,id):
         if i.id == id:
             both_request=i
     full_name=both_request.Request_by
+    Department=both_request.Department
     req_em=employ.objects.get(Full_Name=full_name)
     
+    re_dep=department.objects.get(departmentName=Department)
+    dep_head=re_dep.departmentHead
     context={
         'item':both_request,
         'req_em':req_em,
         're_emp':re_emp,
+        'dep_head':dep_head,
     }
     
     return render(request,'Store_manager/cheeck_Request/check_delivered_item.html',context)
@@ -791,60 +797,64 @@ def add_to_store(request):
             catagory= request.POST.get('catagory_name')
 
             item=form2permanent.objects.get(id=OrderId)
-
-            item.add_qty=item.add_qty+Qty
-           
-            if (item.req_qty-item.add_qty==0):
-                item.Item_Status="Completed"
-                cat=Catagory.objects.get(Catagory_Name=catagory)
-                check=Item.objects.filter(item_name=item_name)
-                if check.count():
-                    add_item=Item.objects.get(item_name=item_name)
-                    add_item.total_item_in_Stok = str(item.add_qty)
-                    ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
-                    add_item.save()
-                else:
-                    new_item=Item.objects.create(
-                    store=re_Store,
-                    Catagory=cat,
-                    Order_Id=OrderId,
-                    item_name=item_name,
-                    Reason='Purchased',
-                    total_item_in_Stok= item.add_qty,
-                    add_by=re_emp,
-                    Action='New_Add',
-                    )
-                    if new_item:
-                        ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+            if (item.Admin_Appruval == 'Approved' ):
+                if (item.Finance_Action == 'Completed'):
+                    item.add_qty=item.add_qty+Qty
+                    if (item.req_qty-item.add_qty==0):
+                        item.Item_Status="Completed"
+                        cat=Catagory.objects.get(Catagory_Name=catagory)
+                        check=Item.objects.filter(item_name=item_name)
+                        if check.count():
+                            add_item=Item.objects.get(item_name=item_name)
+                            add_item.total_item_in_Stok = str(item.add_qty)
+                            ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            add_item.save()
+                        else:
+                            new_item=Item.objects.create(
+                            store=re_Store,
+                            Catagory=cat,
+                            Order_Id=OrderId,
+                            item_name=item_name,
+                            Reason='Purchased',
+                            total_item_in_Stok= item.add_qty,
+                            add_by=re_emp,
+                            Action='New_Add',
+                            )
+                            if new_item:
+                                ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            
                     
-            
-            elif(item.req_qty>item.add_qty):
-                item.Item_Status="Pending"
-                if check.count():
-                    add_item=Item.objects.get(item_name=item_name)
-                    add_item.total_item_in_Stok = str(item.add_qty)
-                    ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
-                    add_item.save()
+                    elif(item.req_qty>item.add_qty):
+                        item.Item_Status="Pending"
+                        if check.count():
+                            add_item=Item.objects.get(item_name=item_name)
+                            add_item.total_item_in_Stok = str(item.add_qty)
+                            ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            add_item.save()
+                        else:
+                            new_item=Item.objects.create(
+                            store=re_Store,
+                            Catagory=cat,
+                            Order_Id=OrderId,
+                            item_name=item_name,
+                            Reason='Purchased',
+                            total_item_in_Stok= item.add_qty,
+                            add_by=re_emp,
+                            Action='New_Add',
+                            )
+                            if new_item:
+                                ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            
+                    elif(item.req_qty<item.add_qty):
+                        item.add_qty=item.add_qty-Qty
+                        messages.error(request,'Sorry, the data you entered is not valid.')
+                        return redirect('list_for_purchase')
+                    item.save()
+                 
                 else:
-                    new_item=Item.objects.create(
-                    store=re_Store,
-                    Catagory=cat,
-                    Order_Id=OrderId,
-                    item_name=item_name,
-                    Reason='Purchased',
-                    total_item_in_Stok= item.add_qty,
-                    add_by=re_emp,
-                    Action='New_Add',
-                    )
-                    if new_item:
-                        ItemHistory.objects.create(Item=new_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
-                    
-            elif(item.req_qty<item.add_qty):
-                item.add_qty=item.add_qty-Qty
-                messages.error(request,'Sorry, the data you entered is not valid.')
-                return redirect('list_for_purchase')
-            item.save()
-            
+                    messages.error(request,'The request was not completed by Finance.') 
+            else:
+                messages.error(request,'The request was not approved by the Administrator.')       
         elif (Reseaon=='Other'):
             pass
         elif (Reseaon=='Returned'):
@@ -941,11 +951,15 @@ class GeneratePdf(View):
 class deliverd_item(View):
    def get(self, request,id, *args, **kwargs,):
     item=employe_request_form1_permanent.objects.get(id=id)
+    Department=item.Department
+    re_dep=department.objects.get(departmentName=Department)
+    dep_head=re_dep.departmentHead
     req=item.Request_by
     req_em=employ.objects.get(Full_Name=req)
     data={
         'item':item,
         'req_em':req_em,
+        'dep_head':dep_head,
     }
     open('templates/temp.html', "w").write(render_to_string('Store_manager/cheeck_Request/pdf_format_to delivered.html',data ))
     pdf = html_to_pdf('temp.html')

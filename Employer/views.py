@@ -173,7 +173,7 @@ def pending_item(request):
     all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
     all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
     all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
-    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))     
     all_emp_request_pending1=[]
     for i in all_emp_request_pending:
         if i.Recival_status_by_Employer == 'Not_Received':
@@ -229,7 +229,7 @@ def Returned_item(request):
     all_emp_request_in_me=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
     all_emp_request_retun=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Returned'))  
     all_emp_request_reject=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & Q(Store_Keeper_Action='Reject') | Q(dept_head_Action="Rejected") | Q(Recival_status_by_Employer='Not_Received'))  
-    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(dept_head_Action="Rejected") & ~Q(Recival_status_by_Employer='Not_Received'))  
+    all_emp_request_pending=employe_request_form1_permanent.objects.filter(Q(Request_by=Request_by) & ~Q(Store_Keeper_Action='Reject') & ~Q(Recival_status_by_Employer='Received'))     
     all_emp_request_pending1=[]
     for i in all_emp_request_pending:
         if i.Recival_status_by_Employer == 'Not_Received':

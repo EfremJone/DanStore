@@ -36,6 +36,7 @@
       {% csrf_token %}
       <input type="hidden" name="res" value={{res}}>
       <div class="col-lg-12 col-md-4 pt-2">
+        
         <label for="inputNanme4" class="form-label">Order Code</label>
         <input
           name="OrderId"
@@ -44,6 +45,15 @@
           id="inputNanme4"
           placeholder="Enter Order Code"
         />
+        <!-- <div class="col-lg-12 col-md-4 pt-2">
+          <select name="" id="" placeholder="Enter Order Code" class="form-control">
+            <option value="" >Enter Order Code</option>
+            {% for order in all_oreder %}
+            <option value="{{order.id}}">{{order.id}}</option>
+            {% endfor %}
+         </select>
+        </div> -->
+        
       </div>
 
       <div class="col-lg-12 col-md-6 pt-2">

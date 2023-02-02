@@ -130,8 +130,8 @@ def item_in_each_department(request,id):
     print(re_employ)
     checkd_by=re_employ
     Request_by=re_employ.Full_Name
-    requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(Request_by=Request_by) & Q(Store_Keeper_Action="Allowed") | Q(Recival_status_by_Employer='Received')).order_by("-id") 
-    requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(checkd_by=checkd_by) & Q(Store_Keeper_Action="Allowed") | Q(Recival_status_by_Employer='Received')).order_by("-id") 
+    requ_by_dept_recv=dept_request_form1_permanent.objects.filter (Q(Request_by=Request_by) & Q(Store_Keeper_Action="Allowed") & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received') ).order_by("-id") 
+    requ_by_emp_recv=employe_request_form1_permanent.objects.filter(Q(checkd_by=checkd_by) & Q(Store_Keeper_Action='Allowed') & Q(dept_head_Action="Approved") & Q(Recival_status_by_Employer='Received'))  
     all_receved_req=list(chain(requ_by_dept_recv, requ_by_emp_recv))
     context={
         
@@ -224,6 +224,8 @@ def store_details(request,id):
         'all_category': all_category,
         'storeId':id,
         'store':store,
+
+        
         'storeKeepers': storeKeepers
     }
     if request.method == "POST":
@@ -325,8 +327,26 @@ def send_message(request):
 
 
 def Purchase_item(request):
-    all_perch_item=form2permanent.objects.all()
+    all_list_item=form2permanent.objects.all()
     context={
-        'all_perch_item':all_perch_item
+        'all_list_item':all_list_item
     }
-    return render(request,'Company_Admin/Purchase_item/Approve_purchase_item.html')
+    return render(request,'Company_Admin/Purchase_item/Approve_purchase_item.html',context)
+def admin_respons(request,id):
+    req_order=form2permanent.objects.get(pk=id)
+    context={
+        'req_order':req_order,
+    }
+    if 'approve' in request.POST:
+        note=request.POST.get('note')
+        req_order.Admin_response=note
+        req_order.Admin_Appruval='Approved'
+        req_order.save()
+        return redirect('Purchase_item')
+    elif 'reject' in request.POST:
+        note=request.POST.get('note')
+        req_order.Admin_response=note
+        req_order.Admin_Appruval='Reject'
+        req_order.save()
+        return redirect('Purchase_item')
+    return render(request,'Company_Admin/Purchase_item/admin_respons.html',context)

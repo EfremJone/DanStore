@@ -41,7 +41,9 @@ urlpatterns = [
     # 
     
     path('purchase_item', views.Purchase_item, name='Purchase_item'),
-        
+    path('admin_respons/<int:id>', views.admin_respons, name='admin_respons'),
+    
+
   # -------- Chat --------- #
     path('chat/',views.chat,name="admin-chat"),
     path('chat_pepol/<int:id>',views.chat_pepol,name="admin-chat_people"),

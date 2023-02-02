@@ -12,6 +12,7 @@ urlpatterns = [
    path('view_request/<int:id>',views.view_request,name="view_request"),
    path('approved_accept/<int:id>',views.accept_approveal,name="approved_accept"),  
    path('cancel_request/<int:id>',views.cancel_request,name="cancel_request"),
+        
    path('pending_item',views.pending_item,name="pending_item"),
    path('total_item_in_me',views.total_item_in_me,name="total_item_in_me"),
    path('Returned_item',views.Returned_item,name="Returned_item"),

@@ -22,8 +22,8 @@ urlpatterns = [
    path('dept_check_mess/<int:id>',views.dept_check_mess,name="dept_check_mess"),
    
    # ---------------------- End Chat ---------------------------------------
+   path('dept_role',views.role,name="dept_role"),
    
-
     # -------- profile --------- #
    path('dept_user_Profile',views.user_Profile,name="dept_user-Profile"),
    path('emp_edit_Profile',views.edit_Profile,name="emp_edit-Profile"),

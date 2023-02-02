@@ -62,6 +62,7 @@ class form2permanent(models.Model):
     Finance_Action=models.CharField(max_length=200,choices=Finance_Action_status,default='Pending')
     Item_Status=models.CharField(max_length=200,choices=status,default='Pending')
     date=models.DateField(auto_now_add=True,null=True)
+    Admin_response=models.TextField(max_length=1000,null=True,blank=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
 
 class department(models.Model):
