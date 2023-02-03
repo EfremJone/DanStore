@@ -9,18 +9,21 @@ from itertools import chain
 # Create your views here.
 
 def home(request):
+    
     allDep=department.objects.all()
     deptLength = allDep.__len__()
     allstores=allStore.objects.all()
     allDep=department.objects.all()
     allemp=employ.objects.all()
     emplength=allemp.__len__()
+    storeLength=allstores.__len__()
     context={
         'deptLength': deptLength,
         'allstores':allstores,
         'allDep':allDep,
         'emplength':emplength,
         'allemp':allemp,
+        'storeLength':storeLength,
     }
     return render(request,'Company_Admin/Dashboard/index.html',context)
 
@@ -33,12 +36,14 @@ def deparetment_dashboard(request):
     allDep=department.objects.all()
     allemp=employ.objects.all()
     emplength=allemp.__len__()
+    storeLength=allstores.__len__()
     context={
         'deptLength': deptLength,
         'allstores':allstores,
         'allDep':allDep,
         'emplength':emplength,
         'allemp':allemp,
+        'storeLength':storeLength,
     }
     
     return render(request,'Company_Admin/Dashboard/departments.html',context)
@@ -50,12 +55,14 @@ def employees_dashboard(request):
     allDep=department.objects.all()
     allemp=employ.objects.all()
     emplength=allemp.__len__()
+    storeLength=allstores.__len__()
     context={
         'deptLength': deptLength,
         'allstores':allstores,
         'allDep':allDep,
         'emplength':emplength,
         'allemp':allemp,
+        'storeLength':storeLength,
     }
     return render(request,'Company_Admin/Dashboard/employees.html',context)
 #----------------- MANAGE EMPLOYEE ---------------#
@@ -334,8 +341,11 @@ def Purchase_item(request):
     return render(request,'Company_Admin/Purchase_item/Approve_purchase_item.html',context)
 def admin_respons(request,id):
     req_order=form2permanent.objects.get(pk=id)
+    full_name=req_order.form1per.Request_by
+    req_emp=employ.objects.get(Full_Name=full_name)
     context={
         'req_order':req_order,
+        'req_emp':req_emp,
     }
     if 'approve' in request.POST:
         note=request.POST.get('note')

@@ -320,14 +320,22 @@
                       </thead>
                       <tbody>
                         {% for item in all_emp_request %}
-                        {{item.}}
+                        
                         
                         <tr>
                           <!-- <th scope="row">1</th> -->
+                          
+                          {% if item.Recival_status_by_Employer == 'Not_Received' %}
                           <td><a href="{% url 'view_request' item.id %}">{{item.Description}}</a></td>
                           <td>{{item.unit}}</td>
                           <td>{{item.req_qty}}</td>
-                    
+                          <td><span class="badge bg-info">Request_Cancelled</span></td>
+                          <td><span class="badge bg-info">Request_Cancelled</span></td>
+                          <td><span class="badge bg-info">Request_Cancelled</span></td>
+                          {% else  %}
+                          <td><a href="{% url 'view_request' item.id %}">{{item.Description}}</a></td>
+                          <td>{{item.unit}}</td>
+                          <td>{{item.req_qty}}</td>
                           {% if item.dept_head_Action == 'Pending' %}
                           <td><span class="badge bg-warning text-dark">{{item.dept_head_Action}}</span></td>
                           {% elif item.dept_head_Action == 'Approved' %}
@@ -345,15 +353,16 @@
                           <td><span class="badge bg-danger">Rejected</span></td>
                           {% endif %} 
 
+                          
                           {% if item.Store_Keeper_Action == "Pending" %}
                           <td>
                             <a class="btn btn-sm btn-success text-dark disabled">Yes</a>
-                            <a class="btn btn-sm btn-danger text-dark disabled">No</a>
+                            <a href="{% url 'cancel_request' item.id %}" class="btn btn-sm btn-danger text-dark ">No</a>
                           </td>
                           {% elif item.Store_Keeper_Action == 'wait' %}
                           <td>
                             <a class="btn btn-sm btn-success text-dark disabled">Yes</a>
-                            <a class="btn btn-sm btn-danger text-dark disabled">No</a>
+                            <a href="{% url 'cancel_request' item.id %}" class="btn btn-sm btn-danger text-dark ">No</a>
                           </td>
                           {% elif item.Store_Keeper_Action == 'Allowed' %} 
                              {% if item.Recival_status_by_Employer == 'Received' %}
@@ -374,6 +383,10 @@
                             <span class="badge bg-danger">Request_Rejected</span>
                           </td>
                           {% endif %}
+                          {% endif %}
+
+
+                          
                           
                           
                           <td>{{item.date}}</td>

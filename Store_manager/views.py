@@ -797,6 +797,7 @@ def add_to_store(request):
             catagory= request.POST.get('catagory_name')
 
             item=form2permanent.objects.get(id=OrderId)
+            check=Item.objects.filter(item_name=item_name)
             if (item.Admin_Appruval == 'Approved' ):
                 if (item.Finance_Action == 'Completed'):
                     item.add_qty=item.add_qty+Qty
@@ -807,7 +808,7 @@ def add_to_store(request):
                         if check.count():
                             add_item=Item.objects.get(item_name=item_name)
                             add_item.total_item_in_Stok = str(item.add_qty)
-                            ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            ItemHistory.objects.create(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
                             add_item.save()
                         else:
                             new_item=Item.objects.create(
@@ -829,7 +830,7 @@ def add_to_store(request):
                         if check.count():
                             add_item=Item.objects.get(item_name=item_name)
                             add_item.total_item_in_Stok = str(item.add_qty)
-                            ItemHistory.objects(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
+                            ItemHistory.objects.create(Item=add_item,Reason='Purchased',Amount=item.add_qty,Action='Add')
                             add_item.save()
                         else:
                             new_item=Item.objects.create(

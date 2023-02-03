@@ -72,7 +72,7 @@ def cheek_request(request):
     me_with=exploreU
     admin=exploreU
     my_message=chatbot.objects.filter(me_with=me_with)
-    all_request=employe_request_form1_permanent.objects.filter(checkd_by=exploreU)
+    all_request=employe_request_form1_permanent.objects.filter(Q(checkd_by=exploreU) & ~Q(Recival_status_by_Employer='Not_Received') )
     context={
         'all_request':all_request,
         'my_message':my_message,

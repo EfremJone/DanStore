@@ -63,6 +63,7 @@ class form2permanent(models.Model):
     Item_Status=models.CharField(max_length=200,choices=status,default='Pending')
     date=models.DateField(auto_now_add=True,null=True)
     Admin_response=models.TextField(max_length=1000,null=True,blank=True)
+    Finance_response=models.TextField(max_length=1000,null=True,blank=True)
     Remark=models.CharField(max_length=100,null=True,blank=True)
 
 class department(models.Model):

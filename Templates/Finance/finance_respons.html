@@ -1,5 +1,5 @@
-{% extends 'Company_Admin/base.html' %} {% block admin %}
-
+{% extends 'Finance/F_base.html' %}
+{% block f_head  %}
 <main id="main" class="main">
     <div class="pagetitle">
       <h1 style="color: black">List of Item for Purchase</h1>
@@ -58,7 +58,7 @@
                     
                     <li><p><span>Employer name:</span> <span class="h5">{{req_order.form1per.Request_by}}</span></p></li>
                     <li><p><p><span>Employer Department:</span> <span class="h5">{{req_order.form1per.Department }}</span></p></p></li>
-                    <li><p><p><span>Employer Phone:</span> <span class="h5">{{req_emp.phone1}}</span></p></p></li>
+                    <li><p><p><span>Employer Phone:</span> <span class="h5">{{req_order.form1per.checkd_by}}</span></p></p></li>
                   </ul>
                   <h5><strong>Request Status:</strong></h5>
                   <ul>
@@ -69,16 +69,21 @@
                   {% if req_order.Admin_Appruval == 'Approved' or req_order.Admin_Appruval == 'Reject' %}
                   <h5 class="pt-2"><strong>Admin Response</strong></h5>
                   <p>{{req_order.Admin_response}}</p>
+                  {% endif %}
+
+                  {% if req_order.Finance_Action == 'Completed' %}
+                  <h5 class="pt-2"><strong>Admin Response</strong></h5>
+                  <p>{{req_order.Finance_response}}</p>
+                  
                  {% else %}
                 <form action=" " class="border shadow p-3" method="POST">
-                    <h5 class="text-center pt-2"><strong>Admin Response</strong></h5>
+                    <h5 class="text-center pt-2"><strong>Finance Response</strong></h5>
                     {% csrf_token %}
                    <div class="col-12 p-2">
                     <textarea class="form-control" placeholder="Enter Your Comment ....." name="note" id="floatingTextarea" style="height: 100px;"></textarea>
                    </div>
                    <div class="col-12 p-2">
                     <button type="submit" class="btn btn-outline-success" name="approve">Approve</button>
-                    <button type="submit" class="btn btn-outline-danger" name="reject">Reject</button>
                    </div>
                 </form>
                 {% endif %}

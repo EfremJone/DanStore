@@ -48,12 +48,12 @@
                           {% if item.Store_Keeper_Action == "Pending" %}
                           <td>
                             <a class="btn btn-sm btn-success text-dark disabled">Yes</a>
-                            <a class="btn btn-sm btn-danger text-dark disabled">No</a>
+                            <a href="{% url 'cancel_request' item.id %}" class="btn btn-sm btn-danger text-dark ">No</a>
                           </td>
                           {% elif item.Store_Keeper_Action == 'wait' %}
                           <td>
                             <a class="btn btn-sm btn-success text-dark disabled">Yes</a>
-                            <a class="btn btn-sm btn-danger text-dark disabled">No</a>
+                            <a href="{% url 'cancel_request' item.id %}" class="btn btn-sm btn-danger text-dark ">No</a>
                           </td>
                           {% elif item.Store_Keeper_Action == 'Allowed' %} 
                              {% if item.Recival_status_by_Employer == 'Received' %}
