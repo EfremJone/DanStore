@@ -3,7 +3,6 @@ from django.contrib import messages
 from Store_manager.models import *
 def finance_view(request):
     all_list_item=form2permanent.objects.all()
-    
     context={
         'all_list_item':all_list_item,
     }
@@ -19,5 +18,5 @@ def finance_respons(request,id):
         req_order.Finance_Action='Completed'
         req_order.save()
         return redirect('finance_dashboard')
-    
+
     return render(request,'Finance/finance_respons.html',context)

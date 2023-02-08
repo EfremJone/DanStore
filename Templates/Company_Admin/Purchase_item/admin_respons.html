@@ -68,6 +68,7 @@
                   
                   {% if req_order.Admin_Appruval == 'Approved' or req_order.Admin_Appruval == 'Reject' %}
                   <h5 class="pt-2"><strong>Admin Response</strong></h5>
+                  
                   <p>{{req_order.Admin_response}}</p>
                  {% else %}
                 <form action=" " class="border shadow p-3" method="POST">

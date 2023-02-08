@@ -131,10 +131,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# SESSION_EXPIRE_SECONDS = 200
-# SESSION_TIMEOUT_REDIRECT = '/'
+SESSION_EXPIRE_SECONDS = 100000
+SESSION_TIMEOUT_REDIRECT = '/'
 
-# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
 EMAIL_BACKED='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
