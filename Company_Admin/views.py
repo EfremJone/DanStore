@@ -384,7 +384,8 @@ def delete_store(request,id):
     except IndexError as e:
         messages.error(request, 'Login Before ')
         return redirect('log-out')
-    
+def cat_item_detail(request,id):
+    return render(request,'Company_Admin/Categories/index.html')    
 def add_new_store(request):
     try:
         if request.user.groups.all()[0].name == 'Company_Admin':
